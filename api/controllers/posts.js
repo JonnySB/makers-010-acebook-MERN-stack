@@ -8,10 +8,12 @@ const getAllPosts = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  let data = req.body.JSON.stringify()
-  data.owner = req.user_id
-  console.log(data)
+  let data = req.body;
+  // sets the data.owner property from our PostSchema to the required user_id from our token
+  data.owner = req.user_id;
+  // Creates a new instance of Post from our model post which contains the PostSchema
   const post = new Post(data);
+  // saves it to the database
   post.save();
 
   const newToken = generateToken(req.user_id);

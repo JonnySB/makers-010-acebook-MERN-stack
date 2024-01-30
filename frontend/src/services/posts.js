@@ -28,13 +28,13 @@ export const createPosts = async (token, message) => {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
-    body: {
+    //Remember to use JSON.stringify the body to create a valid JSON string
+    //when making POST requests
+    body: JSON.stringify({
       message: message,
       timestamp: new Date().toISOString(),
-    },
+    }),
   };
-
-  console.log(requestOptions);
 
   const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
 
