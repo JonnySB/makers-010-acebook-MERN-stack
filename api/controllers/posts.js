@@ -8,9 +8,8 @@ const getAllPosts = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  let data = req.body.JSON.stringify()
+  let data = req.body
   data.owner = req.user_id
-  console.log(data)
   const post = new Post(data);
   post.save();
 

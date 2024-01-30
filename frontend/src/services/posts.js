@@ -22,19 +22,19 @@ export const getPosts = async (token) => {
 };
 
 export const createPosts = async (token, message) => {
+  const payload = {
+    message: message,
+    timestamp: new Date().toISOString(),
+  }
+
   const requestOptions = {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
-    body: {
-      message: message,
-      timestamp: new Date().toISOString(),
-    },
+    body: JSON.stringify(payload)
   };
-
-  console.log(requestOptions);
 
   const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
 
