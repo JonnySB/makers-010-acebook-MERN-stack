@@ -14,7 +14,7 @@ export const SignupPage = () => {
     try {
       await signup(email, password);
       console.log("redirecting...:");
-      navigate("/login");
+      navigate("/");
     } catch (err) {
       console.error(err);
       navigate("/signup");
@@ -30,27 +30,6 @@ export const SignupPage = () => {
   };
 
   return (
-    // <>
-    //   <h2>Signup</h2>
-    //   <form onSubmit={handleSubmit}>
-    //     <label htmlFor="email">Email:</label>
-    //     <input
-    //       id="email"
-    //       type="text"
-    //       value={email}
-    //       onChange={handleEmailChange}
-    //     />
-    //     <label htmlFor="password">Password:</label>
-    //     <input
-    //       placeholder="Password"
-    //       id="password"
-    //       type="password"
-    //       value={password}
-    //       onChange={handlePasswordChange}
-    //     />
-    //     <input role="submit-button" id="submit" type="submit" value="Submit" />
-    //   </form>
-    // </>
     <section className="bg-gray-50 dark:bg-gray-900">
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         
