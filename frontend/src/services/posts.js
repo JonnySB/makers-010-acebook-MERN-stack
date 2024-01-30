@@ -30,22 +30,10 @@ export const createPosts = async (token, message) => {
   const requestOptions = {
     method: "POST",
     headers: {
-<<<<<<< HEAD
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload)
-=======
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    //Remember to use JSON.stringify the body to create a valid JSON string
-    //when making POST requests
-    body: JSON.stringify({
-      message: message,
-      timestamp: new Date().toISOString(),
-    }),
->>>>>>> refs/remotes/origin/create_post
   };
 
   const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
