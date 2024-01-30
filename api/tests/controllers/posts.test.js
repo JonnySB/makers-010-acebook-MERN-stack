@@ -18,7 +18,7 @@ const createToken = (userId) => {
       // Set the JWT token to expire in 10 minutes
       exp: Math.floor(Date.now() / 1000) + 10 * 60,
     },
-    secret
+    secret,
   );
 };
 
@@ -26,8 +26,10 @@ let token;
 describe("/posts", () => {
   beforeAll(async () => {
     const user = new User({
-      email: "post-test@test.com",
-      password: "12345678",
+      username: "pops123",
+      email: "poppy@email.com",
+      password: "1234",
+      dob: new Date("1988-02-05"),
     });
     await user.save();
     await Post.deleteMany({});
