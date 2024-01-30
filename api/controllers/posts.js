@@ -8,7 +8,10 @@ const getAllPosts = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  const post = new Post(req.body);
+  let data = req.body.JSON.stringify()
+  data.owner = req.user_id
+  console.log(data)
+  const post = new Post(data);
   post.save();
 
   const newToken = generateToken(req.user_id);

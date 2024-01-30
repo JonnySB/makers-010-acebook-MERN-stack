@@ -2,11 +2,14 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const login = async (email, password) => {
+  
+  // Turns the email & password into a object variable
   const payload = {
     email: email,
     password: password,
   };
 
+  // Turns the above object variable into JSON and stringify "payload" so that it is readable by our DB
   const requestOptions = {
     method: "POST",
     headers: {
@@ -15,8 +18,10 @@ export const login = async (email, password) => {
     body: JSON.stringify(payload),
   };
 
+  // Get's tokens with above login details. 
   const response = await fetch(`${BACKEND_URL}/tokens`, requestOptions);
 
+  // Returns token if response is 201 otherwise throws an error. 201 means succesful request that led to creation of a resource (In this case a "token")
   // docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201
   if (response.status === 201) {
     let data = await response.json();
