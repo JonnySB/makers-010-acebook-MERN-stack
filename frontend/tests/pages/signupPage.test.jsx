@@ -11,7 +11,11 @@ import { SignupPage } from "../../src/pages/Signup/SignupPage";
 vi.mock("react-router-dom", () => {
   const navigateMock = vi.fn();
   const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
-  return { useNavigate: useNavigateMock };
+  const linkMock = vi.fn();
+  const useLinkMock = () => linkMock;
+  
+  // don't just assume this is OK
+  return { useNavigate: useNavigateMock, Link: useLinkMock };
 });
 
 // Mocking the signup service
@@ -24,10 +28,14 @@ vi.mock("../../src/services/authentication", () => {
 const completeSignupForm = async () => {
   const user = userEvent.setup();
 
-  const emailInputEl = screen.getByLabelText("Email:");
-  const passwordInputEl = screen.getByLabelText("Password:");
+  const usernameInputEl = screen.getByLabelText("Username");
+  const dobInputEl = screen.getByLabelText("DOB");
+  const emailInputEl = screen.getByLabelText("Your email");
+  const passwordInputEl = screen.getByLabelText("Password");
   const submitButtonEl = screen.getByRole("submit-button");
 
+  await user.type(usernameInputEl, "testusername");
+  await user.type(dobInputEl, "2009-10-10");
   await user.type(emailInputEl, "test@email.com");
   await user.type(passwordInputEl, "1234");
   await user.click(submitButtonEl);
@@ -43,17 +51,17 @@ describe("Signup Page", () => {
 
     await completeSignupForm();
 
-    expect(signup).toHaveBeenCalledWith("test@email.com", "1234");
+    expect(signup).toHaveBeenCalledWith("testusername", "2009-10-10","test@email.com", "1234");
   });
 
-  test("navigates to /login on successful signup", async () => {
+  test("navigates to / on successful signup", async () => {
     render(<SignupPage />);
 
     const navigateMock = useNavigate();
 
     await completeSignupForm();
 
-    expect(navigateMock).toHaveBeenCalledWith("/login");
+    expect(navigateMock).toHaveBeenCalledWith("/");
   });
 
   test("navigates to /signup on unsuccessful signup", async () => {

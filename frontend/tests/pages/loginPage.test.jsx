@@ -11,7 +11,12 @@ import { LoginPage } from "../../src/pages/Login/LoginPage";
 vi.mock("react-router-dom", () => {
     const navigateMock = vi.fn();
     const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
-    return { useNavigate: useNavigateMock };
+
+    const linkMock = vi.fn();
+    const useLinkMock = () => linkMock;
+    
+    // don't just assume this is OK
+    return { useNavigate: useNavigateMock, Link: useLinkMock };
 });
 
 // Mocking the login service
@@ -24,8 +29,8 @@ vi.mock("../../src/services/authentication", () => {
 const completeLoginForm = async () => {
     const user = userEvent.setup();
 
-    const emailInputEl = screen.getByLabelText("Email:");
-    const passwordInputEl = screen.getByLabelText("Password:");
+    const emailInputEl = screen.getByLabelText("Your email");
+    const passwordInputEl = screen.getByLabelText("Password");
     const submitButtonEl = screen.getByRole("submit-button");
 
     await user.type(emailInputEl, "test@email.com");
@@ -65,6 +70,6 @@ describe("Login Page", () => {
 
         await completeLoginForm();
 
-        expect(navigateMock).toHaveBeenCalledWith("/login");
+        expect(navigateMock).toHaveBeenCalledWith("/");
     });
 });
