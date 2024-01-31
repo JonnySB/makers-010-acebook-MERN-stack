@@ -9,26 +9,24 @@ const CreatePost = () => {
   const token = window.localStorage.getItem("token");
 
   const handleChange = (event) => {
-    // const textAreaEl = event.target;
-    // setText(textAreaEl.value);
     setText(event.target.value)
   };
 
   const handleCreatePost = (event) => {
     event.preventDefault();
+    createPosts(token, text);
+    setText("")
+    //We might need to change to change to the following code when implementing Posts with Photos
     // const form = event.target;
     // const formData = new FormData(form);
     // const formJson = Object.fromEntries(formData.entries());
     // console.log(formJson.message)
     // createPosts(token, formJson.message);
-    createPosts(token, text);
-    setText("")
   };
 
   return (
     <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
       <textarea
-        aria-label="form"
         rows="5"
         cols="75"
         name="message"
@@ -38,7 +36,7 @@ const CreatePost = () => {
         placeholder="Enter your post here..."
       ></textarea>
       <label>
-        <input type="submit" name="submit" value="Create Post" aria-label="Submit Post"></input>
+        <input role="submit-button" type="submit" name="submit" value="Create Post" aria-label="Submit Post"></input>
       </label>
     </form>
   );
