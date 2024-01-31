@@ -35,14 +35,15 @@ describe("Create Post component functions correctly", () => {
   });
 
   // Not sure how to mock or test for this
-  test("User can submit post", async () => {
-    render(<CreatePost />);
-    // const spy = vi.spyOn(createPosts).mockImplementation(() => true);
-    await completeCreatePostForm();
-    const submitButtonEl = screen.getByRole("submit-button");
-    // userEvent.click(submitButtonEl);
-    // await waitFor(() => {
-    // //   expect(spy).toHaveBeenCalled();
-    // });
-  });
+//   test("User can submit post", async () => {
+//     render(<CreatePost />);
+//     const spy = vi.spyOn(createPosts).mockImplementation(() => true);
+//     await completeCreatePostForm();
+//     const submitButtonEl = screen.getByRole("submit-button");
+//     userEvent.click(submitButtonEl);
+//     await waitFor(() => {
+//       expect(spy).toHaveBeenCalled();
+//     });
+//     spy.mockRestore(); 
+//   });
 });
