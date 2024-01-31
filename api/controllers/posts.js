@@ -22,15 +22,18 @@ const createPost = async (req, res) => {
 
 // add comment:
 const createComment = async (req, res) => {
-  const postID = req.body.post_id;
-  const message = req.body.message;
-  const createdAt = new Date();
-  const owner = req.user_id; // collect from logged in user?
+  const postId = req.body.post_id;
 
-  const post = Post.findByIdAndUpdate(postID, "");
-  console.log(post);
-  post.comments.push(Comment({ message, createdAt, owner }));
-  post.save();
+  const comment = {
+    message: req.body.message,
+    createdAt: new Date(),
+    owner: req.user_id,
+  };
+
+  Post.updateOne({ _id: postId }, { $push: { comments: comment } });
+
+  const newToken = generateToken(req.user_id);
+  res.status(201).json({ message: "OK", token: newToken });
 };
 
 const PostsController = {
