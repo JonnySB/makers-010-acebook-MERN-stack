@@ -1,5 +1,4 @@
 const Post = require("../models/post");
-const Comment = require("../models/comment");
 const { decodeToken, generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
@@ -36,10 +35,24 @@ const createComment = async (req, res) => {
   res.status(201).json({ message: "OK", token: newToken });
 };
 
+const createLike = async (req, res) => {
+  const postId = req.body.post_id;
+
+  const user = req.user_id;
+
+  // check user hasn't liked already
+
+  await Post.findByIdAndUpdate(postId, { $push: user });
+
+  const newToken = generateToken(req.user_id);
+  res.status(201).json({ message: "OK", token: newToken });
+};
+
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
   createComment: createComment,
+  createLike: createLike,
 };
 
 module.exports = PostsController;

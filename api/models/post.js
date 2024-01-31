@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Comment = require("../models/comment");
 
 // A Schema defines the "shape" of entries in a collection. This is similar to
 // defining the columns of an SQL Database.
