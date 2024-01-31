@@ -24,6 +24,13 @@ const completeCreatePostForm = async () => {
   await user.type(textAreaEl, "Hello World");
 };
 
+vi.mock("../../src/services/posts", () => {
+  const createPostsMock = vi.fn(() => console.log('createdPostsMock was called'));
+  return {
+    createPosts: createPostsMock,
+  };
+});
+
 describe("Create Post component functions correctly", () => {
   test("User can input text into textarea", async () => {
     render(<CreatePost />);
@@ -34,16 +41,14 @@ describe("Create Post component functions correctly", () => {
     ).to.have.property("value", "Hello World");
   });
 
-  // Not sure how to mock or test for this
-//   test("User can submit post", async () => {
-//     render(<CreatePost />);
-//     const spy = vi.spyOn(createPosts).mockImplementation(() => true);
-//     await completeCreatePostForm();
-//     const submitButtonEl = screen.getByRole("submit-button");
-//     userEvent.click(submitButtonEl);
-//     await waitFor(() => {
-//       expect(spy).toHaveBeenCalled();
-//     });
-//     spy.mockRestore(); 
-//   });
+  //   Not sure how to mock or test for this
+  it("calls the createPosts function when user clicks button", async () => {
+    render(<CreatePost />);
+    await completeCreatePostForm();
+    const submitButtonEl = screen.getByRole("submit-button");
+    userEvent.click(submitButtonEl);
+    await waitFor(() => {
+      expect(createPosts).toHaveBeenCalled();
+    });
+  });
 });
