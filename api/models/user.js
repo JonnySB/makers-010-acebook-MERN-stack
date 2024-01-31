@@ -1,8 +1,14 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  email: { type: String, required: true },
-  password: { type: String, required: true },
+    username: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    dob: { type: Date, required: true },
+    firstName: { type: String, required: false },
+    lastName: { type: String, required: false },
+    bio: { type: String, required: false },
+    friends: [{ type: mongoose.Types.ObjectId, ref: "User" }],
 });
 
 const User = mongoose.model("User", UserSchema);
