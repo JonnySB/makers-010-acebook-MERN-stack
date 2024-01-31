@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
-const { generateToken } = require("../lib/token");
+const { decodeToken, generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
   const posts = await Post.find();
@@ -10,9 +10,8 @@ const getAllPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
   const message = req.body.message;
-  console.log(req.body.message, req.user_id);
   const createdAt = new Date();
-  const owner = req.user_id; // collect from logged in user?
+  const owner = req.user_id;
 
   const post = new Post({ message, createdAt, owner });
   post.save();
@@ -24,17 +23,18 @@ const createPost = async (req, res) => {
 // add comment:
 const createComment = async (req, res) => {
   const postID = req.body.post_id;
-
   const message = req.body.message;
   const createdAt = new Date();
   const owner = req.user_id; // collect from logged in user?
 
-  const comment = new Comment(message, createdAt, owner);
+  const post = Post.findByIdAndUpda(postID, { message: "Yay" });
+  console.log(post);
 };
 
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
+  createComment: createComment,
 };
 
 module.exports = PostsController;
