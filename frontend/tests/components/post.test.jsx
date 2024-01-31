@@ -9,7 +9,7 @@ describe("Post", () => {
     render(<Post post={testPost} />);
 
     const article = screen.getByRole("article");
-    expect(article.textContent).toBe("test message");
+    expect(article).toHave("test message");
   });
 
   test("displays CreatePost as a form", () => {
