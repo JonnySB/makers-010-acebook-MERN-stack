@@ -5,9 +5,9 @@ const mongoose = require("mongoose");
 const PostSchema = new mongoose.Schema({
   message: { type: String, required: true },
   createdAt: { type: Date, required: true },
-  owner: { type: mongoose.Types.ObjectId, ref: "User", required: true },
-  comments: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
-  likes: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  owner: { type: mongoose.Types.ObjectId, ref: "User", required: false },
+  // comments: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
+  // likes: [{ type: mongoose.Types.ObjectId, ref: "User" }],
 });
 
 // We use the Schema to create the Post model. Models are classes which we can

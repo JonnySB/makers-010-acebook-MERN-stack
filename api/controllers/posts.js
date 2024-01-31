@@ -10,10 +10,11 @@ const getAllPosts = async (req, res) => {
 
 const createPost = async (req, res) => {
   const message = req.body.message;
+  console.log(req.body.message, req.user_id);
   const createdAt = new Date();
   const owner = req.user_id; // collect from logged in user?
 
-  const post = new Post(message, createdAt, owner);
+  const post = new Post({ message, createdAt, owner });
   post.save();
 
   const newToken = generateToken(req.user_id);
