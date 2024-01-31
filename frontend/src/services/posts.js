@@ -24,7 +24,7 @@ export const getPosts = async (token) => {
 export const createPosts = async (token, message) => {
   const payload = {
     message: message,
-    timestamp: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
   }
 
   const requestOptions = {

@@ -1,5 +1,5 @@
 const Post = (props) => {
-  var formattedDate = new Date(props.post.timestamp).toLocaleString()
+  var formattedDate = new Date(props.post.createdAt).toLocaleString()
 
 
   return (

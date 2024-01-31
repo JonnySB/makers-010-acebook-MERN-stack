@@ -1,5 +1,4 @@
 const Post = require("../models/post");
-const User = require("../models/user")
 const { generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
@@ -31,7 +30,7 @@ const getAllPosts = async (req, res) => {
 
   // sorts post to descending order (last one first) based on the timestamp
   // compareFn(a, b) (first and second element) see sort method doc
-  posts.sort((a, b) => b.timestamp - a.timestamp);
+  posts.sort((a, b) => b.createdAt - a.createdAt);
 
   res.status(200).json({ posts: posts, token: token });
 };
