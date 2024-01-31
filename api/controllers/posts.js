@@ -30,7 +30,7 @@ const createComment = async (req, res) => {
     owner: req.user_id,
   };
 
-  Post.updateOne({ _id: postId }, { $push: { comments: comment } });
+  await Post.findByIdAndUpdate(postId, { $push: { comments: comment } });
 
   const newToken = generateToken(req.user_id);
   res.status(201).json({ message: "OK", token: newToken });
