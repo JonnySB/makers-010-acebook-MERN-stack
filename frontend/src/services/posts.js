@@ -1,5 +1,3 @@
-import { json } from "react-router-dom";
-
 // docs: https://vitejs.dev/guide/env-and-mode.html
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 

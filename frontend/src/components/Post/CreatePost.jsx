@@ -9,8 +9,9 @@ const CreatePost = () => {
   const token = window.localStorage.getItem("token");
 
   const handleChange = (event) => {
-    const textAreaEl = event.target;
-    setText(textAreaEl.value);
+    // const textAreaEl = event.target;
+    // setText(textAreaEl.value);
+    setText(event.target.value)
   };
 
   const handleCreatePost = (event) => {
@@ -21,11 +22,13 @@ const CreatePost = () => {
     // console.log(formJson.message)
     // createPosts(token, formJson.message);
     createPosts(token, text);
+    setText("")
   };
 
   return (
-    <form onSubmit={handleCreatePost}>
+    <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
       <textarea
+        aria-label="form"
         rows="5"
         cols="75"
         name="message"
@@ -35,7 +38,7 @@ const CreatePost = () => {
         placeholder="Enter your post here..."
       ></textarea>
       <label>
-        <input type="submit" name="submit" value="Create Post"></input>
+        <input type="submit" name="submit" value="Create Post" aria-label="Submit Post"></input>
       </label>
     </form>
   );
