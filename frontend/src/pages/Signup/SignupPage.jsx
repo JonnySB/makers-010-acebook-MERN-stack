@@ -8,7 +8,7 @@ export const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [dob, setDob] = useState(undefined);
+  const [dob, setDob] = useState();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -36,7 +36,9 @@ export const SignupPage = () => {
   }
 
   const handleDobChange = (event) => {
-    setDob(new Date(event.target.value));
+    const selectedDate = new Date(event.target.value);
+    const formattedDate = selectedDate.toISOString().split('T')[0];
+    setDob(formattedDate);
   }
 
   return (
@@ -53,7 +55,6 @@ export const SignupPage = () => {
                 </h1>
                 <form 
                   className="space-y-4 md:space-y-6" 
-                  // action="#"
                   onSubmit={handleSubmit}>
 
               <div className="grid grid-cols-6 gap-6">
