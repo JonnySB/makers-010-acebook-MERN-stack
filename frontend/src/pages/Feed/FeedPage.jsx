@@ -32,13 +32,16 @@ export const FeedPage = () => {
 
   return (
     <>
-      <CreatePost token={token}/>
+      <div className="w-screen">
+        <div className="flex justify-center">
+        <CreatePost token={token} />
+        </div>
 
-      <h2>Posts</h2>
-      <div className="feed" role="feed">
-        {posts.map((post) => (
-          <Post post={post} key={post._id} />
-        ))}
+        <div role="feed">
+          {posts.map((post) => (
+            <Post post={post} key={post._id} />
+          ))}
+        </div>
       </div>
     </>
   );
