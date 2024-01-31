@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Post from "../../src/components/Post/Post";
-import CreatePost from "../../src/components/CreatePost/CreatePost";
+import CreatePost from "../../src/components/Post/CreatePost";
 
 describe("Post", () => {
   test("displays the message as an article", () => {
@@ -13,7 +13,7 @@ describe("Post", () => {
 
   test("displays CreatePost as a form", () => {
     render(<CreatePost />);
-    expect(screen.getByPlaceholderText("Enter your post here...")).to.exist; 
+    expect(screen.getByPlaceholderText("Enter your post here...")).toBeInTheDocument(); 
     expect(screen.getByLabelText("form")).to.exist; 
     expect(screen.getByRole("button")).to.exist; 
     expect(screen.getByRole("form")).to.exist;
