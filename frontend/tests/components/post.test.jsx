@@ -13,7 +13,7 @@ describe("Post", () => {
 
   test("displays CreatePost as a form", () => {
     render(<CreatePost />);
-    expect(screen.getByPlaceholderText("Enter your post here...")).to.exist;
+    expect(screen.getByPlaceholderText("Enter your post here...")).to.exist; 
     expect(screen.getByLabelText("form")).to.exist; 
     expect(screen.getByRole("button")).to.exist; 
     expect(screen.getByRole("form")).to.exist;
