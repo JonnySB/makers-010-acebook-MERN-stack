@@ -27,8 +27,10 @@ const createComment = async (req, res) => {
   const createdAt = new Date();
   const owner = req.user_id; // collect from logged in user?
 
-  const post = Post.findByIdAndUpda(postID, { message: "Yay" });
+  const post = Post.findByIdAndUpdate(postID, "");
   console.log(post);
+  post.comments.push(Comment({ message, createdAt, owner }));
+  post.save();
 };
 
 const PostsController = {
