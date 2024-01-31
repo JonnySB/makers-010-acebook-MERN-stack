@@ -7,10 +7,10 @@ import CreatePost from "../../src/components/Post/CreatePost";
 describe("Create Post component renders correctly", () => {
   test("CreatePost component renders all elements", () => {
     render(<CreatePost />);
-    expect(screen.getByPlaceholderText("Enter your post here...")).to.exist;
+    expect(screen.getByPlaceholderText("Write a post...")).to.exist;
     expect(screen.getByRole("submit-button")).to.exist;
     expect(screen.getByRole("submit-button")).to.have.property(
-      "value",
+      "textContent",
       "Create Post"
     );
     expect(screen.getByRole("form")).to.exist;
@@ -20,28 +20,34 @@ describe("Create Post component renders correctly", () => {
 
 const completeCreatePostForm = async () => {
   const user = userEvent.setup();
-  const textAreaEl = screen.getByPlaceholderText("Enter your post here...");
+  const textAreaEl = screen.getByPlaceholderText("Write a post...");
   await user.type(textAreaEl, "Hello World");
 };
 
 vi.mock("../../src/services/posts", () => {
-  const createPostsMock = vi.fn(() => console.log('createdPostsMock was called'));
+  const createPostsMock = vi.fn(() =>
+    console.log("createdPostsMock was called")
+  );
   return {
     createPosts: createPostsMock,
   };
 });
 
 describe("Create Post component functions correctly", () => {
+  beforeEach(() => {
+    createPosts.mockReset();
+  });
+
   test("User can input text into textarea", async () => {
     render(<CreatePost />);
 
     await completeCreatePostForm();
-    expect(
-      screen.getByPlaceholderText("Enter your post here...")
-    ).to.have.property("value", "Hello World");
+    expect(screen.getByPlaceholderText("Write a post...")).to.have.property(
+      "value",
+      "Hello World"
+    );
   });
 
-  //   Not sure how to mock or test for this
   it("calls the createPosts function when user clicks button", async () => {
     render(<CreatePost />);
     await completeCreatePostForm();
@@ -50,5 +56,15 @@ describe("Create Post component functions correctly", () => {
     await waitFor(() => {
       expect(createPosts).toHaveBeenCalled();
     });
+  });
+
+  test("User can't submit a post that's empty", async () => {
+    // const consoleLogSpy = vi.spyOn(console, "error");
+    render(<CreatePost />);
+    const submitButtonEl = screen.getByRole("submit-button");
+    userEvent.click(submitButtonEl);
+    // expect(consoleLogSpy).toHaveBeenCalled();
+    expect(createPosts).not.toHaveBeenCalled();
+    // consoleLogSpy.mockReset();
   });
 });
