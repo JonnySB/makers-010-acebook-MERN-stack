@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
 
 import { signup } from "../../services/authentication";
 
@@ -8,13 +10,13 @@ export const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [dob, setDob] = useState();
+  const [dob, setDob] = useState(new Date());
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await signup(email, password);
+      await signup(username, dob, email, password);
       console.log("redirecting...:");
       navigate("/");
     } catch (err) {
@@ -39,6 +41,7 @@ export const SignupPage = () => {
     const selectedDate = new Date(event.target.value);
     const formattedDate = selectedDate.toISOString().split('T')[0];
     setDob(formattedDate);
+    console.log(formattedDate);
   }
 
   return (
@@ -88,6 +91,13 @@ export const SignupPage = () => {
                     className="text-sm font-medium text-gray-900 block mb-2">
                       DOB
                       </label>
+                      {/* <DatePicker 
+                      className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                      selected={dob} 
+                      onChange={handleDobChange} 
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="yyyy-mm-dd"
+                      /> */}
                     <input 
                     type="date" 
                     name="dob" 
