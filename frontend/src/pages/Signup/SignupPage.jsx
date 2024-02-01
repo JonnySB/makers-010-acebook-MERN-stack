@@ -10,7 +10,7 @@ export const SignupPage = () => {
   const [isValid, setIsValid] = useState(false);
   const [username, setUsername] = useState("");
   const [dob, setDob] = useState();
-  // const [showRequirements, setShowRequirements] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -41,9 +41,6 @@ export const SignupPage = () => {
     setIsValid(passwordRegex.test(password));
   };
 
-  // const handlePasswordInputClick = () => {
-  //   setShowRequirements(true);
-  // };
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -146,9 +143,8 @@ export const SignupPage = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                 value={password}
                 onChange={handlePasswordChange}
-                required=""
+                
                 />
-
                 {isValid 
                 ? <p className="font-medium text-green-600 dark:text-green-500">Password is valid!</p> 
                 : <p className="font-medium text-red-600 dark:text-green-500">Password must have:<br/> - 8 characters minimum<br/> - at least one capital letter <br/> - at least one number<br/> - at least one special character</p>
