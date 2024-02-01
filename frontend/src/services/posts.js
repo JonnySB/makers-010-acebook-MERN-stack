@@ -63,4 +63,31 @@ export const postLike = async (token, post_id) => {
   if (response.status !== 201) {
     throw new Error("Unable to fetch posts");
   }
+
+  const data = await response.json();
+  return data;
+};
+
+export const postUnlike = async (token, post_id) => {
+  const payload = {
+    post_id: post_id,
+  }
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts/unlike`, requestOptions);
+
+  if (response.status !== 201) {
+    throw new Error("Unable to fetch posts");
+  }
+
+  const data = await response.json();
+  return data;
 };

@@ -76,11 +76,22 @@ const createLike = async (req, res) => {
   res.status(201).json({ message: "OK", token: newToken });
 };
 
+const deleteLike = async (req, res) => {
+  const postId = req.body.post_id;
+  const user = req.user_id;
+
+  await Post.findByIdAndUpdate(postId, {  $pull: { likes: user } } );
+
+  const newToken = generateToken(req.user_id);
+  res.status(201).json({ message: "OK", token: newToken });
+}
+
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
   createComment: createComment,
   createLike: createLike,
+  deleteLike: deleteLike
 };
 
 module.exports = PostsController;
