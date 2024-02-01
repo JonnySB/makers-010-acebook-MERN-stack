@@ -24,7 +24,7 @@ export const FeedPage = () => {
     } else {
       navigate("/login");
     }
-  }, [posts]);
+  }, [token]);
 
   if (!token) {
     return;
@@ -34,12 +34,12 @@ export const FeedPage = () => {
     <>
       <div className="w-screen">
         <div className="flex justify-center">
-        <CreatePost token={token} />
+          <CreatePost token={token} setToken={setToken}/>
         </div>
 
         <div role="feed">
           {posts.map((post) => (
-            <Post post={post} key={post._id} />
+            <Post post={post} key={post._id}/>
           ))}
         </div>
       </div>

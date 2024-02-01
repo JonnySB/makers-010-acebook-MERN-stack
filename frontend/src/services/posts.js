@@ -39,7 +39,10 @@ export const createPosts = async (token, message) => {
   if (response.status !== 201) {
     throw new Error("Unable to fetch posts");
   }
-};
+
+  const data = await response.json();
+  return data;
+ };
 
 export const postLike = async (token, post_id) => {
   const payload = {

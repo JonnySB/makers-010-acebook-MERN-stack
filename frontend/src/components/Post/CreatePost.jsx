@@ -1,24 +1,41 @@
 import { useState } from "react";
 import { createPosts } from "../../services/posts";
 
-const CreatePost = () => {
+const CreatePost = (props) => {
   // Updates the text in the body of textarea
   const [text, setText] = useState("");
   // Need this to pass the user_id from token generated from user login
   // to backend for authentiation when making requests
-  const token = window.localStorage.getItem("token");
-
+  
   const handleChange = (event) => {
     setText(event.target.value);
   };
 
   const handleCreatePost = (event) => {
     event.preventDefault();
+<<<<<<< HEAD
     // if (!text.trim()) {
     //   console.log("createPosts wasn't called")
     //   throw new Error("Empty Post")
     // }
     createPosts(token, text);
+=======
+    if (text.trim() === "") {
+      console.log("createPosts wasn't called")
+      console.error("Error: Please write some text in your post");
+      return;
+    }
+    console.log('createPosts was called')
+
+    createPosts(props.token, text)
+      .then((data) => {
+        props.setToken(data.token);
+      })
+      .catch((err) => {
+        console.err(err);
+      });
+      
+>>>>>>> e5875dd (Fixed useEffect infinite loop)
     setText("");
     //We might need to change to change to the following code when implementing Posts with Photos
     // const form = event.target;
