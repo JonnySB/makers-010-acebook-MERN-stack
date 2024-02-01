@@ -7,8 +7,10 @@ import { signup } from "../../services/authentication";
 export const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isValid, setIsValid] = useState(false);
   const [username, setUsername] = useState("");
-  const [dob, setDob] = useState(new Date());
+  const [dob, setDob] = useState();
+  // const [showRequirements, setShowRequirements] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -28,8 +30,20 @@ export const SignupPage = () => {
   };
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+    validatePassword(newPassword);
   };
+
+  const validatePassword = (password) => {
+    // Example criteria: at least 8 characters, one uppercase letter, one lowercase letter, one digit
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    setIsValid(passwordRegex.test(password));
+  };
+
+  // const handlePasswordInputClick = () => {
+  //   setShowRequirements(true);
+  // };
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -134,6 +148,12 @@ export const SignupPage = () => {
                 onChange={handlePasswordChange}
                 required=""
                 />
+
+                {isValid 
+                ? <p className="font-medium text-green-600 dark:text-green-500">Password is valid!</p> 
+                : <p className="font-medium text-red-600 dark:text-green-500">Password must have:<br/> - 8 characters minimum<br/> - at least one capital letter <br/> - at least one number<br/> - at least one special character</p>
+                }
+
               </div>
 
                 <div className="flex items-start">
