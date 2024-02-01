@@ -14,12 +14,10 @@ const CreatePost = () => {
 
   const handleCreatePost = (event) => {
     event.preventDefault();
-    if (text.trim() === "") {
-      console.log("createPosts wasn't called")
-      console.error("Error: Please write some text in your post");
-      return;
-    }
-    console.log('createPosts was called')
+    // if (!text.trim()) {
+    //   console.log("createPosts wasn't called")
+    //   throw new Error("Empty Post")
+    // }
     createPosts(token, text);
     setText("");
     //We might need to change to change to the following code when implementing Posts with Photos
