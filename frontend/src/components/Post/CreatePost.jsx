@@ -13,13 +13,6 @@ const CreatePost = (props) => {
 
   const handleCreatePost = (event) => {
     event.preventDefault();
-<<<<<<< HEAD
-    // if (!text.trim()) {
-    //   console.log("createPosts wasn't called")
-    //   throw new Error("Empty Post")
-    // }
-    createPosts(token, text);
-=======
     if (text.trim() === "") {
       console.log("createPosts wasn't called")
       console.error("Error: Please write some text in your post");
@@ -35,7 +28,6 @@ const CreatePost = (props) => {
         console.err(err);
       });
       
->>>>>>> e5875dd (Fixed useEffect infinite loop)
     setText("");
     //We might need to change to change to the following code when implementing Posts with Photos
     // const form = event.target;
