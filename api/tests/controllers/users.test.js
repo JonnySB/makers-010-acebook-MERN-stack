@@ -11,13 +11,26 @@ describe("/users", () => {
   });
 
   describe("POST, when email and password are provided", () => {
-    test("the response code is 201", async () => {
+    test("the response code is 400 for short invalid password", async () => {
       const response = await request(app)
         .post("/users")
         .send({
           username: "pops123",
           email: "poppy@email.com",
           password: "1234",
+          dob: new Date("1988-02-05"),
+        });
+
+      expect(response.statusCode).toBe(400);
+    });
+
+    test("the response code is 201", async () => {
+      const response = await request(app)
+        .post("/users")
+        .send({
+          username: "pops123",
+          email: "poppy@email.com",
+          password: "Password1!",
           dob: new Date("1988-02-05"),
         });
 
@@ -30,7 +43,7 @@ describe("/users", () => {
         .send({
           username: "scar123",
           email: "scarconstt@email.com",
-          password: "1234",
+          password: "Password1!",
           dob: new Date("1998-02-05"),
         });
 
