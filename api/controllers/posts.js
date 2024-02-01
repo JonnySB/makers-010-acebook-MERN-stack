@@ -42,7 +42,7 @@ const createLike = async (req, res) => {
 
   // check user hasn't liked already
 
-  await Post.findByIdAndUpdate(postId, { $push: user });
+  await Post.findByIdAndUpdate(postId, { $push: { likes: user } });
 
   const newToken = generateToken(req.user_id);
   res.status(201).json({ message: "OK", token: newToken });
