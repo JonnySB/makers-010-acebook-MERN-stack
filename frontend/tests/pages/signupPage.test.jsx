@@ -74,4 +74,60 @@ describe("Signup Page", () => {
 
     expect(navigateMock).toHaveBeenCalledWith("/signup");
   });
+
+
+  // // password validator test
+  // test("displays error message for invalid password - missing special character and number", () => {
+  //   render(<SignupPage />);
+
+  //   const passwordInputEl = screen.getByLabelText("Password");
+
+  //   userEvent.type(passwordInputEl, "invalidpassword");
+
+  //   const errorMessageEl = screen.getByText(
+  //     /Password must have:\s*-\s*8 characters minimum\s*-\s*at least one capital letter\s*-\s*at least one number\s*-\s*at least one special character/i
+  //   );
+
+  //   expect(errorMessageEl).toBeTruthy();
+  // });
+
+  // test("displays error message for invalid password - too short", () => {
+  //   render(<SignupPage />);
+
+  //   const passwordInputEl = screen.getByLabelText("Password");
+
+  //   userEvent.type(passwordInputEl, "pass");
+
+  //   const errorMessageEl = screen.getByText(
+  //     /Password must have:\s*-\s*8 characters minimum\s*-\s*at least one capital letter\s*-\s*at least one number\s*-\s*at least one special character/i
+  //   );
+
+  //   expect(errorMessageEl).toBeTruthy();
+  // });
+
+  // test("displays error message for invalid password - empty password", () => {
+  //   render(<SignupPage />);
+
+  //   const passwordInputEl = screen.getByLabelText("Password");
+
+  //   userEvent.type(passwordInputEl, "");
+
+  //   const errorMessageEl = screen.getByText(
+  //     /Password must have:\s*-\s*8 characters minimum\s*-\s*at least one capital letter\s*-\s*at least one number\s*-\s*at least one special character/i
+  //   );
+
+  //   expect(errorMessageEl).toBeTruthy();
+  // });
+
+  // test("displays success message for valid password", () => {
+  //   render(<SignupPage />);
+
+  //   const passwordInputEl = screen.getByLabelText("Password");
+
+  //   userEvent.type(passwordInputEl, "ValidPassword1!");
+
+  //   const successMessageEl = screen.getByText(/Password is valid!/i);
+
+  //   expect(successMessageEl).toBeTruthy();
+  // });
 });
