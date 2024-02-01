@@ -76,58 +76,42 @@ describe("Signup Page", () => {
   });
 
 
-  // // password validator test
+  // password validator test
   // test("displays error message for invalid password - missing special character and number", () => {
   //   render(<SignupPage />);
 
   //   const passwordInputEl = screen.getByLabelText("Password");
 
-  //   userEvent.type(passwordInputEl, "invalidpassword");
+  //   userEvent.type(passwordInputEl, "Password1!");
 
-  //   const errorMessageEl = screen.getByText(
-  //     /Password must have:\s*-\s*8 characters minimum\s*-\s*at least one capital letter\s*-\s*at least one number\s*-\s*at least one special character/i
-  //   );
+  //   const errorMessageEl = screen.getByTestId("invalid-password");
+  //   console.log("Start - This is the what it returns when NOT using textContent:")
+  //   console.log(errorMessageEl);
+  //   console.log("End - This is the what it returns when using textContent")
+  //   console.log(" ")
+  //   console.log("This is the what it returns when using textContent:")
+  //   console.log(errorMessageEl.textContent);
 
-  //   expect(errorMessageEl).toBeTruthy();
+  //   expect(errorMessageEl.textContent).toBe("Password is invalid!");
+  //   // expect(errorMessageEl).toBe("Password is invalid!");
+  //   // console.log(expect(errorMessageEl).toBeTruthy());
   // });
 
-  // test("displays error message for invalid password - too short", () => {
-  //   render(<SignupPage />);
 
-  //   const passwordInputEl = screen.getByLabelText("Password");
-
-  //   userEvent.type(passwordInputEl, "pass");
-
-  //   const errorMessageEl = screen.getByText(
-  //     /Password must have:\s*-\s*8 characters minimum\s*-\s*at least one capital letter\s*-\s*at least one number\s*-\s*at least one special character/i
-  //   );
-
-  //   expect(errorMessageEl).toBeTruthy();
-  // });
-
-  // test("displays error message for invalid password - empty password", () => {
-  //   render(<SignupPage />);
-
-  //   const passwordInputEl = screen.getByLabelText("Password");
-
-  //   userEvent.type(passwordInputEl, "");
-
-  //   const errorMessageEl = screen.getByText(
-  //     /Password must have:\s*-\s*8 characters minimum\s*-\s*at least one capital letter\s*-\s*at least one number\s*-\s*at least one special character/i
-  //   );
-
-  //   expect(errorMessageEl).toBeTruthy();
-  // });
 
   // test("displays success message for valid password", () => {
   //   render(<SignupPage />);
 
-  //   const passwordInputEl = screen.getByLabelText("Password");
-
+  //   const passwordInputEl =  screen.getByTestId("TEST");
+  //   console.log(passwordInputEl);
   //   userEvent.type(passwordInputEl, "ValidPassword1!");
+  //   const successMessageEl = screen.getByTestId("valid-password");
 
-  //   const successMessageEl = screen.getByText(/Password is valid!/i);
+  //   console.log("This is the what it returns when NOT using textContent:");
+  //   console.log(successMessageEl);
+  //   console.log("This is the what it returns:");
+  //   console.log(successMessageEl.textContent);
 
-  //   expect(successMessageEl).toBeTruthy();
+  //   expect(successMessageEl.textContent).toBe("Password is valid!");
   // });
 });
