@@ -8,6 +8,9 @@ describe("Post model", () => {
   beforeEach(async () => {
     await Post.deleteMany({});
   });
+  afterEach(async () => {
+    await Post.deleteMany({});
+  });
 
   it("it tests that post has a message", () => {
     const post = new Post({
@@ -35,7 +38,7 @@ describe("Post model", () => {
     });
     // mongoose.Types.ObjectId
     expect(post.owner).toEqual(
-      new mongoose.Types.ObjectId("65ba5046a9d4c1867a4cd305"),
+      new mongoose.Types.ObjectId("65ba5046a9d4c1867a4cd305")
     );
     // expect(post.owner).toEqual("65ba5046a9d4c1867a4cd305");
   });
@@ -73,7 +76,7 @@ describe("Post model", () => {
 
     it("tests that comments have an owner", () => {
       expect(post.comments[0].owner).toEqual(
-        new mongoose.Types.ObjectId("65ba5046a9d4c1867a4cd305"),
+        new mongoose.Types.ObjectId("65ba5046a9d4c1867a4cd305")
       );
     });
   });
@@ -97,7 +100,7 @@ describe("Post model", () => {
 
     it("tests that comments have a message", () => {
       expect(post.likes[0]).toEqual(
-        new mongoose.Types.ObjectId("65ba5046a9d4c1867a4cd305"),
+        new mongoose.Types.ObjectId("65ba5046a9d4c1867a4cd305")
       );
     });
   });
