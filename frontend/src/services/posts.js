@@ -40,3 +40,24 @@ export const createPosts = async (token, message) => {
     throw new Error("Unable to fetch posts");
   }
 };
+
+export const postLike = async (token, post_id) => {
+  const payload = {
+    post_id: post_id,
+  }
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload)
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts/likes`, requestOptions);
+
+  if (response.status !== 201) {
+    throw new Error("Unable to fetch posts");
+  }
+};

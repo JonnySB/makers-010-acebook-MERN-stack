@@ -29,8 +29,8 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-1/2 border border-gray-200 rounded-lg bg-gray-50">
-      <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
+    <div className="w-1/2 border border-gray-200 bg-gray-50">
+    <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
         <div className="px-4 py-2 bg-white rounded-t-lg">
           <textarea
             name="message"
