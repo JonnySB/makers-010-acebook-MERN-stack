@@ -4,6 +4,7 @@ const JWT = require("jsonwebtoken");
 const app = require("../../app");
 const Post = require("../../models/post");
 const User = require("../../models/user");
+const { isObjectIdOrHexString } = require("mongoose");
 
 require("../mongodb_helper");
 
@@ -106,8 +107,8 @@ describe("/posts", () => {
 
   describe("GET, when token is present", () => {
     test("the response code is 200", async () => {
-      const post1 = new Post({ message: "I love all my children equally" });
-      const post2 = new Post({ message: "I've never cared for GOB" });
+      const post1 = new Post({ message: "I love all my children equally", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
+      const post2 = new Post({ message: "I've never cared for GOB", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968"});
       await post1.save();
       await post2.save();
 
@@ -119,8 +120,8 @@ describe("/posts", () => {
     });
 
     test("returns every post in the collection", async () => {
-      const post1 = new Post({ message: "howdy!" });
-      const post2 = new Post({ message: "hola!" });
+      const post1 = new Post({ message: "howdy!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
+      const post2 = new Post({ message: "hola!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
       await post1.save();
       await post2.save();
 
@@ -137,8 +138,8 @@ describe("/posts", () => {
     });
 
     test("returns a new token", async () => {
-      const post1 = new Post({ message: "First Post!" });
-      const post2 = new Post({ message: "Second Post!" });
+      const post1 = new Post({ message: "First Post!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
+      const post2 = new Post({ message: "Second Post!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
       await post1.save();
       await post2.save();
 
@@ -157,8 +158,8 @@ describe("/posts", () => {
 
   describe("GET, when token is missing", () => {
     test("the response code is 401", async () => {
-      const post1 = new Post({ message: "howdy!" });
-      const post2 = new Post({ message: "hola!" });
+      const post1 = new Post({ message: "howdy!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
+      const post2 = new Post({ message: "hola!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
       await post1.save();
       await post2.save();
 
@@ -168,8 +169,8 @@ describe("/posts", () => {
     });
 
     test("returns no posts", async () => {
-      const post1 = new Post({ message: "howdy!" });
-      const post2 = new Post({ message: "hola!" });
+      const post1 = new Post({ message: "howdy!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
+      const post2 = new Post({ message: "hola!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
       await post1.save();
       await post2.save();
 
@@ -179,8 +180,8 @@ describe("/posts", () => {
     });
 
     test("does not return a new token", async () => {
-      const post1 = new Post({ message: "howdy!" });
-      const post2 = new Post({ message: "hola!" });
+      const post1 = new Post({ message: "howdy!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
+      const post2 = new Post({ message: "hola!", createdAt: "2000-09-06T00:00:00.000Z", owner: "65ba8e865746c13158c06968" });
       await post1.save();
       await post2.save();
 
