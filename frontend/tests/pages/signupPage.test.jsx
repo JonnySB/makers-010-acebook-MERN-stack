@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 
@@ -74,44 +74,142 @@ describe("Signup Page", () => {
 
     expect(navigateMock).toHaveBeenCalledWith("/signup");
   });
+});
 
+describe("Password validation", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+  
+    // Testing password: INVALID PASSWORDS
 
-  // password validator test
-  // test("displays error message for invalid password - missing special character and number", () => {
-  //   render(<SignupPage />);
+    test("displays password validation error for invalid password - no capitcal, number or special character", async () => {
+      render(<SignupPage />);
+  
+      const passwordInputEl = screen.getByLabelText("Password");
+      const submitButtonEl = screen.getByRole("submit-button");
+  
+      await userEvent.type(passwordInputEl, "weakpassword");
+      await userEvent.click(submitButtonEl);
+  
+      const validationError = screen.getByText(/Password must have:/);
+      expect(validationError !== null).toBe(true);
+    });
 
-  //   const passwordInputEl = screen.getByLabelText("Password");
+    test("displays password validation error for invalid password - no special character", async () => {
+      render(<SignupPage />);
+  
+      const passwordInputEl = screen.getByLabelText("Password");
+      const submitButtonEl = screen.getByRole("submit-button");
+  
+      await userEvent.type(passwordInputEl, "stillWeak1");
+      await userEvent.click(submitButtonEl);
+  
+      const validationError = screen.getByText(/Password must have:/);
+      expect(validationError !== null).toBe(true);
+    });
+    test("displays password validation error for invalid password - too short", async () => {
+      render(<SignupPage />);
+  
+      const passwordInputEl = screen.getByLabelText("Password");
+      const submitButtonEl = screen.getByRole("submit-button");
+  
+      await userEvent.type(passwordInputEl, "www");
+      await userEvent.click(submitButtonEl);
+  
+      const validationError = screen.getByText(/Password must have:/);
+      expect(validationError !== null).toBe(true);
+    });
 
-  //   userEvent.type(passwordInputEl, "Password1!");
+    test("displays password validation error for invalid password - More than 8 chars all lowercase", async () => {
+      render(<SignupPage />);
+  
+      const passwordInputEl = screen.getByLabelText("Password");
+      const submitButtonEl = screen.getByRole("submit-button");
+  
+      await userEvent.type(passwordInputEl, "wwwkdlfklgdkfkflakfefeukjd");
+      await userEvent.click(submitButtonEl);
+  
+      const validationError = screen.getByText(/Password must have:/);
+      expect(validationError !== null).toBe(true);
+    });
 
-  //   const errorMessageEl = screen.getByTestId("invalid-password");
-  //   console.log("Start - This is the what it returns when NOT using textContent:")
-  //   console.log(errorMessageEl);
-  //   console.log("End - This is the what it returns when using textContent")
-  //   console.log(" ")
-  //   console.log("This is the what it returns when using textContent:")
-  //   console.log(errorMessageEl.textContent);
+    test("displays password validation error is null for valid password ", async () => {
+      render(<SignupPage />);
+    
+      const passwordInputEl = screen.getByLabelText("Password");
+      const submitButtonEl = screen.getByRole("submit-button");
+    
+      // Type a valid password
+      await userEvent.type(passwordInputEl, "ThisIsValid1!");
+      await userEvent.click(submitButtonEl);
+    
+      // Use waitFor to wait for the UI to update asynchronously
+      await waitFor(() => {
+        const validationError = screen.queryByText(/Password must have:/);
+        expect(validationError).toBeNull();
+        const successMessage = screen.queryByText("Password is valid!");
+        expect(successMessage).toBeTruthy();
+      });
+    });
+    // Testing password: VALID PASSWORDS
+  
+    test("displays password validation success for valid password", async () => {
+      render(<SignupPage />);
+  
+      const passwordInputEl = screen.getByLabelText("Password");
+      const submitButtonEl = screen.getByRole("submit-button");
+  
+      await userEvent.type(passwordInputEl, "Password1!");
+      await userEvent.click(submitButtonEl);
+  
+      const successMessage = screen.getByText("Password is valid!");
+      expect(successMessage !== null).toBe(true);
+    });
 
-  //   expect(errorMessageEl.textContent).toBe("Password is invalid!");
-  //   // expect(errorMessageEl).toBe("Password is invalid!");
-  //   // console.log(expect(errorMessageEl).toBeTruthy());
-  // });
-
-
-
-  // test("displays success message for valid password", () => {
-  //   render(<SignupPage />);
-
-  //   const passwordInputEl =  screen.getByTestId("TEST");
-  //   console.log(passwordInputEl);
-  //   userEvent.type(passwordInputEl, "ValidPassword1!");
-  //   const successMessageEl = screen.getByTestId("valid-password");
-
-  //   console.log("This is the what it returns when NOT using textContent:");
-  //   console.log(successMessageEl);
-  //   console.log("This is the what it returns:");
-  //   console.log(successMessageEl.textContent);
-
-  //   expect(successMessageEl.textContent).toBe("Password is valid!");
-  // });
+    // Test password: INVALID AND VALID PASSWORDS IN ONE
+    test("displays password validation error for invalid password and then returns true for when password is updated to be valid", async () => {
+      render(<SignupPage />);
+    
+      const passwordInputEl = screen.getByLabelText("Password");
+      const submitButtonEl = screen.getByRole("submit-button");
+    
+      // Type an invalid password
+      await userEvent.type(passwordInputEl, "stillWeak1");
+      await userEvent.click(submitButtonEl);
+    
+      // Check for validation error
+      const validationError = screen.queryByText(/Password must have:/);
+    
+      // Expect the validation error to be true initially
+      expect(validationError !== null).toBe(true);
+    
+      // Type a valid password
+      await userEvent.clear(passwordInputEl);
+      await userEvent.type(passwordInputEl, "isNowStrong1!");
+      await userEvent.click(submitButtonEl);
+    
+      // Check that validation error is now false for a valid password
+      expect(screen.queryByText(/Password must have:/)).toBeNull();
+      expect(screen.queryByText("Password is valid!")).toBeTruthy();
+    });
+});
+describe("Sign up - Password validation", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+  test("allows a user to signup with password put throught validation", async () => {
+    render(<SignupPage />);
+    await completeSignupForm();
+    const pw = "1234"
+    const passwordInputEl = screen.getByLabelText("Password");
+      const submitButtonEl = screen.getByRole("submit-button");
+  
+      await userEvent.type(passwordInputEl, pw);
+      await userEvent.click(submitButtonEl);
+  
+      const validationError = screen.getByText(/Password must have:/);
+      expect(validationError !== null).toBe(true);
+    expect(signup).toHaveBeenCalledWith("testusername", "2009-10-10","test@email.com", pw);
+  });
 });
