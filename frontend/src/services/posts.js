@@ -37,7 +37,7 @@ export const createPosts = async (token, message) => {
   const response = await fetch(`${BACKEND_URL}/posts`, requestOptions);
 
   if (response.status !== 201) {
-    throw new Error("Unable to fetch posts");
+    throw new Error("Unable to make POST request for fetch posts");
   }
 
   const data = await response.json();
