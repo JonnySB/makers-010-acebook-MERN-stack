@@ -140,11 +140,9 @@ describe("Password validation", () => {
       const passwordInputEl = screen.getByLabelText("Password");
       const submitButtonEl = screen.getByRole("submit-button");
     
-      // Type a valid password
       await userEvent.type(passwordInputEl, "ThisIsValid1!");
       await userEvent.click(submitButtonEl);
     
-      // Use waitFor to wait for the UI to update asynchronously
       await waitFor(() => {
         const validationError = screen.queryByText(/Password must have:/);
         expect(validationError).toBeNull();
@@ -152,6 +150,7 @@ describe("Password validation", () => {
         expect(successMessage).toBeTruthy();
       });
     });
+
     // Testing password: VALID PASSWORDS
   
     test("displays password validation success for valid password", async () => {
@@ -174,26 +173,22 @@ describe("Password validation", () => {
       const passwordInputEl = screen.getByLabelText("Password");
       const submitButtonEl = screen.getByRole("submit-button");
     
-      // Type an invalid password
       await userEvent.type(passwordInputEl, "stillWeak1");
       await userEvent.click(submitButtonEl);
     
-      // Check for validation error
       const validationError = screen.queryByText(/Password must have:/);
     
-      // Expect the validation error to be true initially
       expect(validationError !== null).toBe(true);
     
-      // Type a valid password
       await userEvent.clear(passwordInputEl);
       await userEvent.type(passwordInputEl, "isNowStrong1!");
       await userEvent.click(submitButtonEl);
     
-      // Check that validation error is now false for a valid password
       expect(screen.queryByText(/Password must have:/)).toBeNull();
       expect(screen.queryByText("Password is valid!")).toBeTruthy();
     });
 });
+
 describe("Sign up - Password validation", () => {
   beforeEach(() => {
     vi.resetAllMocks();
@@ -203,13 +198,35 @@ describe("Sign up - Password validation", () => {
     await completeSignupForm();
     const pw = "1234"
     const passwordInputEl = screen.getByLabelText("Password");
-      const submitButtonEl = screen.getByRole("submit-button");
-  
-      await userEvent.type(passwordInputEl, pw);
-      await userEvent.click(submitButtonEl);
-  
-      const validationError = screen.getByText(/Password must have:/);
-      expect(validationError !== null).toBe(true);
+    const submitButtonEl = screen.getByRole("submit-button");
+
+    await userEvent.type(passwordInputEl, pw);
+    await userEvent.click(submitButtonEl);
+
+    const validationError = screen.getByText(/Password must have:/);
+    expect(validationError !== null).toBe(true);
     expect(signup).toHaveBeenCalledWith("testusername", "2009-10-10","test@email.com", pw);
   });
+});
+
+describe("Sign up - If user exists", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+  test("displays error message for existing username or email on unsuccessful signup", async () => {
+    render(<SignupPage />);
+    signup.mockRejectedValue({
+      response: {
+        data: {
+          message: "Username or email already exists",
+        },
+      },
+    });
+    const navigateMock = useNavigate();
+    await completeSignupForm();
+    const errorElement = screen.getByText("Username or email already exists");
+    expect(errorElement !== null).toBe(true);
+    expect(navigateMock).toHaveBeenCalledWith("/signup");
+  });
+  
 });

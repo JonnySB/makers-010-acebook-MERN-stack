@@ -12,19 +12,21 @@ export const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [dob, setDob] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      await signup(username, dob, email, password);
-      console.log("redirecting...:");
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      navigate("/signup");
-    }
+    try {    
+    await signup(username, dob, email, password);  
+    console.log("redirecting...:");    
+    navigate("/");    
+    } catch (err) {   
+    console.error(err);    
+    setError(err.response?.data?.message || "Username or email already exists");    
+    navigate("/signup");    
+    }   
   };
 
   const handleEmailChange = (event) => {
@@ -105,7 +107,7 @@ export const SignupPage = () => {
                     placeholder="*username" 
                     value={username}
                     onChange={handleUsernameChange}
-                    required=""/>
+                    required/>
                 </div>
                 <div className="col-span-6 sm:col-span-3">
                     <label 
@@ -121,7 +123,7 @@ export const SignupPage = () => {
                     placeholder="*dob" 
                     value={dob}
                     onChange={handleDobChange}
-                    required=""/>
+                    required/>
                 </div>
               </div>
               
@@ -151,7 +153,7 @@ export const SignupPage = () => {
                     placeholder="*name@company.com" 
                     value={email}
                     onChange={handleEmailChange}
-                    required=""
+                    required
                   />
                 </div>
               </div>
@@ -171,7 +173,7 @@ export const SignupPage = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  
                     value={password}
                     onChange={handlePasswordChange}
-                    data-testid="TEST"
+                    required
                   />
                   <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 cursor-pointer">
                     <svg 
@@ -238,6 +240,9 @@ export const SignupPage = () => {
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Already have an account?  <Link to="/" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Log In</Link>
                 </p>
+                {error && (
+                  <p className="font-medium text-xs text-red-600 dark:text-green-500">{error}</p>
+                )}
                 </form>
             </div>
         </div>
