@@ -1,6 +1,5 @@
 const request = require("supertest");
 const JWT = require("jsonwebtoken");
-const mongoose = require("mongoose");
 
 const app = require("../../app");
 const Post = require("../../models/post");
