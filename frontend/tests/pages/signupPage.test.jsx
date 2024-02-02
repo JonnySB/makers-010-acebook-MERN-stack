@@ -209,7 +209,7 @@ describe("Sign up - Password validation", () => {
   });
 });
 
-describe("Sign up - If user exists", () => {
+describe("Sign up - If user exists or doesn't exist", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
@@ -227,6 +227,22 @@ describe("Sign up - If user exists", () => {
     const errorElement = screen.getByText("Username or email already exists");
     expect(errorElement !== null).toBe(true);
     expect(navigateMock).toHaveBeenCalledWith("/signup");
+  });
+
+  test("successful sign up for unique user", async () => {
+    render(<SignupPage />);
+    signup.mockResolvedValue(({
+      response: {
+        data: {
+          message: "Username or email already exists",
+        },
+      },
+    })); // Assuming signup should resolve successfully for a unique user
+    const navigateMock = useNavigate();
+    await completeSignupForm();
+    const errorElement = screen.queryByText("Username or email already exists");
+    expect(errorElement).toBeNull(); 
+    expect(navigateMock).toHaveBeenCalledWith("/");
   });
   
 });
