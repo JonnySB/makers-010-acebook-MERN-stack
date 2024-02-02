@@ -65,14 +65,17 @@ describe("authentication service", () => {
 
   describe("signup", () => {
     test("calls the backend url for a token", async () => {
+      const testUsername = "testusername"
+      const testDob = new Date("1994-04-15");
       const testEmail = "test@testEmail.com";
       const testPassword = "12345678";
+      
 
       fetch.mockResponseOnce("", {
         status: 201,
       });
 
-      await signup(testEmail, testPassword);
+      await signup(testUsername, testDob, testEmail, testPassword);
 
       // This is an array of the arguments that were last passed to fetch
       const fetchArguments = fetch.mock.lastCall;
@@ -82,7 +85,7 @@ describe("authentication service", () => {
       expect(url).toEqual(`${BACKEND_URL}/users`);
       expect(options.method).toEqual("POST");
       expect(options.body).toEqual(
-        JSON.stringify({ email: testEmail, password: testPassword })
+        JSON.stringify({ username: testUsername, dob: testDob, email: testEmail, password: testPassword })
       );
       expect(options.headers["Content-Type"]).toEqual("application/json");
     });
