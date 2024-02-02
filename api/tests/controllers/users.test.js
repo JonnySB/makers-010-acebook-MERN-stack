@@ -21,6 +21,7 @@ const createToken = (userId) => {
   );
 };
 
+let token
 describe("/users", () => {
   beforeEach(async () => {
     await User.deleteMany({});
@@ -245,64 +246,24 @@ describe("/users/:id", () => {
     });
   });
 
-  //   describe("GET, when token is missing", () => {
-  //     const date = new Date("2024-01-31T13:51:02.009+00:00");
+  describe("GET, when token is missing", () => {
+  
+    test("the response code is 401", async () => {
+      const response = await request(app)
+      .get(`/users/${user2._id}`)
+      expect(response.status).toEqual(401);
+    });
 
-  //     test("the response code is 401", async () => {
-  //       const post1 = new Post({
-  //         message: "I love all my children equally",
-  //         createdAt: date,
-  //         owner: "65ba5046a9d4c1867a4cd305",
-  //       });
-  //       const post2 = new Post({
-  //         message: "I've never cared for GOB",
-  //         createdAt: date,
-  //         owner: "65ba5046a9d4c1867a4cd305",
-  //       });
-  //       await post1.save();
-  //       await post2.save();
+    test("returns no user data", async () => {
+      const response = await request(app)
+      .get(`/users/${user2._id}`)
+      expect(response.body.user).toEqual(undefined);
+    });
 
-  //       const response = await request(app).get("/posts");
-
-  //       expect(response.status).toEqual(401);
-  //     });
-
-  //     test("returns no posts", async () => {
-  //       const post1 = new Post({
-  //         message: "I love all my children equally",
-  //         createdAt: date,
-  //         owner: "65ba5046a9d4c1867a4cd305",
-  //       });
-  //       const post2 = new Post({
-  //         message: "I've never cared for GOB",
-  //         createdAt: date,
-  //         owner: "65ba5046a9d4c1867a4cd305",
-  //       });
-  //       await post1.save();
-  //       await post2.save();
-
-  //       const response = await request(app).get("/posts");
-
-  //       expect(response.body.posts).toEqual(undefined);
-  //     });
-
-  //     test("does not return a new token", async () => {
-  //       const post1 = new Post({
-  //         message: "I love all my children equally",
-  //         createdAt: date,
-  //         owner: "65ba5046a9d4c1867a4cd305",
-  //       });
-  //       const post2 = new Post({
-  //         message: "I've never cared for GOB",
-  //         createdAt: date,
-  //         owner: "65ba5046a9d4c1867a4cd305",
-  //       });
-  //       await post1.save();
-  //       await post2.save();
-
-  //       const response = await request(app).get("/posts");
-
-  //       expect(response.body.token).toEqual(undefined);
-  //     });
-  //   });
+    test("does not return a new token", async () => {
+      const response = await request(app)
+      .get(`/users/${user2._id}`)
+      expect(response.body.token).toEqual(undefined);
+    });
+  });
 });
