@@ -4,7 +4,7 @@ const Post = (props) => {
   const formattedDate = new Date(props.post.createdAt).toLocaleString();
   var comments = 0;
   return (
-    <div key={props.post._id} className="flex justify-center mt-6">
+    <div role="singlePost" key={props.post._id} className="flex justify-center mt-6">
       <div className="w-1/2 text-justify border border-gray-200">
         <div className="pt-2 p-4">
           <div className="flex flex-row">
@@ -20,7 +20,7 @@ const Post = (props) => {
               </div>
             </div>
           </div>
-          <p className="mt-2 text-sm text-black">
+          <p role="singlePostContent" className="mt-2 text-sm text-black">
             {props.post.message}
           </p>
         </div>

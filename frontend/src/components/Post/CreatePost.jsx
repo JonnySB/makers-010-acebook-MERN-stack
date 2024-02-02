@@ -38,7 +38,7 @@ const CreatePost = (props) => {
   };
 
   return (
-    <div className="w-1/2 border border-gray-200 bg-gray-50">
+    <div role="createPostDiv" className="w-1/2 border border-gray-200 bg-gray-50">
     <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
         <div className="px-4 py-2 bg-white rounded-t-lg">
           <textarea
@@ -55,11 +55,12 @@ const CreatePost = (props) => {
         <div className="flex justify-end px-3 py-2 border-t">
           <div>
             <button
-              role="submit-button"
+              role="createPostSubmitButton"
               type="submit"
               name="submit"
               className="py-2.5 px-4 text-xs font-medium text-center text-white bg-green-600 rounded-lg focus:ring-4 focus:ring-green-200 hover:bg-green-800"
               aria-label="Submit Post"
+              value="Create Post"
             >
               Create Post
             </button>

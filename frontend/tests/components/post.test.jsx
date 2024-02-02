@@ -1,30 +1,29 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import Post from "../../src/components/Post/Post";
-import CreatePost from "../../src/components/Post/CreatePost";
 
-describe("Post", () => {
-  test("displays the message as an article", () => {
-    const testPost = { _id: "123", message: "test message" };
+describe("Post component tests", () => {
+  const testPost = {
+    _id: "12345",
+    message: "Test Post 1",
+    createdAt: "2024-02-01T16:50:30.870Z",
+    likes: [],
+    comments: [],
+    user_data: [{
+      username: "user",
+      firstName: "Bob",
+      lastName: "Smith"
+    }]
+  };
+
+  test("displays the content(message) as a paragraph", () => {
     render(<Post post={testPost} />);
-
-    const article = screen.getByRole("article");
-    expect(article).toHave("test message");
+    const paragraph = screen.getByRole("singlePostContent");
+    expect(paragraph.textContent).toEqual("Test Post 1");
   });
 
-  test("displays CreatePost as a form", () => {
-    render(<CreatePost />);
-    expect(screen.getByPlaceholderText("Enter your post here...")).to.exist; 
-    expect(screen.getByRole("submit-button")).to.exist; 
-    expect(screen.getByRole("submit-button")).to.have.property('value', 'Create Post');
-    expect(screen.getByRole("form")).to.exist;
-    expect(screen.getByLabelText("Create New Post Form")).to.exist; 
+  test("displays Like component", () => {
+    render(<Post post={testPost} />);
+    expect(screen.getByRole("likeDiv")).toBeInTheDocument();
   });
 
-  test("User can input text into textarea", async () => {
-    const user = userEvent.setup();
-    render(<CreatePost />); 
-    const textAreaEl = screen.getByPlaceholderText("Enter your post here...")
-    await user.type(textAreaEl, "Hello World");
-  });
 }); 
