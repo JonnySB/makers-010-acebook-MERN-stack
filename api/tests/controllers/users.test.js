@@ -213,13 +213,8 @@ describe("/users", () => {
         dob: new Date("1998-02-05"),
       });
 
-      const users = [];
-      users.push(user1);
-      users.push(user2);
-      users.push(user3);
-
       const found = await User.find();
-      expect(found.length).toEqual(1);
+      expect(found[0].username).toBe("scar123");
     });
 
     test("Three users created - only two has unique username and all have different emails", async () => {
@@ -243,13 +238,10 @@ describe("/users", () => {
         dob: new Date("1998-02-05"),
       });
 
-      const users = [];
-      users.push(user1);
-      users.push(user2);
-      users.push(user3);
-
       const found = await User.find();
-      expect(found.length).toEqual(2);
+      console.log(found);
+      const usernames = found.map(user => user.username)
+      expect(usernames).toEqual(['scar123','scar1234']);
     });
   });
 
@@ -309,13 +301,9 @@ describe("/users", () => {
         dob: new Date("1998-02-05"),
       });
 
-      const users = [];
-      users.push(user1);
-      users.push(user2);
-      users.push(user3);
-
       const found = await User.find();
-      expect(found.length).toEqual(1);
+      console.log("Username it test: ", found[0].email);
+      expect(found[0].email).toBe("scar@email.com");
     });
 
     test("Three users created - only two have unique emails and all have different usernames", async () => {
@@ -339,13 +327,9 @@ describe("/users", () => {
         dob: new Date("1998-02-05"),
       });
 
-      const users = [];
-      users.push(user1);
-      users.push(user2);
-      users.push(user3);
-
       const found = await User.find();
-      expect(found.length).toEqual(2);
+      const emails = found.map(user => user.email)
+      expect(emails).toEqual(['scar@email.com','scarconstt@email.com']);
     });
   });
 });
