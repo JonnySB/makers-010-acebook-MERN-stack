@@ -32,7 +32,7 @@ const getAllPosts = async (req, res) => {
   // compareFn(a, b) (first and second element) see sort method doc
   posts.sort((a, b) => b.createdAt - a.createdAt);
 
-  res.status(200).json({ posts: posts, token: token });
+  res.status(200).json({ posts: posts, user_id: req.user_id, token: token });
 };
 
 const createPost = async (req, res) => {

@@ -8,6 +8,7 @@ import CreatePost from "../../components/Post/CreatePost";
 export const FeedPage = () => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [userID, setUserID] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,6 +17,7 @@ export const FeedPage = () => {
         .then((data) => {
           setPosts(data.posts);
           setToken(data.token);
+          setUserID(data.user_id);
           window.localStorage.setItem("token", data.token);
         })
         .catch((err) => {
@@ -39,7 +41,7 @@ export const FeedPage = () => {
 
         <div role="feed">
           {posts.map((post) => (
-            <Post post={post} key={post._id} token={token} setToken={setToken}/>
+            <Post userID={userID} post={post} key={post._id} token={token} setToken={setToken}/>
           ))}
         </div>
       </div>

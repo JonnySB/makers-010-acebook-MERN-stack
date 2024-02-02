@@ -3,7 +3,6 @@ import Like from "./Like";
 const Post = (props) => {
   const formattedDate = new Date(props.post.createdAt).toLocaleString();
   var comments = 0;
-
   return (
     <div key={props.post._id} className="flex justify-center mt-6">
       <div className="w-1/2 text-justify border border-gray-200">
@@ -28,7 +27,7 @@ const Post = (props) => {
 
 
         <div className="grid grid-cols-2 grid-rows-1 border-t px-4 py-2 text-xs text-neutral-500">
-          <Like post_id={props.post._id} likes={props.post.likes} token={props.token} setToken={props.setToken}/>
+          <Like post_id={props.post._id} likes={props.post.likes} userID={props.userID} token={props.token} setToken={props.setToken}/>
           
           <div className="flex justify-end items-center align-middle">
             <span className="me-2">{comments}</span>
