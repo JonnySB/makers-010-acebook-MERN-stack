@@ -4,7 +4,6 @@ const JWT = require("jsonwebtoken");
 const app = require("../../app");
 const Post = require("../../models/post");
 const User = require("../../models/user");
-const { isObjectIdOrHexString } = require("mongoose");
 
 require("../mongodb_helper");
 
