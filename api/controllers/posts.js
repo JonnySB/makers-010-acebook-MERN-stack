@@ -2,9 +2,37 @@ const Post = require("../models/post");
 const { generateToken } = require("../lib/token");
 
 const getAllPosts = async (req, res) => {
-  const posts = await Post.find();
   const token = generateToken(req.user_id);
-  res.status(200).json({ posts: posts, token: token });
+
+  const posts = await Post.aggregate([
+    {
+      $lookup:
+      {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "user_data"
+      }
+    },
+    {
+      $unset: 
+      [
+        "owner", 
+        "user_data._id",
+        "user_data.email",
+        "user_data.password",
+        "user_data.dob",
+        "user_data.bio",
+        "user_data.friends"
+      ]
+    }
+  ]);
+
+  // sorts post to descending order (last one first) based on the timestamp
+  // compareFn(a, b) (first and second element) see sort method doc
+  posts.sort((a, b) => b.createdAt - a.createdAt);
+
+  res.status(200).json({ posts: posts, user_id: req.user_id, token: token });
 };
 
 const createPost = async (req, res) => {
@@ -42,17 +70,28 @@ const createLike = async (req, res) => {
 
   // check user hasn't liked already
 
-  await Post.findByIdAndUpdate(postId, { $push: { likes: user } });
+  await Post.findByIdAndUpdate(postId, {  $push: { likes: user } } );
 
   const newToken = generateToken(req.user_id);
   res.status(201).json({ message: "OK", token: newToken });
 };
+
+const deleteLike = async (req, res) => {
+  const postId = req.body.post_id;
+  const user = req.user_id;
+
+  await Post.findByIdAndUpdate(postId, {  $pull: { likes: user } } );
+
+  const newToken = generateToken(req.user_id);
+  res.status(201).json({ message: "OK", token: newToken });
+}
 
 const PostsController = {
   getAllPosts: getAllPosts,
   createPost: createPost,
   createComment: createComment,
   createLike: createLike,
+  deleteLike: deleteLike
 };
 
 module.exports = PostsController;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { login } from "../../services/authentication";
+import { login } from "../../services/authentication"; // Look this up
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +14,7 @@ export const LoginPage = () => {
     event.preventDefault();
     try {
       const token = await login(email, password);
+
       window.localStorage.setItem("token", token);
       navigate("/posts");
     } catch (err) {

@@ -7,5 +7,6 @@ router.get("/", PostsController.getAllPosts);
 router.post("/", PostsController.createPost);
 router.post("/comments", PostsController.createComment);
 router.post("/likes", PostsController.createLike);
+router.post("/unlike", PostsController.deleteLike);
 
 module.exports = router;
