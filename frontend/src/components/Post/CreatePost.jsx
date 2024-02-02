@@ -38,9 +38,9 @@ const CreatePost = (props) => {
   };
 
   return (
-    <div role="createPostDiv" className="w-1/2 border border-gray-200 bg-gray-50">
+    <div role="createPostDiv" className="w-1/2 shadow border border-gray-200 bg-white">
     <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
-        <div className="px-4 py-2 bg-white rounded-t-lg">
+        <div className="px-4 py-2 rounded-t-lg">
           <textarea
             name="message"
             value={text}
