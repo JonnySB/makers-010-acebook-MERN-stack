@@ -20,6 +20,7 @@ export const getPosts = async (token) => {
 };
 
 export const createPosts = async (token, message) => {
+  // console.log("createPosts was called")
   const payload = {
     message: message,
     createdAt: new Date().toISOString(),

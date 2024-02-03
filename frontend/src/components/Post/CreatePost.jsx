@@ -4,30 +4,33 @@ import { createPosts } from "../../services/posts";
 const CreatePost = (props) => {
   // Updates the text in the body of textarea
   const [text, setText] = useState("");
-  // Need this to pass the user_id from token generated from user login
-  // to backend for authentiation when making requests
-  
+
   const handleChange = (event) => {
     setText(event.target.value);
   };
 
   const handleCreatePost = (event) => {
     event.preventDefault();
-    if (text.trim() === "") {
-      console.log("createPosts wasn't called")
-      console.error("Error: Please write some text in your post");
-      return;
-    }
-    console.log('createPosts was called')
+    // TODO:
+    // The following lines of code will never be called as <textarea> has been
+    // set to required. This makes it hard to test and so can only test that
+    // the function wasn't called.
+    // The tooltip popup is from the browser and won't appear in the DOM
+    //
+    // if (!text.trim()) {
+    //   console.log("createPosts wasn't called")
+    //   console.error("Error: Please write some text in your post");
+    //   return;
+    // }
 
     createPosts(props.token, text)
       .then((data) => {
         props.setToken(data.token);
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
       });
-      
+
     setText("");
     //We might need to change to change to the following code when implementing Posts with Photos
     // const form = event.target;
@@ -38,8 +41,11 @@ const CreatePost = (props) => {
   };
 
   return (
-    <div role="createPostDiv" className="w-1/2 border border-gray-200 bg-gray-50">
-    <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
+    <div
+      role="createPostDiv"
+      className="w-1/2 border border-gray-200 bg-gray-50"
+    >
+      <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
         <div className="px-4 py-2 bg-white rounded-t-lg">
           <textarea
             name="message"
