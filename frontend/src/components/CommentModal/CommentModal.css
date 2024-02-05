@@ -20,15 +20,19 @@ body.active-modal {
 .overlay {
   background: rgba(47, 47, 47, 0.9);
 }
+
+.full-width {
+  display: block;
+  width: 100%;
+}
 .modal-content {
   position: absolute;
-  top: 20%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.4;
-  background: #f1f1f1;
+  background: #ffffff;
   border-radius: 3px;
-  width: 50vw;
 }
 
 .close-modal {

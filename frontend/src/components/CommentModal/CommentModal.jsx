@@ -28,7 +28,6 @@ const CommentModal = (props) => {
     </svg>
   );
 
-  const formattedDate = new Date(props.post.createdAt).toLocaleString();
   return (
     <>
       <button onClick={toggleCommentModal} className="btn-modal">
@@ -37,7 +36,7 @@ const CommentModal = (props) => {
 
       {commentModal && (
         <div className="modal">
-          <div className="overlay" onClick={toggleCommentModal}>
+          <div className="overlay">
             <div className="modal-content pt-2 p-4">
               <Post
                 userID={props.userID}
@@ -45,11 +44,12 @@ const CommentModal = (props) => {
                 key={props.post._id}
                 token={props.token}
                 setToken={props.setToken}
+                commentModal={commentModal}
               />
+              <CreateComment />
               <button className="close-modal" onClick={toggleCommentModal}>
                 Close
               </button>
-              <CreateComment />
             </div>
           </div>
         </div>

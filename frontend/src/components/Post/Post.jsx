@@ -10,7 +10,12 @@ const Post = (props) => {
       key={props.post._id}
       className="flex justify-center mt-6"
     >
-      <div className="w-1/2 text-justify border border-gray-200">
+      <div
+        className={
+          "w-1/2 border border-gray-200 " +
+          (props.commentModal ? "w-full" : "w-1/2")
+        }
+      >
         <div className="pt-2 p-4">
           <div className="flex flex-row">
             <div className="p-4 border rounded-full">Pic</div>
