@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { fireEvent } from "@testing-library/react";
 import { vi } from "vitest";
 
 import { useNavigate } from "react-router-dom";
@@ -189,7 +190,7 @@ describe("Password validation", () => {
     });
 });
 
-describe("Sign up - Password validation", () => {
+describe("Sign up - Cannot signup with invalid password", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
@@ -246,3 +247,28 @@ describe("Sign up - If user exists or doesn't exist", () => {
   });
   
 });
+
+// describe("Sign up - Age limit is 13", () => {
+//   beforeEach(() => {
+//     vi.resetAllMocks();
+//   });
+
+//   test("User cannot sign up if they are 10 years old", async () => {
+//     render(<SignupPage />);
+    
+//     const dobInputEl = screen.getByLabelText("DOB");
+//     const submitButtonEl = screen.getByRole("submit-button");
+    
+//     await userEvent.type(dobInputEl, "2014-02-04");
+//     // Trigger the change event to ensure the asynchronous logic is executed
+//     await waitFor(() => {
+//       fireEvent.change(dobInputEl, { target: { value: "2014-02-04" } });
+//     });
+//     await userEvent.click(submitButtonEl);
+//     screen.debug()
+  
+//     const validationError = screen.queryByText(/User must be at least 13 years old/);
+//     expect(validationError !== null).toBe(true);
+//   });
+// });
+

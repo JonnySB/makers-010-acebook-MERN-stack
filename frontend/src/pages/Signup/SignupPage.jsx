@@ -153,14 +153,13 @@ export const SignupPage = () => {
                     onChange={handleDobChange}
                     onClick={reachedMinAge}
                     required/>
-                    {showAgeMessage && (
-                      <p className="font-medium text-xs text-red-600 dark:text-green-500">
-                        You must be at least 13 years old!
-                      </p>
-                    )}
+                  </div>
+                  {showAgeMessage && (
+                    <p className="font-medium text-xs text-red-600 dark:text-green-500">
+                      User must be at least 13 years old.
+                    </p>
+                  )}
                 </div>
-              </div>
-              
               <div>
                 <label 
                   htmlFor="email"
