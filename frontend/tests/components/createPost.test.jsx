@@ -22,7 +22,7 @@ describe("CreatePost component renders correctly", () => {
 const completeCreatePostForm = async () => {
   const user = userEvent.setup();
   const textAreaEl = screen.getByPlaceholderText("Write a post...");
-  await user.type(textAreaEl, "Hello World");
+  await user.type(textAreaEl, "Hell o World");
 };
 
 describe("Create Post component functions correctly", () => {
