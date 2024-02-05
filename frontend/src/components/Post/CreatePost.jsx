@@ -6,7 +6,7 @@ const CreatePost = (props) => {
   const [text, setText] = useState("");
   // Need this to pass the user_id from token generated from user login
   // to backend for authentiation when making requests
-  
+
   const handleChange = (event) => {
     setText(event.target.value);
   };
@@ -14,20 +14,20 @@ const CreatePost = (props) => {
   const handleCreatePost = (event) => {
     event.preventDefault();
     if (text.trim() === "") {
-      console.log("createPosts wasn't called")
+      console.log("createPosts wasn't called");
       console.error("Error: Please write some text in your post");
       return;
     }
-    console.log('createPosts was called')
+    console.log("createPosts was called");
 
     createPosts(props.token, text)
       .then((data) => {
         props.setToken(data.token);
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
       });
-      
+
     setText("");
     //We might need to change to change to the following code when implementing Posts with Photos
     // const form = event.target;
@@ -38,8 +38,11 @@ const CreatePost = (props) => {
   };
 
   return (
-    <div role="createPostDiv" className="w-1/2 border border-gray-200 bg-gray-50">
-    <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
+    <div
+      role="createPostDiv"
+      className="w-1/2 border border-gray-200 bg-gray-50"
+    >
+      <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
         <div className="px-4 py-2 bg-white rounded-t-lg">
           <textarea
             name="message"
