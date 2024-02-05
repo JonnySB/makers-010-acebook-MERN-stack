@@ -38,7 +38,6 @@ const Post = (props) => {
             token={props.token}
             setToken={props.setToken}
           />
-
           <div className="flex justify-end items-center align-middle">
             <span className="me-2">{comments}</span>
             <span>
