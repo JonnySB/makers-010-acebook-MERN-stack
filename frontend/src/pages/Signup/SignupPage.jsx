@@ -12,12 +12,27 @@ export const SignupPage = () => {
   const [username, setUsername] = useState("");
   const [dob, setDob] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showAgeMessage, setShowAgeMessage] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+        const userDob = new Date(dob);
+        const today = new Date();
+        today.setHours(12, 0, 0, 0);
+    
+        const userAge = today.getFullYear() - userDob.getFullYear() -
+          ((today.getMonth() < userDob.getMonth() ||
+            (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
+    
+        if (userAge < 13) {
+          setShowAgeMessage(true);
+          return;
+        }
+
     try {    
     await signup(username, dob, email, password);  
     console.log("redirecting...:");    
@@ -61,8 +76,21 @@ export const SignupPage = () => {
     const selectedDate = new Date(event.target.value);
     const formattedDate = selectedDate.toISOString().split('T')[0];
     setDob(formattedDate);
-    console.log(formattedDate);
+    reachedMinAge();
   }
+
+  const reachedMinAge = () => {
+    const userDob = new Date(dob);
+    const today = new Date();
+    today.setHours(12, 0, 0, 0);
+
+    const userAge = today.getFullYear() - userDob.getFullYear() -
+      ((today.getMonth() < userDob.getMonth() ||
+        (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
+
+    // Show the age message if the user is under 13
+    setShowAgeMessage(userAge < 13);
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -123,7 +151,13 @@ export const SignupPage = () => {
                     placeholder="*dob" 
                     value={dob}
                     onChange={handleDobChange}
+                    onClick={reachedMinAge}
                     required/>
+                    {showAgeMessage && (
+                      <p className="font-medium text-xs text-red-600 dark:text-green-500">
+                        You must be at least 13 years old!
+                      </p>
+                    )}
                 </div>
               </div>
               
