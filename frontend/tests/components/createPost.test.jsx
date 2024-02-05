@@ -2,7 +2,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { expect, vi } from "vitest";
 import * as servicesPost from "../../src/services/posts";
-// import { createPosts } from "../../src/services/posts"
 import CreatePost from "../../src/components/Post/CreatePost";
 
 describe("CreatePost component renders correctly", () => {
@@ -33,7 +32,7 @@ describe("Create Post component functions correctly", () => {
 
   const createPostsSpy = vi
     .spyOn(servicesPost, "createPosts")
-    .mockResolvedValue(console.log("called success"));
+    .mockResolvedValue({});
 
   //TODO: Is this test necessary as it can be covered by the below test
   test("User can input text into textarea", async () => {
@@ -44,6 +43,7 @@ describe("Create Post component functions correctly", () => {
     );
   });
 
+  //TODO: props.setToken isn't a function
   test("When a user fills out the post's text field and clicks the button, it calls the createPost method with a token and a string", async () => {
     const mockToken = "testToken";
 
@@ -64,6 +64,7 @@ describe("Create Post component functions correctly", () => {
   // As the validation has been delegated to <textarea required> rather than our own checks
   // TODO: Discuss if we are ok with using <textarea required>
   test("User can't submit a post that's empty", async () => {
+    
     render(<CreatePost />);
     const submitButtonEl = screen.getByRole("createPostSubmitButton");
     userEvent.click(submitButtonEl);
