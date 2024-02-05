@@ -173,6 +173,182 @@ describe("/users", () => {
       expect(users.length).toEqual(0);
     });
   });
+
+  describe("POST, when username already exists but emails are different", () => {
+    test("response code is 201 for (scar1 & kim1)  but 400 for (scar2 & kim2)", async () => {
+      const scar1 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      expect(scar1.statusCode).toBe(201);
+
+      const scar2 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scarconstt@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      expect(scar2.statusCode).toBe(400);
+
+      const kim1 = await request(app).post("/users").send({
+        username: "kim123",
+        email: "kim@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      expect(kim1.statusCode).toBe(201);
+
+      const kim2 = await request(app).post("/users").send({
+        username: "kim123",
+        email: "kimkardashian@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      expect(kim2.statusCode).toBe(400);
+    });
+
+    test("Three users created - only one unique username and all have different emails", async () => {
+      const user1 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      const user2 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scarconstt@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+
+      const user3 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scared@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+
+      const found = await User.find();
+      expect(found[0].username).toBe("scar123");
+    });
+
+    test("Three users created - only two has unique username and all have different emails", async () => {
+      const user1 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      const user2 = await request(app).post("/users").send({
+        username: "scar1234",
+        email: "scarconstt@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+
+      const user3 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scared@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+
+      const found = await User.find();
+      console.log(found);
+      const usernames = found.map(user => user.username)
+      expect(usernames).toEqual(['scar123','scar1234']);
+    });
+  });
+
+  describe("POST, when email already exists but usernames are different", () => {
+    test("response code is 201 for (scar1 & kim1)  but 400 for (scar2 & kim2)", async () => {
+      const scar1 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      expect(scar1.statusCode).toBe(201);
+
+      const scar2 = await request(app).post("/users").send({
+        username: "scar1234",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      expect(scar2.statusCode).toBe(400);
+
+      const kim1 = await request(app).post("/users").send({
+        username: "kim123",
+        email: "kim@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      expect(kim1.statusCode).toBe(201);
+
+      const kim2 = await request(app).post("/users").send({
+        username: "kim1234",
+        email: "kim@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      expect(kim2.statusCode).toBe(400);
+    });
+
+    test("Three users created - only one has unique email and all have different usernames", async () => {
+      const user1 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      const user2 = await request(app).post("/users").send({
+        username: "scar1234",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+
+      const user3 = await request(app).post("/users").send({
+        username: "scar12345",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+
+      const found = await User.find();
+      console.log("Username it test: ", found[0].email);
+      expect(found[0].email).toBe("scar@email.com");
+    });
+
+    test("Three users created - only two have unique emails and all have different usernames", async () => {
+      const user1 = await request(app).post("/users").send({
+        username: "scar123",
+        email: "scar@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+      const user2 = await request(app).post("/users").send({
+        username: "scar1234",
+        email: "scarconstt@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+
+      const user3 = await request(app).post("/users").send({
+        username: "scar12345",
+        email: "scarconstt@email.com",
+        password: "Password1!",
+        dob: new Date("1998-02-05"),
+      });
+
+      const found = await User.find();
+      const emails = found.map(user => user.email)
+      expect(emails).toEqual(['scar@email.com','scarconstt@email.com']);
+    });
+  });
 });
 
 describe("/users/:id", () => {

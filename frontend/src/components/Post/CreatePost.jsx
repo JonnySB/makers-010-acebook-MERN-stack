@@ -27,7 +27,7 @@ const CreatePost = (props) => {
         props.setToken(data.token);
       })
       .catch((err) => {
-        console.error(err);
+        console.err(err);
       });
 
     setText("");
