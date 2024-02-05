@@ -276,7 +276,7 @@ describe("/users", () => {
         });
 
       const found = await User.find();
-      console.log(found);
+      // console.log(found);
       const usernames = found.map((user) => user.username);
       expect(usernames).toEqual(["scar123", "scar1234"]);
     });
@@ -353,7 +353,7 @@ describe("/users", () => {
         });
 
       const found = await User.find();
-      console.log("Username it test: ", found[0].email);
+      // console.log("Username it test: ", found[0].email);
       expect(found[0].email).toBe("scar@email.com");
     });
 
@@ -411,9 +411,9 @@ describe("/users/:id", () => {
 
   beforeAll(async () => {
     await user1.save();
-    console.log(user1, "before tests");
+    // console.log(user1, "before tests");
     await user2.save();
-    console.log(user2, "before tests");
+    // console.log(user2, "before tests");
     token = createToken(user1.id);
   });
 
@@ -486,8 +486,39 @@ describe("/users/:id", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({ bio: "I love acebook" });
 
-      const user = await User.findOne({_id: user1._id})
-      console.log(user.bio)
+      const user = await User.findOne({ _id: user1._id });
+      expect(user.bio).toEqual("I love acebook");
+    });
+
+    test("When a user updates their current location, it appears in their db", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/currentLocation`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ currentLocation: "London" });
+
+      const user = await User.findOne({ _id: user1._id });
+      expect(user.currentLocation).toEqual("London");
+    });
+
+    test("When a user updates their workplace, it appears in their db", async () => {
+      console.log(token)
+      await request(app)
+        .post(`/users/${user1._id}/workplace`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ workplace: "Makers" });
+
+      const user = await User.findOne({ _id: user1._id });
+      expect(user.workplace).toEqual("Makers");
+    });
+
+    test("When a user updates their education, it appears in their db", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/education`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ education: "School of hard knocks" });
+
+      const user = await User.findOne({ _id: user1._id });
+      expect(user.education).toEqual("School of hard knocks");
     });
   });
 });

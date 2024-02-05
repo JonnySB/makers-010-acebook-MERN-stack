@@ -38,7 +38,7 @@ const create = async (req, res) => {
     }
     const user = new User({ username, email, password, dob });
     await user.save();
-    console.log("User created, id:", user._id.toString());
+    // console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.error(error);
@@ -58,8 +58,11 @@ const updateBio = async (req, res) => {
   const bio = req.body.bio;
 
   try {
-    const updatedBio = await User.findByIdAndUpdate(userId, { bio: bio }, { new: true });
-    console.log("During Bio update", updatedBio)
+    const updatedBio = await User.findByIdAndUpdate(
+      userId,
+      { bio: bio },
+      { new: true }
+    );
     res.status(200).json({ message: "Bio updated successfully" });
   } catch (error) {
     console.error(error);
@@ -67,17 +70,65 @@ const updateBio = async (req, res) => {
   }
 };
 
-const updateCurrenctLocation = async () => {};
+const updateCurrentLocation = async (req, res) => {
+  const userId = req.user_id;
+  const currentLocation = req.body.currentLocation;
 
-const updateWorkplace = async () => {};
+  try {
+    const updatedCurrentLocation = await User.findByIdAndUpdate(
+      userId,
+      { currentLocation: currentLocation },
+      { new: true }
+    );
 
-const updateEducation = async () => {};
+    res.status(200).json({ message: "Current location updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const updateWorkplace = async (req, res) => {
+  const userId = req.user_id;
+  const workplace = req.body.workplace;
+
+  try {
+    const updatedWorkplace = await User.findByIdAndUpdate(
+      userId,
+      { workplace: workplace },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Workplace updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const updateEducation = async (req, res) => {
+  const userId = req.user_id;
+  const education = req.body.education;
+
+  try {
+    const updateEducation = await User.findByIdAndUpdate(
+      userId,
+      { education: education },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "Education updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const UsersController = {
   create: create,
   getUserById: getUserById,
   updateBio: updateBio,
-  updateCurrenctLocation: updateCurrenctLocation,
+  updateCurrentLocation: updateCurrentLocation,
   updateWorkplace: updateWorkplace,
   updateEducation,
 };
