@@ -10,6 +10,8 @@ describe("/tokens", () => {
       email: "poppy@email.com",
       password: "1234",
       dob: new Date("1988-02-05"),
+      firstName: "Scar",
+      lastName: "Brown"
     });
 
     // We need to use `await` so that the "beforeAll" setup function waits for

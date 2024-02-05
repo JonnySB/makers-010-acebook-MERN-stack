@@ -14,6 +14,8 @@ const create = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const dob = req.body.dob;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
 
   if (!validatePassword(password)) {
     return res
@@ -33,7 +35,7 @@ const create = async (req, res) => {
     if (!validatePassword(password)) {
       return res.status(400).json({ message: 'Password does not meet the criteria.' });
     }
-    const user = new User({ username, email, password, dob });
+    const user = new User({ username, email, password, dob, firstName, lastName });
     await user.save();
     console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });

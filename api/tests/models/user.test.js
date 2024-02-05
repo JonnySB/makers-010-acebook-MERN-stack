@@ -14,6 +14,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: new Date("1994-04-15"),
+      firstName: "Scar",
+      lastName: "Brown"
     });
     expect(user.email).toEqual("someone@example.com");
   });
@@ -24,6 +26,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: new Date("1994-04-15"),
+      firstName: "Scar",
+      lastName: "Brown"
     });
     expect(user.password).toEqual("password");
   });
@@ -34,6 +38,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: new Date("1994-04-15"),
+      firstName: "Scar",
+      lastName: "Brown"
     });
     expect(user.username).toEqual("user123");
   });
@@ -44,6 +50,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
+      firstName: "Scar",
+      lastName: "Brown"
     });
     expect(user.dob).toEqual(dob);
   });
