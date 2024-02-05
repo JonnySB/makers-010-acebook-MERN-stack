@@ -15,6 +15,7 @@ const CreatePost = (props) => {
     // The below check won't be called <textarea> has attribute "required". 
     // This makes it hard to test and so can only test that the function wasn't called.
     // The tooltip popup is from the browser and won't appear in the DOM
+    // Need to have a further think about validation on front end
     if (!text.trim()) {
       console.log("createPosts wasn't called")
       console.error("Error: Please write some text in your post");

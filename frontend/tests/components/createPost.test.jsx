@@ -34,16 +34,7 @@ describe("Create Post component functions correctly", () => {
     .spyOn(servicesPost, "createPosts")
     .mockResolvedValue({});
 
-  //TODO: Is this test necessary as it can be covered by the below test
-  test("User can input text into textarea", async () => {
-    render(<CreatePost />);
-    await completeCreatePostForm();
-    expect(screen.getByPlaceholderText("Write a post...")).toHaveTextContent(
-      "Hello World"
-    );
-  });
-
-  //TODO: props.setToken isn't a function
+  //TODO: props.setToken isn't a function. Maybe need to create a mock?
   test("When a user fills out the post's text field and clicks the button, it calls the createPost method with a token and a string", async () => {
     const mockToken = "testToken";
 
