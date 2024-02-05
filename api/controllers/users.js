@@ -53,27 +53,33 @@ const getUserById = async (req, res) => {
   res.status(200).json({ user: user, user_id: req.user_id, token: newToken });
 };
 
-const updateBio = async () => {};
+const updateBio = async (req, res) => {
+  const userId = req.user_id;
+  const bio = req.body.bio;
 
-const updateCurrenctLocation = async () => {
+  try {
+    const updatedBio = await User.findByIdAndUpdate(userId, { bio: bio }, { new: true });
+    console.log("During Bio update", updatedBio)
+    res.status(200).json({ message: "Bio updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
-}; 
+const updateCurrenctLocation = async () => {};
 
-const updateWorkplace = async () => {
+const updateWorkplace = async () => {};
 
-}; 
-
-const updateEducation = async () => {
-
-}; 
+const updateEducation = async () => {};
 
 const UsersController = {
   create: create,
   getUserById: getUserById,
-  updateBio: updateBio,  
-  updateCurrenctLocation: updateCurrenctLocation, 
-  updateWorkplace: updateWorkplace, 
-  updateEducation, 
+  updateBio: updateBio,
+  updateCurrenctLocation: updateCurrenctLocation,
+  updateWorkplace: updateWorkplace,
+  updateEducation,
 };
 
 module.exports = UsersController;

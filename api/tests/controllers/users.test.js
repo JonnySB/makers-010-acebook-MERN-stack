@@ -462,31 +462,6 @@ describe("/users/:id", () => {
     });
   });
 
-  describe("POST, when a user updates their profile intro", () => {
-    const dob = new Date("1988-02-05");
-    const user = new User({
-      username: "user123",
-      email: "user@email.com",
-      password: "1234",
-      dob: dob,
-      firstName: "Joe",
-      lastName: "Bloggs",
-    });
-
-    beforeAll(async () => {
-      await user.save();
-      console.log(user1, "before tests");
-    });
-
-    afterAll(async () => {
-      await User.deleteMany({});
-    });
-
-    test("When a user updates their bio, it appears in their db", async () => {
-      const response = await request(app)
-    });
-  });
-
   describe("GET, when token is missing", () => {
     test("the response code is 401", async () => {
       const response = await request(app).get(`/users/${user2._id}`);
@@ -501,6 +476,18 @@ describe("/users/:id", () => {
     test("does not return a new token", async () => {
       const response = await request(app).get(`/users/${user2._id}`);
       expect(response.body.token).toEqual(undefined);
+    });
+  });
+
+  describe("POST, when a user updates their profile intro", () => {
+    test("When a user updates their bio, it appears in their db", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/bio`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ bio: "I love acebook" });
+
+      const user = await User.findOne({_id: user1._id})
+      console.log(user.bio)
     });
   });
 });
