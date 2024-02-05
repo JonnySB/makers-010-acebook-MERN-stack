@@ -465,7 +465,6 @@ describe("/users/:id", () => {
           password: "Password1!",
           dob: new Date("2012-08-05"),
         });
-        console.log("Inside testing age tests:")
 
       expect(response.statusCode).toBe(400);
     });
@@ -480,7 +479,6 @@ describe("/users/:id", () => {
           dob: new Date("2011-02-05"),
         });
 
-      console.log("Response body:", response.body);
       expect(response.statusCode).toBe(201);
     });
 

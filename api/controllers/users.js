@@ -28,30 +28,37 @@ const create = async (req, res) => {
 
   const today = new Date();
   today.setHours(12, 0, 0, 0); // handles time difference - so to have a comparison point between birthdate and todays date
+
   const userAge = today.getFullYear() - userDob.getFullYear() -
   ((today.getMonth() < userDob.getMonth() ||
   (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
-  console.log("The user age is -> ", userAge);
-  if(userAge < 13) {
-    return res.status(400).json({ message: 'User must be at least 13 years old.' });
-  }
+  
 
+  
   try {
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
         return res.status(400).json({ message: 'Username already exists' });
     }
+
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
         return res.status(400).json({ message: 'Email already exists' });
     }
+
+    if(userAge < 13) {
+      return res.status(400).json({ message: 'User must be at least 13 years old.' });
+    }
+
     if (!validatePassword(password)) {
       return res.status(400).json({ message: 'Password does not meet the criteria.' });
     }
+
     const user = new User({ username, email, password, dob });
     await user.save();
     console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });
+
   } catch(error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
