@@ -6,7 +6,7 @@ const tokenChecker = require("../middleware/tokenChecker");
 const router = express.Router();
 
 router.post("/", UsersController.create);
-router.get("/:id", tokenChecker, UsersController.getUserById);
+router.get("/:user_id", tokenChecker, UsersController.getUserById);
 
 
 

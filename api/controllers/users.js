@@ -24,30 +24,32 @@ const create = async (req, res) => {
   try {
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
-        return res.status(400).json({ message: 'Username already exists' });
+      return res.status(400).json({ message: "Username already exists" });
     }
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
-        return res.status(400).json({ message: 'Email already exists' });
+      return res.status(400).json({ message: "Email already exists" });
     }
     if (!validatePassword(password)) {
-      return res.status(400).json({ message: 'Password does not meet the criteria.' });
+      return res
+        .status(400)
+        .json({ message: "Password does not meet the criteria." });
     }
     const user = new User({ username, email, password, dob });
     await user.save();
     console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
 const getUserById = async (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.user_id;
   const user = await User.findById(userId).select("-password -email");
   const newToken = generateToken(req.user_id);
-  res.status(200).json({ user: user, token: newToken });
+  res.status(200).json({ user: user, user_id: req.user_id, token: newToken });
 };
 
 const UsersController = {
