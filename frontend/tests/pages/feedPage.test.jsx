@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { vi } from "vitest";
+import { describe, vi } from "vitest";
 
 import { FeedPage } from "../../src/pages/Feed/FeedPage";
 import { getPosts } from "../../src/services/posts";
@@ -23,17 +23,38 @@ describe("Feed Page", () => {
         window.localStorage.removeItem("token");
     });
 
-    test("It displays posts from the backend", async () => {
+    const mockPosts = [{
+        _id: "12345",
+        message: "Test Post 1",
+        createdAt: "2024-02-01T16:50:30.870Z",
+        likes: [],
+        comments: [],
+        user_data: [{
+            username: "user",
+            firstName: "Bob",
+            lastName: "Smith"
+        }]
+    }];
+
+    describe("It gets posts from the backend", () => {
         window.localStorage.setItem("token", "testToken");
-
-        const mockPosts = [{ _id: "12345", message: "Test Post 1" }];
-
-        getPosts.mockResolvedValue({ posts: mockPosts, token: "newToken" });
-
+        getPosts.mockResolvedValue({ posts: mockPosts, token: "newToken", user_id: "userID" });
+        
         render(<FeedPage />);
 
-        const post = await screen.findByRole("article");
-        expect(post.textContent).toEqual("Test Post 1");
+        test("It displays the Post and Like components", () => {
+            const post = screen.getByRole("singlePostContent");
+            const like = screen.getByRole("likeDiv");
+            expect(post).toBeInTheDocument();;
+            expect(like).toBeInTheDocument();
+        });
+    });
+
+    test("It displays the CreatePost component", () => {
+        window.localStorage.setItem("token", "testToken");
+        render(<FeedPage />);
+            const createPost = screen.getByRole("createPostDiv");
+            expect(createPost).toBeInTheDocument();
     });
 
     test("It navigates to login if no token is present", async () => {
