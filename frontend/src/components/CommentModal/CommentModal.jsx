@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import "./CommentModal.css";
 import CreateComment from "./CreateComment";
 import Post from "../Post/Post.jsx";
+import Comment from "./Comment";
 
 const CommentModal = (props) => {
   const [commentModal, setCommentModal] = useState(false);
 
   const toggleCommentModal = () => {
-    setCommentModal(!commentModal);
+    if (props.commentOn) setCommentModal(!commentModal);
   };
 
   const commentIcon = (
@@ -45,8 +46,18 @@ const CommentModal = (props) => {
                 token={props.token}
                 setToken={props.setToken}
                 commentModal={commentModal}
+                commentOn={false}
               />
-              <CreateComment />
+              <div className="comments">
+                {props.post.comments.map((comment) => {
+                  <Comment />;
+                })}
+              </div>
+              <CreateComment
+                token={props.token}
+                setToken={props.setToken}
+                post_id={props.post._id}
+              />
               <button className="close-modal" onClick={toggleCommentModal}>
                 Close
               </button>

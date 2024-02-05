@@ -52,6 +52,7 @@ const Post = (props) => {
                 key={props.post._id}
                 token={props.token}
                 setToken={props.setToken}
+                commentOn={props.commentOn}
               />
             </span>
           </div>

@@ -92,4 +92,27 @@ export const postUnlike = async (token, post_id) => {
   return data;
 };
 
-export const createComment = async (token, post_id) => {};
+export const createComment = async (token, post_id, message) => {
+  const payload = {
+    post_id: post_id,
+    message: message,
+  };
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  };
+
+  const response = await fetch(`${BACKEND_URL}/posts/comments`, requestOptions);
+
+  if (response.status !== 201) {
+    throw new Error("Unable to create comment");
+  }
+
+  const data = await response.json();
+  return data;
+};

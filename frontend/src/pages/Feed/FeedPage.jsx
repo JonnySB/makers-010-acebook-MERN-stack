@@ -36,12 +36,19 @@ export const FeedPage = () => {
     <>
       <div className="w-screen">
         <div className="flex justify-center">
-          <CreatePost token={token} setToken={setToken}/>
+          <CreatePost token={token} setToken={setToken} />
         </div>
 
         <div role="feed">
           {posts.map((post) => (
-            <Post userID={userID} post={post} key={post._id} token={token} setToken={setToken}/>
+            <Post
+              userID={userID}
+              post={post}
+              key={post._id}
+              token={token}
+              setToken={setToken}
+              commentOn={true}
+            />
           ))}
         </div>
       </div>

@@ -3,24 +3,24 @@ import { createComment } from "../../services/posts";
 
 const CreateComment = (props) => {
   // Updates the text in the body of textarea
-  const [text, setText] = useState("");
+  const [comment, setComment] = useState("");
   // Need this to pass the user_id from token generated from user login
   // to backend for authentiation when making requests
 
   const handleChange = (event) => {
-    setText(event.target.value);
+    setComment(event.target.value);
   };
 
   const handleCreateComment = (event) => {
     event.preventDefault();
-    if (text.trim() === "") {
+    if (comment.trim() === "") {
       console.log("createComments wasn't called");
-      console.error("Error: Please write some text in your post");
+      console.error("Error: Please write some text in your comment");
       return;
     }
     console.log("createComments was called");
 
-    createComment(props.token, text)
+    createComment(props.token, props.post_id, comment)
       .then((data) => {
         props.setToken(data.token);
       })
@@ -28,7 +28,7 @@ const CreateComment = (props) => {
         console.error(err);
       });
 
-    setText("");
+    setComment("");
   };
 
   return (
@@ -37,7 +37,7 @@ const CreateComment = (props) => {
         <div className="px-4 py-2 bg-white rounded-t-lg">
           <textarea
             name="message"
-            value={text}
+            value={comment}
             onChange={handleChange}
             rows="4"
             cols="75"
