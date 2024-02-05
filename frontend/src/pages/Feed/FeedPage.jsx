@@ -34,7 +34,7 @@ export const FeedPage = () => {
 
   return (
     <>
-      <div className="w-screen">
+      <div className="w-screen bg-gray-50">
         <div className="flex justify-center">
           <CreatePost token={token} setToken={setToken} />
         </div>
