@@ -36,8 +36,7 @@ const Post = (props) => {
         </div>
 
       </div>
-    </div>)
-    ;
+    </div>);
 };
 
 export default Post;
