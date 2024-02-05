@@ -5,7 +5,7 @@ const Post = (props) => {
   let comments = 0;
   return (
     <div role="singlePost" key={props.post._id} className="flex justify-center mt-6">
-      <div className="w-1/2 text-justify border border-gray-200">
+      <div className="w-1/2 bg-white shadow text-justify border border-gray-200">
         <div className="pt-2 p-4">
           <div className="flex flex-row">
             <div className="p-4 border rounded-full">
