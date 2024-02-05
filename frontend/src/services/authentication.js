@@ -33,12 +33,14 @@ export const login = async (email, password) => {
   }
 };
 
-export const signup = async (username, dob, email, password) => {
+export const signup = async (username, dob, email, password, firstName, lastName) => {
   const payload = {
     username: username,
     dob: dob,
     email: email,
     password: password,
+    firstName: firstName,
+    lastName: lastName
   };
 
   const requestOptions = {
