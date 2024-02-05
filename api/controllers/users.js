@@ -9,7 +9,7 @@ const validatePassword = (password) => {
   return passwordRegex.test(password);
 };
 
-const create = (req, res) => {
+const create = async (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   const password = req.body.password;
@@ -21,18 +21,27 @@ const create = (req, res) => {
       .json({ message: "Password does not meet the criteria." });
   }
 
-  const user = new User({ username, email, password, dob });
-  user
-    .save()
-    .then((user) => {
-      console.log("User created, id:", user._id.toString());
-      res.status(201).json({ message: "OK" });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(400).json({ message: "Something went wrong" });
-    });
-};
+  try {
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+        return res.status(400).json({ message: 'Username already exists' });
+    }
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+        return res.status(400).json({ message: 'Email already exists' });
+    }
+    if (!validatePassword(password)) {
+      return res.status(400).json({ message: 'Password does not meet the criteria.' });
+    }
+    const user = new User({ username, email, password, dob });
+    await user.save();
+    console.log("User created, id:", user._id.toString());
+    res.status(201).json({ message: "User created successfully" });
+  } catch(error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
 
 const getUserById = async (req, res) => {
   const userId = req.params.id;
