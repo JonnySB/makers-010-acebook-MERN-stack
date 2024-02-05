@@ -8,6 +8,9 @@ const UserSchema = new mongoose.Schema({
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
     bio: { type: String, required: false },
+    currentLocation: { type: String, required: false}, 
+    workplace: { type: String, required: false}, 
+    education: { type: String, required: false}, 
     friends: [{ type: mongoose.Types.ObjectId, ref: "User" }],
 });
 

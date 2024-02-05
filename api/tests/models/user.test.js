@@ -59,6 +59,12 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
+      firstName: "Joe", 
+      lastName: "Blogs", 
+      bio: "An interesting man from London", 
+      currentLocation: "London", 
+      workplace: "Makers",
+      education: "School of hard knocks"
     });
 
     await user.save();
@@ -68,5 +74,31 @@ describe("User model", () => {
     expect(users[0].email).toEqual("someone@example.com");
     expect(users[0].password).toEqual("password");
     expect(users[0].dob).toEqual(dob);
+    expect(users[0].firstName).toEqual("Joe");
+    expect(users[0].lastName).toEqual("Blogs");
+    expect(users[0].bio).toEqual("An interesting man from London");
+    expect(users[0].currentLocation).toEqual("London");
+    expect(users[0].workplace).toEqual("Makers");
+    expect(users[0].education).toEqual("School of hard knocks");
   });
+
+  test("A user can have friends", async () => {
+    const user1 = new User({
+      username: "user123",
+      email: "someone@example.com",
+      password: "password",
+      dob: dob,
+      friends: new User({
+        username: "user456",
+        email: "someoneelse@example.com",
+        password: "password",
+        dob: dob, 
+      })
+    });
+
+    await user1.save();
+    const users = await User.find(); 
+
+    expect(users[0].friends.length).toEqual(1)
+  })
 });
