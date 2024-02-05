@@ -17,3 +17,26 @@ vi.mock("react-router-dom", () => {
   const useNavigateMock = () => navigateMock; // Create a mock function for useNavigate
   return { useNavigate: useNavigateMock };
 });
+
+
+describe.skip("Profile page should render all components", () => {
+  test("All components render for a user visiting anoter user's profile", () => {
+    render(<ProfilePage />)
+
+    expect(ProfileHeader).toBeInTheDocument();
+    expect(Intro).toBeInTheDocument();
+    expect(Friends).toBeInTheDocument(); 
+    expect(Photos).toBeInTheDocument(); 
+    expect(Posts).toBeInTheDocument();  
+  })
+  test("All components render for a user visiting their own profile", () => {
+    render(<ProfilePage />)
+
+    expect(ProfileHeader).toBeInTheDocument();
+    expect(Intro).toBeInTheDocument();
+    expect(Friends).toBeInTheDocument(); 
+    expect(Photos).toBeInTheDocument(); 
+    expect(Posts).toBeInTheDocument();  
+  })
+})
+
