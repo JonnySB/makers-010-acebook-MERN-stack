@@ -9,6 +9,7 @@ const validatePassword = (password) => {
   return passwordRegex.test(password);
 };
 
+//TODO: Can rename create to createUser?
 const create = async (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
@@ -52,9 +53,27 @@ const getUserById = async (req, res) => {
   res.status(200).json({ user: user, user_id: req.user_id, token: newToken });
 };
 
+const updateBio = async () => {};
+
+const updateCurrenctLocation = async () => {
+
+}; 
+
+const updateWorkplace = async () => {
+
+}; 
+
+const updateEducation = async () => {
+
+}; 
+
 const UsersController = {
   create: create,
   getUserById: getUserById,
+  updateBio: updateBio,  
+  updateCurrenctLocation: updateCurrenctLocation, 
+  updateWorkplace: updateWorkplace, 
+  updateEducation, 
 };
 
 module.exports = UsersController;

@@ -21,7 +21,7 @@ const createToken = (userId) => {
   );
 };
 
-let token
+let token;
 describe("/users", () => {
   beforeEach(async () => {
     await User.deleteMany({});
@@ -176,147 +176,181 @@ describe("/users", () => {
 
   describe("POST, when username already exists but emails are different", () => {
     test("response code is 201 for (scar1 & kim1)  but 400 for (scar2 & kim2)", async () => {
-      const scar1 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const scar1 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
       expect(scar1.statusCode).toBe(201);
 
-      const scar2 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scarconstt@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const scar2 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scarconstt@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
       expect(scar2.statusCode).toBe(400);
 
-      const kim1 = await request(app).post("/users").send({
-        username: "kim123",
-        email: "kim@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const kim1 = await request(app)
+        .post("/users")
+        .send({
+          username: "kim123",
+          email: "kim@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
       expect(kim1.statusCode).toBe(201);
 
-      const kim2 = await request(app).post("/users").send({
-        username: "kim123",
-        email: "kimkardashian@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const kim2 = await request(app)
+        .post("/users")
+        .send({
+          username: "kim123",
+          email: "kimkardashian@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
       expect(kim2.statusCode).toBe(400);
     });
 
     test("Three users created - only one unique username and all have different emails", async () => {
-      const user1 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
-      const user2 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scarconstt@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const user1 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
+      const user2 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scarconstt@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
 
-      const user3 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scared@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const user3 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scared@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
 
       const found = await User.find();
       expect(found[0].username).toBe("scar123");
     });
 
     test("Three users created - only two has unique username and all have different emails", async () => {
-      const user1 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
-      const user2 = await request(app).post("/users").send({
-        username: "scar1234",
-        email: "scarconstt@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const user1 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
+      const user2 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar1234",
+          email: "scarconstt@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
 
-      const user3 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scared@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const user3 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scared@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
 
       const found = await User.find();
       console.log(found);
-      const usernames = found.map(user => user.username)
-      expect(usernames).toEqual(['scar123','scar1234']);
+      const usernames = found.map((user) => user.username);
+      expect(usernames).toEqual(["scar123", "scar1234"]);
     });
   });
 
   describe("POST, when email already exists but usernames are different", () => {
     test("response code is 201 for (scar1 & kim1)  but 400 for (scar2 & kim2)", async () => {
-      const scar1 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const scar1 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
       expect(scar1.statusCode).toBe(201);
 
-      const scar2 = await request(app).post("/users").send({
-        username: "scar1234",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const scar2 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar1234",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
       expect(scar2.statusCode).toBe(400);
 
-      const kim1 = await request(app).post("/users").send({
-        username: "kim123",
-        email: "kim@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const kim1 = await request(app)
+        .post("/users")
+        .send({
+          username: "kim123",
+          email: "kim@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
       expect(kim1.statusCode).toBe(201);
 
-      const kim2 = await request(app).post("/users").send({
-        username: "kim1234",
-        email: "kim@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const kim2 = await request(app)
+        .post("/users")
+        .send({
+          username: "kim1234",
+          email: "kim@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
       expect(kim2.statusCode).toBe(400);
     });
 
     test("Three users created - only one has unique email and all have different usernames", async () => {
-      const user1 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
-      const user2 = await request(app).post("/users").send({
-        username: "scar1234",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const user1 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
+      const user2 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar1234",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
 
-      const user3 = await request(app).post("/users").send({
-        username: "scar12345",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const user3 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar12345",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
 
       const found = await User.find();
       console.log("Username it test: ", found[0].email);
@@ -324,29 +358,35 @@ describe("/users", () => {
     });
 
     test("Three users created - only two have unique emails and all have different usernames", async () => {
-      const user1 = await request(app).post("/users").send({
-        username: "scar123",
-        email: "scar@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
-      const user2 = await request(app).post("/users").send({
-        username: "scar1234",
-        email: "scarconstt@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const user1 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar123",
+          email: "scar@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
+      const user2 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar1234",
+          email: "scarconstt@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
 
-      const user3 = await request(app).post("/users").send({
-        username: "scar12345",
-        email: "scarconstt@email.com",
-        password: "Password1!",
-        dob: new Date("1998-02-05"),
-      });
+      const user3 = await request(app)
+        .post("/users")
+        .send({
+          username: "scar12345",
+          email: "scarconstt@email.com",
+          password: "Password1!",
+          dob: new Date("1998-02-05"),
+        });
 
       const found = await User.find();
-      const emails = found.map(user => user.email)
-      expect(emails).toEqual(['scar@email.com','scarconstt@email.com']);
+      const emails = found.map((user) => user.email);
+      expect(emails).toEqual(["scar@email.com", "scarconstt@email.com"]);
     });
   });
 });
@@ -371,9 +411,9 @@ describe("/users/:id", () => {
 
   beforeAll(async () => {
     await user1.save();
-    console.log(user1, "before tests")
+    console.log(user1, "before tests");
     await user2.save();
-    console.log(user2, "before tests")
+    console.log(user2, "before tests");
     token = createToken(user1.id);
   });
 
@@ -422,23 +462,44 @@ describe("/users/:id", () => {
     });
   });
 
-  describe("GET, when token is missing", () => {
-  
-    test("the response code is 401", async () => {
+  describe("POST, when a user updates their profile intro", () => {
+    const dob = new Date("1988-02-05");
+    const user = new User({
+      username: "user123",
+      email: "user@email.com",
+      password: "1234",
+      dob: dob,
+      firstName: "Joe",
+      lastName: "Bloggs",
+    });
+
+    beforeAll(async () => {
+      await user.save();
+      console.log(user1, "before tests");
+    });
+
+    afterAll(async () => {
+      await User.deleteMany({});
+    });
+
+    test("When a user updates their bio, it appears in their db", async () => {
       const response = await request(app)
-      .get(`/users/${user2._id}`)
+    });
+  });
+
+  describe("GET, when token is missing", () => {
+    test("the response code is 401", async () => {
+      const response = await request(app).get(`/users/${user2._id}`);
       expect(response.status).toEqual(401);
     });
 
     test("returns no user data", async () => {
-      const response = await request(app)
-      .get(`/users/${user2._id}`)
+      const response = await request(app).get(`/users/${user2._id}`);
       expect(response.body.user).toEqual(undefined);
     });
 
     test("does not return a new token", async () => {
-      const response = await request(app)
-      .get(`/users/${user2._id}`)
+      const response = await request(app).get(`/users/${user2._id}`);
       expect(response.body.token).toEqual(undefined);
     });
   });
