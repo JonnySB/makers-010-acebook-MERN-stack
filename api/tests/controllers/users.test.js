@@ -442,4 +442,47 @@ describe("/users/:id", () => {
       expect(response.body.token).toEqual(undefined);
     });
   });
+  describe("POST, checking if new user dob meets age requirement", () => {
+    test("Returns status 400 if user is 4 years old", async () => {
+      const response = await request(app)
+        .post("/users")
+        .send({
+          username: "pops1234",
+          email: "poppy1@email.com",
+          password: "Password1!",
+          dob: new Date("2020-02-05"),
+        });
+
+      expect(response.statusCode).toBe(400);
+    });
+
+    test("Returns status 400 if user is 12 years and 6 months old", async () => {
+      const response = await request(app)
+        .post("/users")
+        .send({
+          username: "pops12345",
+          email: "poppy2@email.com",
+          password: "Password1!",
+          dob: new Date("2012-08-05"),
+        });
+        console.log("Inside testing age tests:")
+
+      expect(response.statusCode).toBe(400);
+    });
+
+    test("Returns status 201 if user is 13 years on feb 5th 2024", async () => {
+      const response = await request(app)
+        .post("/users")
+        .send({
+          username: "pops123456",
+          email: "poppy3@email.com",
+          password: "Password1!",
+          dob: new Date("2011-02-05"),
+        });
+
+      console.log("Response body:", response.body);
+      expect(response.statusCode).toBe(201);
+    });
+
+  })
 });

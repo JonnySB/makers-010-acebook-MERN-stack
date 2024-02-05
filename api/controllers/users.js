@@ -21,6 +21,21 @@ const create = async (req, res) => {
       .json({ message: "Password does not meet the criteria." });
   }
 
+  const userDob = new Date(dob);
+  if(isNaN(userDob.getTime())) {
+    return res.status(400).json({ message: 'Invalid date of birth'});
+  }
+
+  const today = new Date();
+  today.setHours(12, 0, 0, 0); // handles time difference - so to have a comparison point between birthdate and todays date
+  const userAge = today.getFullYear() - userDob.getFullYear() -
+  ((today.getMonth() < userDob.getMonth() ||
+  (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
+  console.log("The user age is -> ", userAge);
+  if(userAge < 13) {
+    return res.status(400).json({ message: 'User must be at least 13 years old.' });
+  }
+
   try {
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
