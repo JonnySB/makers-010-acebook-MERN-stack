@@ -14,12 +14,27 @@ export const SignupPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showAgeMessage, setShowAgeMessage] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+        const userDob = new Date(dob);
+        const today = new Date();
+        today.setHours(12, 0, 0, 0);
+    
+        const userAge = today.getFullYear() - userDob.getFullYear() -
+          ((today.getMonth() < userDob.getMonth() ||
+            (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
+    
+        if (userAge < 13) {
+          setShowAgeMessage(true);
+          return;
+        }
+
     try {    
     await signup(username, dob, email, password, firstName, lastName);  
     console.log("redirecting...:");    
@@ -67,15 +82,32 @@ export const SignupPage = () => {
 
   const handleDobChange = (event) => {
     const selectedDate = new Date(event.target.value);
+    console.log("event -> ", event.target.value);
+    console.log("Selected date -> ", selectedDate)
     const formattedDate = selectedDate.toISOString().split('T')[0];
+    console.log("formated date -> ", formattedDate)
     setDob(formattedDate);
-    console.log(formattedDate);
+    reachedMinAge();
   }
+
+  const reachedMinAge = () => {
+    const userDob = new Date(dob);
+    const today = new Date();
+    today.setHours(12, 0, 0, 0);
+
+    const userAge = today.getFullYear() - userDob.getFullYear() -
+      ((today.getMonth() < userDob.getMonth() ||
+        (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
+        // console.log("USER AGE -> ", userAge)
+        // console.log("USER DOB -> ", userDob)
+        // console.log("another DOB -> ", dob)
+    setShowAgeMessage(userAge < 13);
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-
+  console.log("FROM COMPONENT -> ", showAgeMessage);
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -155,10 +187,15 @@ export const SignupPage = () => {
                     placeholder="*dob" 
                     value={dob}
                     onChange={handleDobChange}
+                    onClick={reachedMinAge}
                     required/>
+                      {showAgeMessage && (
+                        <p className="font-medium text-xs text-red-600 dark:text-green-500">
+                          User must be at least 13 years old.
+                        </p>
+                      )}
+                  </div>
                 </div>
-              </div>
-              
               <div>
                 <label 
                   htmlFor="email"
