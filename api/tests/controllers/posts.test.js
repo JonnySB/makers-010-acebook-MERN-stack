@@ -356,7 +356,7 @@ describe("/posts/comments", () => {
       });
 
       const posts = await Post.find();
-      console.log(posts[0]);
+      // console.log(posts[0]);
       expect(posts[0].comments).toEqual([]);
     });
 

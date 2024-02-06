@@ -22,7 +22,7 @@ const createToken = (userId) => {
 };
 
 let token;
-describe("/users", () => {
+describe("Tests for route /users for user creation", () => {
   beforeEach(async () => {
     await User.deleteMany({});
   });
@@ -246,6 +246,8 @@ describe("/users", () => {
 
       const found = await User.find();
       expect(found[0].username).toBe("scar123");
+      expect(found[0].email).toBe("scar@email.com");
+      expect(found.length).toEqual(1);
     });
 
     test("Three users created - only two has unique username and all have different emails", async () => {
@@ -279,6 +281,7 @@ describe("/users", () => {
       // console.log(found);
       const usernames = found.map((user) => user.username);
       expect(usernames).toEqual(["scar123", "scar1234"]);
+      expect(usernames.length).toEqual(2);
     });
   });
 
@@ -355,6 +358,7 @@ describe("/users", () => {
       const found = await User.find();
       // console.log("Username it test: ", found[0].email);
       expect(found[0].email).toBe("scar@email.com");
+      expect(found.length).toEqual(1)
     });
 
     test("Three users created - only two have unique emails and all have different usernames", async () => {
@@ -387,11 +391,12 @@ describe("/users", () => {
       const found = await User.find();
       const emails = found.map((user) => user.email);
       expect(emails).toEqual(["scar@email.com", "scarconstt@email.com"]);
+      expect(found.length).toEqual(2)
     });
   });
 });
 
-describe("/users/:id", () => {
+describe("Tests for route /users/:id", () => {
   const dob = new Date("1988-02-05");
   const user1 = new User({
     username: "pops123",
@@ -480,7 +485,7 @@ describe("/users/:id", () => {
   });
 
   describe("POST, when a user updates their profile intro", () => {
-    test("When a user updates their bio, it appears in their db", async () => {
+    test("A user can update their intro's bio", async () => {
       await request(app)
         .post(`/users/${user1._id}/bio`)
         .set("Authorization", `Bearer ${token}`)
@@ -490,7 +495,7 @@ describe("/users/:id", () => {
       expect(user.bio).toEqual("I love acebook");
     });
 
-    test("When a user updates their current location, it appears in their db", async () => {
+    test("A user can update their intro's current location", async () => {
       await request(app)
         .post(`/users/${user1._id}/currentLocation`)
         .set("Authorization", `Bearer ${token}`)
@@ -500,8 +505,7 @@ describe("/users/:id", () => {
       expect(user.currentLocation).toEqual("London");
     });
 
-    test("When a user updates their workplace, it appears in their db", async () => {
-      console.log(token)
+    test("A user can update their intro's workplace", async () => {
       await request(app)
         .post(`/users/${user1._id}/workplace`)
         .set("Authorization", `Bearer ${token}`)
@@ -511,7 +515,7 @@ describe("/users/:id", () => {
       expect(user.workplace).toEqual("Makers");
     });
 
-    test("When a user updates their education, it appears in their db", async () => {
+    test("A user can update their intro's education", async () => {
       await request(app)
         .post(`/users/${user1._id}/education`)
         .set("Authorization", `Bearer ${token}`)
@@ -519,6 +523,23 @@ describe("/users/:id", () => {
 
       const user = await User.findOne({ _id: user1._id });
       expect(user.education).toEqual("School of hard knocks");
+    });
+    test("A user can update a field that already has a value", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/education`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ bio: "I love acebook" });
+
+      let user = await User.findOne({ _id: user1._id });
+      expect(user.bio).toEqual("I love acebook");
+
+      await request(app)
+        .post(`/users/${user1._id}/bio`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ bio: "I hate acebook" });
+
+      user = await User.findOne({ _id: user1._id });
+      expect(user.bio).toEqual("I hate acebook");
     });
   });
 });
