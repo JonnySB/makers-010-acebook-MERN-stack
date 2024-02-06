@@ -120,11 +120,15 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
+      firstName: "John",
+      lastName: "Doe", 
       friends: new User({
         username: "user456",
         email: "someoneelse@example.com",
         password: "password",
         dob: dob, 
+        firstName: "Joe", 
+        lastName: "Bloggs"
       })
     });
 

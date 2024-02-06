@@ -49,7 +49,7 @@ const create = async (req, res) => {
       lastName,
     });
     await user.save();
-    console.log("User created, id:", user._id.toString());
+    // console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     console.error(error);

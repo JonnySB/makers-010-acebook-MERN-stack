@@ -212,7 +212,7 @@ describe("/users", () => {
     });
 
     test("does not create a user", async () => {
-      await request(app)
+      const response = await request(app)
         .post("/users")
         .send({
           username: "pops123",
@@ -224,6 +224,7 @@ describe("/users", () => {
 
       const users = await User.find();
       expect(users.length).toEqual(0);
+      expect(response.statusCode).toBe(500)
     });
   });
 
@@ -243,7 +244,7 @@ describe("/users", () => {
     });
 
     test("does not create a user", async () => {
-      await request(app)
+      const response = await request(app)
         .post("/users")
         .send({
           username: "pops123",
@@ -255,6 +256,7 @@ describe("/users", () => {
 
       const users = await User.find();
       expect(users.length).toEqual(0);
+      expect(response.statusCode).toBe(500)
     });
   });
 
@@ -382,7 +384,7 @@ describe("/users", () => {
         });
 
       const found = await User.find();
-      console.log(found);
+      // console.log(found);
       const usernames = found.map((user) => user.username);
       expect(usernames).toEqual(["scar123", "scar1234"]);
     });
@@ -473,7 +475,7 @@ describe("/users", () => {
         });
 
       const found = await User.find();
-      console.log("Username it test: ", found[0].email);
+      // console.log("Username it test: ", found[0].email);
       expect(found[0].email).toBe("scar@email.com");
     });
 
@@ -539,9 +541,9 @@ describe("/users/:id", () => {
 
   beforeAll(async () => {
     await user1.save();
-    console.log(user1, "before tests");
+    // console.log(user1, "before tests");
     await user2.save();
-    console.log(user2, "before tests");
+    // console.log(user2, "before tests");
     token = createToken(user1.id);
   });
 
