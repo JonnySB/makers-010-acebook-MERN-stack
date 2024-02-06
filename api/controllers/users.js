@@ -37,7 +37,8 @@ const create = async (req, res) => {
     if (!validatePassword(password)) {
       return res.status(400).json({ message: 'Password does not meet the criteria.' });
     }
-    const user = new User({ username, email, password, dob, firstName, lastName });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ username, email, password: hashedPassword, dob, firstName, lastName });
     await user.save();
     console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });
