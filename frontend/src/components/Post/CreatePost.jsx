@@ -55,7 +55,7 @@ const CreatePost = (props) => {
             required
           ></textarea>
         </div>
-        <div className="flex justify-end px-3 py-2 border-t">
+        <div className="flex justify-end px-3 py-2 bg-white border-t">
           <div>
             <button
               role="createPostSubmitButton"
