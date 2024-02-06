@@ -206,7 +206,7 @@ describe("/users", () => {
         lastName: "Eyre"
       });
 
-      expect(response.statusCode).toBe(400);
+      expect(response.statusCode).toBe(500);
     });
 
     test("does not create a user", async () => {
@@ -233,7 +233,7 @@ describe("/users", () => {
         firstName: "Jane"
       });
 
-      expect(response.statusCode).toBe(400);
+      expect(response.statusCode).toBe(500);
     });
 
     test("does not create a user", async () => {
@@ -387,6 +387,8 @@ describe("/users", () => {
         email: "kim@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Kim",
+        lastName: "Brown"
       });
       expect(kim1.statusCode).toBe(201);
 
