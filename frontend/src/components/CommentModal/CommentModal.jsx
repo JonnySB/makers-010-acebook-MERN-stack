@@ -36,37 +36,64 @@ const CommentModal = (props) => {
       </button>
 
       {commentModal && (
-        <div className="modal">
-          <div className="overlay">
-            <div className="modal-content pt-2 p-4">
-              <Post
-                userID={props.userID}
-                post={props.post}
-                key={props.post._id}
-                token={props.token}
-                setToken={props.setToken}
-                commentModal={commentModal}
-                commentOn={false}
-              />
-              <div className="comments">
-                {props.post.comments.map((comment) => {
-                  return (
-                    <Comment
-                      message={comment.message}
-                      createdAt={comment.createdAt}
-                      owner={comment.owner}
-                    />
-                  );
-                })}
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+            {/* Overlay */}
+            <div
+              className="fixed inset-0 transition-opacity"
+              aria-hidden="true"
+            >
+              <div className="absolute inset-0 bg-gray-700 opacity-75"></div>
+            </div>
+
+            {/* Modal Panel */}
+            <div className="h-75vh w-full md:w-5/6 bg-white rounded-lg text-left transform">
+              {/* Modal Content */}
+              <div className="overflow-y-auto">
+                <div className="pt-2 p-4">
+                  {/* Post Component */}
+                  <Post
+                    userID={props.userID}
+                    post={props.post}
+                    key={props.post._id}
+                    token={props.token}
+                    setToken={props.setToken}
+                    commentModal={commentModal}
+                    commentOn={false}
+                  />
+                  {/* Comments */}
+                  <div
+                    className="comments "
+                    onScroll={(e) => {
+                      document.querySelector(".post-container").scrollTop =
+                        e.target.scrollTop;
+                    }}
+                  >
+                    {props.post.comments.map((comment, index) => (
+                      <Comment
+                        key={index}
+                        message={comment.message}
+                        createdAt={comment.createdAt}
+                        owner={comment.owner}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
-              <CreateComment
-                token={props.token}
-                setToken={props.setToken}
-                post_id={props.post._id}
-              />
-              <button className="close-modal" onClick={toggleCommentModal}>
-                Close
-              </button>
+              {/* Comments Box */}
+              <div className="bg-gray-200 px-4 py-2 sticky bottom-0">
+                <CreateComment
+                  token={props.token}
+                  setToken={props.setToken}
+                  post_id={props.post._id}
+                />
+              </div>
+              {/* Close Button */}
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button className="close-modal" onClick={toggleCommentModal}>
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>

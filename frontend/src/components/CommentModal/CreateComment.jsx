@@ -39,7 +39,7 @@ const CreateComment = (props) => {
             name="message"
             value={comment}
             onChange={handleChange}
-            rows="4"
+            rows="2"
             cols="75"
             className="focus:outline-none w-full px-0 text-sm text-gray-900 bg-white resize-none"
             placeholder="Write a comment..."
