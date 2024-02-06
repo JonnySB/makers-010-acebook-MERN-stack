@@ -12,6 +12,7 @@ const Post = (props) => {
               Pic
             </div>
             <div className="flex flex-col justify-center ms-4">
+              {/* TODO: Add some useful label to the below div to identify it as user's name */}
               <div className="text-sky-500 text-base font-bold">
                 {props.post.user_data[0].username} ({props.post.user_data[0].firstName} {props.post.user_data[0].lastName})
               </div>
