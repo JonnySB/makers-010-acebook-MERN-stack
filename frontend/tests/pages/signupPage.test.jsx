@@ -252,40 +252,65 @@ describe("Sign up - If user exists or doesn't exist", () => {
   
 });
 
-// describe("Sign up - Age limit is 13", () => {
-//   beforeEach(() => {
-//     vi.resetAllMocks();
-//   });
-
-//   test("User cannot sign up if they are 10 years old", async () => {
-//     render(<SignupPage />);
-    
-//     const dobInputEl = screen.getByLabelText("DOB");
-//     const submitButtonEl = screen.getByRole("submit-button");
-    
-//     await userEvent.type(dobInputEl, "2014-02-04");
-//     await waitFor(() => {
-//       fireEvent.change(dobInputEl, { target: { value: "2014-02-04" } });
-//     });
-//     await userEvent.click(submitButtonEl);
-//     screen.debug()
-  
-//     const validationError = screen.queryByText(/User must be at least 13 years old/);
-//     expect(validationError !== null).toBe(true);
-//   });
-// });
-
-
 describe("Sign up - Age limit is 13", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
   test("User cannot sign up if they are 10 years old", async () => {
-    const { getByLabelText, getByText } = render(<SignupPage />);
-    const dobInput = getByLabelText('DOB');
-    fireEvent.change(dobInput, { target: { value: '2012-01-01' } });
-    const errorMessage = getByText('User must be at least 13 years old.');
-    expect(errorMessage).toBeTruthy();
+    render(<SignupPage />);
+    
+    const usernameInputEl = screen.getByLabelText("Username");
+    const dobInputEl = screen.getByLabelText("DOB");
+    const emailInputEl = screen.getByLabelText("Your email");
+    const passwordInputEl = screen.getByLabelText("Password");
+    const firstNameInputEl = screen.getByLabelText("First Name");
+    const lastNameInputEl = screen.getByLabelText("Last Name");
+
+    const submitButtonEl = screen.getByRole("submit-button");
+
+    await userEvent.type(usernameInputEl, "testusername");
+    await userEvent.type(emailInputEl, "test@email.com");
+    await userEvent.type(passwordInputEl, "Password1!");
+    await userEvent.type(firstNameInputEl, "Jane");
+    await userEvent.type(lastNameInputEl, "Eyre");
+    await userEvent.type(dobInputEl, '2014-02-04');
+
+    console.log("DOB INPUT EL AFTER -> ", dobInputEl);
+    await userEvent.click(submitButtonEl);
+    screen.debug()
+  
+    const validationError = screen.queryByText(/User must be at least 13 years old/)
+    console.log("VALIDATION ERROR -> ", validationError)
+    expect(validationError !== null).toBe(true);
+  });
+
+  test("User can sign up if they are 13 years old", async () => {
+    render(<SignupPage />);
+    
+    const usernameInputEl = screen.getByLabelText("Username");
+    const dobInputEl = screen.getByLabelText("DOB");
+    const emailInputEl = screen.getByLabelText("Your email");
+    const passwordInputEl = screen.getByLabelText("Password");
+    const firstNameInputEl = screen.getByLabelText("First Name");
+    const lastNameInputEl = screen.getByLabelText("Last Name");
+
+    const submitButtonEl = screen.getByRole("submit-button");
+
+    await userEvent.type(usernameInputEl, "testusername");
+    await userEvent.type(emailInputEl, "test@email.com");
+    await userEvent.type(passwordInputEl, "Password1!");
+    await userEvent.type(firstNameInputEl, "Jane");
+    await userEvent.type(lastNameInputEl, "Eyre");
+    await userEvent.type(dobInputEl, '2011-02-04');
+
+    console.log("DOB INPUT EL AFTER -> ", dobInputEl);
+    await userEvent.click(submitButtonEl);
+    screen.debug()
+  
+    const validationError = screen.queryByText(/User must be at least 13 years old/)
+    console.log("VALIDATION ERROR -> ", validationError)
+    expect(validationError !== null).toBe(false);
   });
 });
+

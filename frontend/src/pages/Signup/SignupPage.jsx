@@ -82,7 +82,10 @@ export const SignupPage = () => {
 
   const handleDobChange = (event) => {
     const selectedDate = new Date(event.target.value);
+    console.log("event -> ", event.target.value);
+    console.log("Selected date -> ", selectedDate)
     const formattedDate = selectedDate.toISOString().split('T')[0];
+    console.log("formated date -> ", formattedDate)
     setDob(formattedDate);
     reachedMinAge();
   }
@@ -95,14 +98,16 @@ export const SignupPage = () => {
     const userAge = today.getFullYear() - userDob.getFullYear() -
       ((today.getMonth() < userDob.getMonth() ||
         (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
-
+        // console.log("USER AGE -> ", userAge)
+        // console.log("USER DOB -> ", userDob)
+        // console.log("another DOB -> ", dob)
     setShowAgeMessage(userAge < 13);
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-
+  console.log("FROM COMPONENT -> ", showAgeMessage);
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
