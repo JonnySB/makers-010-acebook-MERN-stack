@@ -21,8 +21,8 @@ const createToken = (userId) => {
   );
 };
 
-let token
-describe("/users", () => {
+let token;
+describe("Tests for route /users for user creation", () => {
   beforeEach(async () => {
     await User.deleteMany({});
   });
@@ -324,6 +324,8 @@ describe("/users", () => {
 
       const found = await User.find();
       expect(found[0].username).toBe("scar123");
+      expect(found[0].email).toBe("scar@email.com");
+      expect(found.length).toEqual(1);
     });
 
     test("Three users created - only two has unique username and all have different emails", async () => {
@@ -354,9 +356,10 @@ describe("/users", () => {
       });
 
       const found = await User.find();
-      console.log(found);
-      const usernames = found.map(user => user.username)
-      expect(usernames).toEqual(['scar123','scar1234']);
+      // console.log(found);
+      const usernames = found.map((user) => user.username);
+      expect(usernames).toEqual(["scar123", "scar1234"]);
+      expect(usernames.length).toEqual(2);
     });
   });
 
@@ -431,8 +434,9 @@ describe("/users", () => {
       });
 
       const found = await User.find();
-      console.log("Username it test: ", found[0].email);
+      // console.log("Username it test: ", found[0].email);
       expect(found[0].email).toBe("scar@email.com");
+      expect(found.length).toEqual(1)
     });
 
     test("Three users created - only two have unique emails and all have different usernames", async () => {
@@ -463,13 +467,14 @@ describe("/users", () => {
       });
 
       const found = await User.find();
-      const emails = found.map(user => user.email)
-      expect(emails).toEqual(['scar@email.com','scarconstt@email.com']);
+      const emails = found.map((user) => user.email);
+      expect(emails).toEqual(["scar@email.com", "scarconstt@email.com"]);
+      expect(found.length).toEqual(2)
     });
   });
 });
 
-describe("/users/:id", () => {
+describe("Tests for route /users/:id", () => {
   const dob = new Date("1988-02-05");
   const user1 = new User({
     username: "pops123",
@@ -491,9 +496,9 @@ describe("/users/:id", () => {
 
   beforeAll(async () => {
     await user1.save();
-    console.log(user1, "before tests")
+    // console.log(user1, "before tests");
     await user2.save();
-    console.log(user2, "before tests")
+    // console.log(user2, "before tests");
     token = createToken(user1.id);
   });
 
@@ -543,23 +548,78 @@ describe("/users/:id", () => {
   });
 
   describe("GET, when token is missing", () => {
-  
     test("the response code is 401", async () => {
-      const response = await request(app)
-      .get(`/users/${user2._id}`)
+      const response = await request(app).get(`/users/${user2._id}`);
       expect(response.status).toEqual(401);
     });
 
     test("returns no user data", async () => {
-      const response = await request(app)
-      .get(`/users/${user2._id}`)
+      const response = await request(app).get(`/users/${user2._id}`);
       expect(response.body.user).toEqual(undefined);
     });
 
     test("does not return a new token", async () => {
-      const response = await request(app)
-      .get(`/users/${user2._id}`)
+      const response = await request(app).get(`/users/${user2._id}`);
       expect(response.body.token).toEqual(undefined);
+    });
+  });
+
+  describe("POST, when a user updates their profile intro", () => {
+    test("A user can update their intro's bio", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/bio`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ bio: "I love acebook" });
+
+      const user = await User.findOne({ _id: user1._id });
+      expect(user.bio).toEqual("I love acebook");
+    });
+
+    test("A user can update their intro's current location", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/currentLocation`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ currentLocation: "London" });
+
+      const user = await User.findOne({ _id: user1._id });
+      expect(user.currentLocation).toEqual("London");
+    });
+
+    test("A user can update their intro's workplace", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/workplace`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ workplace: "Makers" });
+
+      const user = await User.findOne({ _id: user1._id });
+      expect(user.workplace).toEqual("Makers");
+    });
+
+    test("A user can update their intro's education", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/education`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ education: "School of hard knocks" });
+
+      const user = await User.findOne({ _id: user1._id });
+      expect(user.education).toEqual("School of hard knocks");
+    });
+    test("A user can update a field that already has a value", async () => {
+      await request(app)
+        .post(`/users/${user1._id}/education`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ bio: "I love acebook" });
+
+      let user = await User.findOne({ _id: user1._id });
+      expect(user.bio).toEqual("I love acebook");
+
+      await request(app)
+        .post(`/users/${user1._id}/bio`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({ bio: "I hate acebook" });
+
+      user = await User.findOne({ _id: user1._id });
+      expect(user.bio).toEqual("I hate acebook");
     });
   });
 });
