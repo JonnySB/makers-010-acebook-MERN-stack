@@ -15,6 +15,8 @@ const create = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const dob = req.body.dob;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
 
   const userDob = new Date(dob);
   if(isNaN(userDob.getTime())) {
@@ -50,7 +52,7 @@ const create = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, email, password: hashedPassword, dob });
+    const user = new User({ username, email, password: hashedPassword, dob, firstName, lastName });
     await user.save();
     console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });

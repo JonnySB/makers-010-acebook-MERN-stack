@@ -36,6 +36,8 @@ describe("/users", () => {
           email: "poppy@email.com",
           password: "1234",
           dob: new Date("1988-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       expect(response.statusCode).toBe(400);
@@ -49,6 +51,8 @@ describe("/users", () => {
           email: "poppy@email.com",
           password: "Password1!",
           dob: new Date("1988-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       expect(response.statusCode).toBe(201);
@@ -62,6 +66,8 @@ describe("/users", () => {
           email: "scarconstt@email.com",
           password: "Password1!",
           dob: new Date("1998-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       const users = await User.find();
@@ -78,6 +84,8 @@ describe("/users", () => {
           username: "scar123",
           email: "scarconstt@email.com",
           dob: new Date("1998-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       expect(response.statusCode).toBe(400);
@@ -90,6 +98,8 @@ describe("/users", () => {
           username: "scar123",
           email: "scarconstt@email.com",
           dob: new Date("1998-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       const users = await User.find();
@@ -105,6 +115,8 @@ describe("/users", () => {
           username: "scar123",
           password: "1234",
           dob: new Date("1998-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       expect(response.statusCode).toBe(400);
@@ -117,6 +129,8 @@ describe("/users", () => {
           username: "scar123",
           password: "1234",
           dob: new Date("1998-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       const users = await User.find();
@@ -132,6 +146,8 @@ describe("/users", () => {
           email: "scarconstt@email.com",
           password: "1234",
           dob: new Date("1998-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       expect(response.statusCode).toBe(400);
@@ -144,6 +160,8 @@ describe("/users", () => {
           email: "scarconstt@email.com",
           password: "1234",
           dob: new Date("1998-02-05"),
+          firstName: "Jane",
+          lastName: "Eyre"
         });
 
       const users = await User.find();
@@ -157,6 +175,8 @@ describe("/users", () => {
         username: "scar123",
         email: "scarconstt@email.com",
         password: "1234",
+        firstName: "Jane",
+        lastName: "Eyre"
       });
 
       expect(response.statusCode).toBe(400);
@@ -167,12 +187,70 @@ describe("/users", () => {
         username: "scar123",
         email: "scarconstt@email.com",
         password: "1234",
+        firstName: "Jane",
+        lastName: "Eyre"
       });
 
       const users = await User.find();
       expect(users.length).toEqual(0);
     });
   });
+
+  describe("POST, when first name is missing", () => {
+    test("response code is 400", async () => {
+      const response = await request(app).post("/users").send({
+        username: "pops123",
+        email: "poppy@email.com",
+        password: "Password1!",
+        dob: new Date("1988-02-05"),
+        lastName: "Eyre"
+      });
+
+      expect(response.statusCode).toBe(500);
+    });
+
+    test("does not create a user", async () => {
+      await request(app).post("/users").send({
+        username: "pops123",
+        email: "poppy@email.com",
+        password: "Password1!",
+        dob: new Date("1988-02-05"),
+        lastName: "Eyre"
+      });
+
+      const users = await User.find();
+      expect(users.length).toEqual(0);
+    });
+  });
+
+  describe("POST, when last name is missing", () => {
+    test("response code is 400", async () => {
+      const response = await request(app).post("/users").send({
+        username: "pops123",
+        email: "poppy@email.com",
+        password: "Password1!",
+        dob: new Date("1988-02-05"),
+        firstName: "Jane"
+      });
+
+      expect(response.statusCode).toBe(500);
+    });
+
+    test("does not create a user", async () => {
+      await request(app).post("/users").send({
+        username: "pops123",
+        email: "poppy@email.com",
+        password: "Password1!",
+        dob: new Date("1988-02-05"),
+        firstName: "Jane"
+      });
+
+      const users = await User.find();
+      expect(users.length).toEqual(0);
+    });
+  });
+  
+  // ADD TESTS FOR FIRST NAME MISSING AND LAST NAME MISSING HERE
 
   describe("POST, when username already exists but emails are different", () => {
     test("response code is 201 for (scar1 & kim1)  but 400 for (scar2 & kim2)", async () => {
@@ -181,6 +259,8 @@ describe("/users", () => {
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scarr",
+        lastName: "Johnson"
       });
       expect(scar1.statusCode).toBe(201);
 
@@ -189,6 +269,8 @@ describe("/users", () => {
         email: "scarconstt@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
       expect(scar2.statusCode).toBe(400);
 
@@ -197,6 +279,8 @@ describe("/users", () => {
         email: "kim@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Kimberly",
+        lastName: "Brown"
       });
       expect(kim1.statusCode).toBe(201);
 
@@ -205,6 +289,8 @@ describe("/users", () => {
         email: "kimkardashian@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Kim",
+        lastName: "Kardashian"
       });
       expect(kim2.statusCode).toBe(400);
     });
@@ -215,12 +301,16 @@ describe("/users", () => {
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
       const user2 = await request(app).post("/users").send({
         username: "scar123",
         email: "scarconstt@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
 
       const user3 = await request(app).post("/users").send({
@@ -228,6 +318,8 @@ describe("/users", () => {
         email: "scared@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
 
       const found = await User.find();
@@ -240,12 +332,16 @@ describe("/users", () => {
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
       const user2 = await request(app).post("/users").send({
         username: "scar1234",
         email: "scarconstt@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
 
       const user3 = await request(app).post("/users").send({
@@ -253,6 +349,8 @@ describe("/users", () => {
         email: "scared@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
 
       const found = await User.find();
@@ -269,6 +367,8 @@ describe("/users", () => {
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
       expect(scar1.statusCode).toBe(201);
 
@@ -277,6 +377,8 @@ describe("/users", () => {
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
       expect(scar2.statusCode).toBe(400);
 
@@ -285,6 +387,8 @@ describe("/users", () => {
         email: "kim@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Kim",
+        lastName: "Brown"
       });
       expect(kim1.statusCode).toBe(201);
 
@@ -293,6 +397,8 @@ describe("/users", () => {
         email: "kim@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Kim",
+        lastName: "Brown"
       });
       expect(kim2.statusCode).toBe(400);
     });
@@ -303,12 +409,16 @@ describe("/users", () => {
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
       const user2 = await request(app).post("/users").send({
         username: "scar1234",
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
 
       const user3 = await request(app).post("/users").send({
@@ -316,6 +426,8 @@ describe("/users", () => {
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
 
       const found = await User.find();
@@ -329,12 +441,16 @@ describe("/users", () => {
         email: "scar@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
       const user2 = await request(app).post("/users").send({
         username: "scar1234",
         email: "scarconstt@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
 
       const user3 = await request(app).post("/users").send({
@@ -342,6 +458,8 @@ describe("/users", () => {
         email: "scarconstt@email.com",
         password: "Password1!",
         dob: new Date("1998-02-05"),
+        firstName: "Scar",
+        lastName: "Brown"
       });
 
       const found = await User.find();
@@ -358,6 +476,8 @@ describe("/users/:id", () => {
     email: "poppy@email.com",
     password: "1234",
     dob: dob,
+    firstName: "Pops",
+    lastName: "Brown"
   });
   const user2 = new User({
     username: "user123",
@@ -451,6 +571,8 @@ describe("/users/:id", () => {
           email: "poppy1@email.com",
           password: "Password1!",
           dob: new Date("2020-02-05"),
+          firstName: "Joe",
+          lastName: "Bloggs",
         });
 
       expect(response.statusCode).toBe(400);
@@ -464,6 +586,8 @@ describe("/users/:id", () => {
           email: "poppy2@email.com",
           password: "Password1!",
           dob: new Date("2012-08-05"),
+          firstName: "Joe",
+          lastName: "Bloggs",
         });
 
       expect(response.statusCode).toBe(400);
@@ -477,6 +601,8 @@ describe("/users/:id", () => {
           email: "poppy3@email.com",
           password: "Password1!",
           dob: new Date("2011-02-05"),
+          firstName: "Joe",
+          lastName: "Bloggs",
         });
 
       expect(response.statusCode).toBe(201);

@@ -14,6 +14,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: new Date("1994-04-15"),
+      firstName: "Scar",
+      lastName: "Brown"
     });
     expect(user.email).toEqual("someone@example.com");
   });
@@ -24,6 +26,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: new Date("1994-04-15"),
+      firstName: "Scar",
+      lastName: "Brown"
     });
     expect(user.password).toEqual("password");
   });
@@ -34,6 +38,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: new Date("1994-04-15"),
+      firstName: "Scar",
+      lastName: "Brown"
     });
     expect(user.username).toEqual("user123");
   });
@@ -44,8 +50,34 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
+      firstName: "Scar",
+      lastName: "Brown"
     });
     expect(user.dob).toEqual(dob);
+  });
+
+  it("has a first name", () => {
+    const user = new User({
+      username: "user123",
+      email: "someone@example.com",
+      password: "password",
+      dob: dob,
+      firstName: "John",
+      lastName: "Doe"
+    });
+    expect(user.firstName).toEqual("John");
+  });
+
+  it("has a last name", () => {
+    const user = new User({
+      username: "user123",
+      email: "someone@example.com",
+      password: "password",
+      dob: dob,
+      firstName: "John",
+      lastName: "Doe"
+    });
+    expect(user.lastName).toEqual("Doe");
   });
 
   it("can list all users", async () => {
@@ -59,6 +91,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
+      firstName: "John",
+      lastName: "Doe"
     });
 
     await user.save();
@@ -68,5 +102,7 @@ describe("User model", () => {
     expect(users[0].email).toEqual("someone@example.com");
     expect(users[0].password).toEqual("password");
     expect(users[0].dob).toEqual(dob);
+    expect(users[0].firstName).toEqual("John");
+    expect(users[0].lastName).toEqual("Doe");
   });
 });
