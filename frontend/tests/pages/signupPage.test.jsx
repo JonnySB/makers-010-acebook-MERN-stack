@@ -275,3 +275,17 @@ describe("Sign up - If user exists or doesn't exist", () => {
 //   });
 // });
 
+
+describe("Sign up - Age limit is 13", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
+  test("User cannot sign up if they are 10 years old", async () => {
+    const { getByLabelText, getByText } = render(<SignupPage />);
+    const dobInput = getByLabelText('DOB');
+    fireEvent.change(dobInput, { target: { value: '2012-01-01' } });
+    const errorMessage = getByText('User must be at least 13 years old.');
+    expect(errorMessage).toBeTruthy();
+  });
+});
