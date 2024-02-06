@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getPosts } from "../../services/posts";
 import { getUserById } from "../../services/users";
 import Post from "../../components/Post/Post";
+import Intro from "../../components/Profile/Intro";
 
 export const ProfilePage = () => {
   const [token, setToken] = useState(window.localStorage.getItem("token"));
@@ -34,12 +35,16 @@ export const ProfilePage = () => {
   }, [token]);
 
   return (
-    <>
-      {profileOwner ? (
-        <h1>Hi owner, {profileInfo.username}</h1>
-      ) : (
-        <h1>Hi stranger</h1>
-      )}
-    </>
-  );
+    <div className="bg-slate-100 min-h-screen py-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-screen-lg mx-auto px-4">
+      <div className="min-w-0 flex-auto">
+        <Intro profileInfo={profileInfo} profileOwner={profileOwner} />
+      </div>
+      <div className="min-w-0 flex-auto">
+        <Intro profileInfo={profileInfo} profileOwner={profileOwner}/>
+      </div>
+    </div>
+    </div>
+    
+  );  
 };
