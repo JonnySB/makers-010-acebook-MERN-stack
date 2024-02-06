@@ -2,27 +2,27 @@ import { useState } from "react";
 
 const Intro = (props) => {
   const [editingBio, setEditingBio] = useState(false);
-  const [newBio, setNewBio] = useState('');
+  const [newBio, setNewBio] = useState("");
 
   const handleBioChange = (e) => {
     setNewBio(e.target.value);
   };
 
   const handleBioSubmit = () => {
-    setNewBio('');
+    setNewBio("");
     setEditingBio(false);
   };
 
   return (
-    <div class="flex mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
+    <div class="flex flex-col items-center mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
       <div>
-        <p class="mt-2 text-2xl font-bold tracking-tight text-gray-900">
+        <h1 class="mt-2 text-2xl font-bold tracking-tight text-gray-900">
           Intro
-        </p>
+        </h1>
       </div>
-      <div>
+      <div className="w-full">
         {props.profileOwner && !props.profileInfo.bio ? (
-          <div>
+          <div className="flex justify-center">
             {editingBio ? (
               <div>
                 <input
@@ -34,7 +34,11 @@ const Intro = (props) => {
                 <button onClick={handleBioSubmit}>Submit</button>
               </div>
             ) : (
-              <button onClick={() => setEditingBio(true)}>Add Bio</button>
+              <div>
+                <button onClick={() => setEditingBio(true)} className="wfull">
+                  Add Bio
+                </button>
+              </div>
             )}
           </div>
         ) : (
