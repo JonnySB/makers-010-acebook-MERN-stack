@@ -248,26 +248,26 @@ describe("Sign up - If user exists or doesn't exist", () => {
   
 });
 
-// describe("Sign up - Age limit is 13", () => {
-//   beforeEach(() => {
-//     vi.resetAllMocks();
-//   });
+describe("Sign up - Age limit is 13", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
 
-//   test("User cannot sign up if they are 10 years old", async () => {
-//     render(<SignupPage />);
+  test("User cannot sign up if they are 10 years old", async () => {
+    render(<SignupPage />);
     
-//     const dobInputEl = screen.getByLabelText("DOB");
-//     const submitButtonEl = screen.getByRole("submit-button");
+    const dobInputEl = screen.getByLabelText("DOB");
+    const submitButtonEl = screen.getByRole("submit-button");
     
-//     await userEvent.type(dobInputEl, "2014-02-04");
-//     await waitFor(() => {
-//       fireEvent.change(dobInputEl, { target: { value: "2014-02-04" } });
-//     });
-//     await userEvent.click(submitButtonEl);
-//     screen.debug()
+    await userEvent.type(dobInputEl, "2014-02-04");
+    await waitFor(() => {
+      fireEvent.change(dobInputEl, { target: { value: "2014-02-04" } });
+    });
+    await userEvent.click(submitButtonEl);
+    screen.debug()
   
-//     const validationError = screen.queryByText(/User must be at least 13 years old/);
-//     expect(validationError !== null).toBe(true);
-//   });
-// });
+    const validationError = screen.queryByText(/User must be at least 13 years old/);
+    expect(validationError !== null).toBe(true);
+  });
+});
 
