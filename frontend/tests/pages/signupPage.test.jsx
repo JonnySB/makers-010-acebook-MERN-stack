@@ -260,7 +260,6 @@ describe("Sign up - If user exists or doesn't exist", () => {
 //     const submitButtonEl = screen.getByRole("submit-button");
     
 //     await userEvent.type(dobInputEl, "2014-02-04");
-//     // Trigger the change event to ensure the asynchronous logic is executed
 //     await waitFor(() => {
 //       fireEvent.change(dobInputEl, { target: { value: "2014-02-04" } });
 //     });

@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
@@ -14,12 +15,6 @@ const create = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const dob = req.body.dob;
-
-  if (!validatePassword(password)) {
-    return res
-      .status(400)
-      .json({ message: "Password does not meet the criteria." });
-  }
 
   const userDob = new Date(dob);
   if(isNaN(userDob.getTime())) {
@@ -54,7 +49,8 @@ const create = async (req, res) => {
       return res.status(400).json({ message: 'Password does not meet the criteria.' });
     }
 
-    const user = new User({ username, email, password, dob });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({ username, email, password: hashedPassword, dob });
     await user.save();
     console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });
@@ -65,6 +61,29 @@ const create = async (req, res) => {
   }
 }
 
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    const token = generateToken(user._id);
+
+    res.status(200).json({ token });
+  } catch(error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const getUserById = async (req, res) => {
   const userId = req.params.id;
   const user = await User.findById(userId).select("-password -email");
@@ -74,6 +93,7 @@ const getUserById = async (req, res) => {
 
 const UsersController = {
   create: create,
+  login: login,
   getUserById: getUserById,
 };
 
