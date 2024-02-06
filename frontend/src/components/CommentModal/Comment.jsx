@@ -3,7 +3,9 @@ import React from "react";
 const Comment = (props) => {
   return (
     <>
-      <p>This is a comment</p>
+      <p>{props.message}</p>
+      <p>{props.createdAt}</p>
+      <p>{props.owner}</p>
     </>
   );
 };

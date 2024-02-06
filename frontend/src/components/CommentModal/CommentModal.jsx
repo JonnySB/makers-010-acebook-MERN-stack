@@ -16,8 +16,8 @@ const CommentModal = (props) => {
       role="commentIcon"
       className="text-blue-700"
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width="19"
+      height="19"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -50,7 +50,13 @@ const CommentModal = (props) => {
               />
               <div className="comments">
                 {props.post.comments.map((comment) => {
-                  <Comment />;
+                  return (
+                    <Comment
+                      message={comment.message}
+                      createdAt={comment.createdAt}
+                      owner={comment.owner}
+                    />
+                  );
                 })}
               </div>
               <CreateComment
