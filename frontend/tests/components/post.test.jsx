@@ -19,9 +19,9 @@ describe("Post component tests", () => {
 
   test("displays the content(message) as a paragraph", () => {
     render(<Post post={testPost} />);
-    expect(screen.getByRole("singlePostContent")).toHaveTextContent(
-      "Test Post 1"
-    );
+    const paragraph = screen.getByRole("singlePostContent");
+    expect(paragraph.textContent).toEqual("Test Post 1");
+    // TODO: Should probably check that the names are also next to the post
   });
 
   test("displays Like component", () => {

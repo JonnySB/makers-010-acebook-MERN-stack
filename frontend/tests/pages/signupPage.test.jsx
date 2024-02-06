@@ -32,12 +32,16 @@ const completeSignupForm = async () => {
   const dobInputEl = screen.getByLabelText("DOB");
   const emailInputEl = screen.getByLabelText("Your email");
   const passwordInputEl = screen.getByLabelText("Password");
+  const firstNameInputEl = screen.getByLabelText("First Name");
+  const lastNameInputEl = screen.getByLabelText("Last Name");
   const submitButtonEl = screen.getByRole("submit-button");
 
   await user.type(usernameInputEl, "testusername");
   await user.type(dobInputEl, "2009-10-10");
   await user.type(emailInputEl, "test@email.com");
   await user.type(passwordInputEl, "1234");
+  await user.type(firstNameInputEl, "Jane");
+  await user.type(lastNameInputEl, "Eyre");
   await user.click(submitButtonEl);
 };
 
@@ -51,7 +55,7 @@ describe("Signup Page", () => {
 
     await completeSignupForm();
 
-    expect(signup).toHaveBeenCalledWith("testusername", "2009-10-10","test@email.com", "1234");
+    expect(signup).toHaveBeenCalledWith("testusername", "2009-10-10","test@email.com", "1234", "Jane", "Eyre");
   });
 
   test("navigates to / on successful signup", async () => {
@@ -205,7 +209,7 @@ describe("Sign up - Password validation", () => {
 
     const validationError = screen.getByText(/Password must have:/);
     expect(validationError !== null).toBe(true);
-    expect(signup).toHaveBeenCalledWith("testusername", "2009-10-10","test@email.com", pw);
+    expect(signup).toHaveBeenCalledWith("testusername", "2009-10-10","test@email.com", pw, "Jane", "Eyre");
   });
 });
 
@@ -237,7 +241,7 @@ describe("Sign up - If user exists or doesn't exist", () => {
           message: "Username or email already exists",
         },
       },
-    })); // Assuming signup should resolve successfully for a unique user
+    })); 
     const navigateMock = useNavigate();
     await completeSignupForm();
     const errorElement = screen.queryByText("Username or email already exists");

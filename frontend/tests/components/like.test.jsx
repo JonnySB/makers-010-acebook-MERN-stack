@@ -5,7 +5,7 @@ import { describe, expect, test, vi } from "vitest";
 import * as servicesPost from "../../src/services/posts";
 import Like from "../../src/components/Post/Like";
 
-const testPost = {
+let testPost = {
   _id: "12345",
   message: "Test Post 1",
   createdAt: "2024-02-01T16:50:30.870Z",
