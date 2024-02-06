@@ -5,8 +5,8 @@ const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     dob: { type: Date, required: true },
-    firstName: { type: String, required: false },
-    lastName: { type: String, required: false },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
     bio: { type: String, required: false },
     friends: [{ type: mongoose.Types.ObjectId, ref: "User" }],
 });

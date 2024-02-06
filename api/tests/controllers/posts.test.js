@@ -29,6 +29,8 @@ describe("/posts", () => {
     email: "poppy@email.com",
     password: "1234",
     dob: new Date("1988-02-05"),
+    firstName: "Scar",
+    lastName: "Brown"
   });
   beforeAll(async () => {
     await user.save();
@@ -250,6 +252,8 @@ describe("/posts/comments", () => {
     email: "poppy@email.com",
     password: "Password1!",
     dob: new Date("1988-02-05"),
+    firstName: "Scar",
+    lastName: "Brown"
   });
   beforeAll(async () => {
     await user.save();
@@ -385,6 +389,8 @@ describe("/posts/likes", () => {
     email: "poppy@email.com",
     password: "Password1!",
     dob: new Date("1988-02-05"),
+    firstName: "Scar",
+    lastName: "Brown"
   });
   beforeAll(async () => {
     await user.save();

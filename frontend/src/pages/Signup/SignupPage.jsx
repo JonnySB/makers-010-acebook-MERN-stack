@@ -11,6 +11,8 @@ export const SignupPage = () => {
   const [isValid, setIsValid] = useState(false);
   const [username, setUsername] = useState("");
   const [dob, setDob] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
 
@@ -19,7 +21,7 @@ export const SignupPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {    
-    await signup(username, dob, email, password);  
+    await signup(username, dob, email, password, firstName, lastName);  
     console.log("redirecting...:");    
     navigate("/");    
     } catch (err) {   
@@ -56,6 +58,12 @@ export const SignupPage = () => {
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   }
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  }
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value);
+  }
 
   const handleDobChange = (event) => {
     const selectedDate = new Date(event.target.value);
@@ -85,14 +93,38 @@ export const SignupPage = () => {
                   onSubmit={handleSubmit}
                   >
               <div className="grid grid-cols-6 gap-6">
-                {/* <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="firstname" className="text-sm font-medium text-gray-900 block mb-2">First Name</label>
-                    <input type="text" name="firstname" id="firstname" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="First Name" required=""/>
+                <div className="col-span-6 sm:col-span-3">
+                    <label 
+                      htmlFor="firstname" 
+                      className="text-sm font-medium text-gray-900 block mb-2">
+                      First Name
+                    </label>
+                    <input 
+                    type="text" 
+                    name="firstname" 
+                    id="firstname" 
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" 
+                    placeholder="First Name" 
+                    value={firstName}
+                    onChange={handleFirstNameChange}
+                    required/>
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                    <label htmlFor="category" className="text-sm font-medium text-gray-900 block mb-2">Last Name</label>
-                    <input type="text" name="lastname" id="lastname" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Last Name" required=""/>
-                </div> */}
+                    <label 
+                      htmlFor="lastname" 
+                      className="text-sm font-medium text-gray-900 block mb-2">
+                        Last Name
+                    </label>
+                    <input 
+                    type="text" 
+                    name="lastname" 
+                    id="lastname" 
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" 
+                    placeholder="Last Name" 
+                    value={lastName}
+                    onChange={handleLastNameChange}
+                    required/>
+                </div>
                 <div className="col-span-6 sm:col-span-3">
                     <label 
                     htmlFor="username" 

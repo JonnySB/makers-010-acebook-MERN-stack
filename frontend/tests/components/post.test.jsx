@@ -19,6 +19,7 @@ describe("Post component tests", () => {
     render(<Post post={testPost} />);
     const paragraph = screen.getByRole("singlePostContent");
     expect(paragraph.textContent).toEqual("Test Post 1");
+    // TODO: Should probably check that the names are also next to the post
   });
 
   test("displays Like component", () => {
