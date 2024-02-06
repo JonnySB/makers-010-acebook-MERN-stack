@@ -9,8 +9,10 @@ describe("CreatePost component renders correctly", () => {
     render(<CreatePost />);
     expect(screen.getByPlaceholderText("Write a post...")).toBeInTheDocument();
     expect(screen.getByRole("createPostSubmitButton")).toBeInTheDocument();
-    expect(screen.getByRole("createPostSubmitButton")).toHaveTextContent("Create Post");
-    expect(screen.getByRole("form")).toBeInTheDocument(); 
+    expect(screen.getByRole("createPostSubmitButton")).toHaveTextContent(
+      "Create Post"
+    );
+    expect(screen.getByRole("form")).toBeInTheDocument();
     expect(screen.getByLabelText("Create New Post Form")).toBeInTheDocument();
   });
 });
@@ -23,42 +25,47 @@ const completeCreatePostForm = async () => {
   await user.type(textAreaEl, "Hello World");
 };
 
-
 describe("Create Post component functions correctly", () => {
-  const createPosts = vi.spyOn(servicesPost, 'createPosts').mockResolvedValue({});
+  beforeEach(() => {
+    createPostsSpy.mockClear();
+  });
 
-  test("User can input text into textarea", async () => {
-    render(<CreatePost />);
+  const createPostsSpy = vi
+    .spyOn(servicesPost, "createPosts")
+    .mockResolvedValue({});
+
+  //TODO: props.setToken isn't a function. Maybe need to create a mock?
+  test("When a user fills out the post's text field and clicks the button, it calls the createPost method with a token and a string", async () => {
+    const mockToken = "testToken";
+
+    render(<CreatePost token={mockToken} />);
     await completeCreatePostForm();
     expect(screen.getByPlaceholderText("Write a post...")).toHaveTextContent(
       "Hello World"
     );
-  });
-
-  it("calls the createPosts function when user clicks button", async () => {
-    render(<CreatePost />);
-    await completeCreatePostForm();
     const submitButtonEl = screen.getByRole("createPostSubmitButton");
     userEvent.click(submitButtonEl);
     await waitFor(() => {
-      expect(createPosts).toHaveBeenCalled();
+      expect(createPostsSpy).toHaveBeenCalled();
+      expect(createPostsSpy).toHaveBeenCalledWith(mockToken, "Hello World");
     });
   });
 
-  // This test implementation only tests that services/createPosts hasn't been called
-  // Haven't discussed the sort of error the user should recieve
-  
-  //To implement (fix)
-  /*
+  // This test implementation only tests that createPosts method hasn't been called
+  // As the validation has been delegated to <textarea required> rather than our own checks
+  // TODO: Discuss if we are ok with using <textarea required>
   test("User can't submit a post that's empty", async () => {
-    // const logSpy = vi.spyOn(console, 'error')
+    
     render(<CreatePost />);
     const submitButtonEl = screen.getByRole("createPostSubmitButton");
     userEvent.click(submitButtonEl);
     await waitFor(() => {
-      expect(createPosts).not.toHaveBeenCalled();
-      // expect(logSpy).toHaveBeenCalled();
+      expect(createPostsSpy).not.toHaveBeenCalled();
     });
   });
-  */
+
+  //TODO:
+  test.skip("User can't submit a post that has a char length over _____", () => {
+
+  })
 });
