@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const User = require("../models/user");
 const { generateToken } = require("../lib/token");
 
@@ -28,6 +29,7 @@ const create = async (req, res) => {
     if (existingUsername) {
         return res.status(400).json({ message: 'Username already exists' });
     }
+
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
         return res.status(400).json({ message: 'Email already exists' });
@@ -45,6 +47,29 @@ const create = async (req, res) => {
   }
 }
 
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    const token = generateToken(user._id);
+
+    res.status(200).json({ token });
+  } catch(error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const getUserById = async (req, res) => {
   const userId = req.params.id;
   const user = await User.findById(userId).select("-password -email");
@@ -54,6 +79,7 @@ const getUserById = async (req, res) => {
 
 const UsersController = {
   create: create,
+  login: login,
   getUserById: getUserById,
 };
 

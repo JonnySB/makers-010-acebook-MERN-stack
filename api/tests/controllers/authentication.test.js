@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs');
 const app = require("../../app");
 const supertest = require("supertest");
 require("../mongodb_helper");
@@ -5,10 +6,11 @@ const User = require("../../models/user");
 
 describe("/tokens", () => {
   beforeAll(async () => {
+    const hashedPassword = await bcrypt.hash("1234", 10);
     const user = new User({
       username: "pops123",
       email: "poppy@email.com",
-      password: "1234",
+      password: hashedPassword,
       dob: new Date("1988-02-05"),
       firstName: "Scar",
       lastName: "Brown"
