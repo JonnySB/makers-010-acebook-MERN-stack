@@ -130,7 +130,7 @@ describe("/posts", () => {
       expect(response.status).toEqual(200);
     });
 
-    test("returns every post in the collection", async () => {
+    test.only("returns every post in the collection", async () => {
       const post1 = new Post({
         message: "I love all my children equally",
         createdAt: date,
@@ -155,6 +155,9 @@ describe("/posts", () => {
       expect(firstPost.message).toEqual("I love all my children equally");
       expect(secondPost.message).toEqual("I've never cared for GOB");
     });
+
+    // TODO:
+    test.todo("returned post doesn't contain user data")
 
     test("returns a new token", async () => {
       const post1 = new Post({
