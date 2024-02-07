@@ -21,9 +21,33 @@ export const getUserById = async (userId, token) => {
 };
 
 //TODO: 
-// export const updateBio = async () => {}
+export const updateBio = async (bioContent, token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`, 
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(bioContent)
+  };
 
-// export const updateCurrentLocation = async () => {}
+  const response = await fetch(`${BACKEND_URL}/users/${token.user_id}/bio`, requestOptions);
+
+  if (response.status !==201){
+    throw new Error("Couldn't update bio");
+  }else{
+    console.log("Updated successfuly")
+  }
+
+  const data = await response.json();
+  return data; 
+}
+
+export const updateCurrentLocation = async (currentLocationContent, token) => {
+  const requestOptions = {
+    method: "POST", 
+  }
+}
 
 // export const updateWorkPlace = async () => {}
 

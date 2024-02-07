@@ -1,8 +1,9 @@
 import createFetchMock from "vitest-fetch-mock";
 import { describe, expect, vi } from "vitest";
 
-import { getUserById } from "../../src/services/user";
+import { getUserById, updateBio, updateCurrentLocation } from "../../src/services/user";
 import { stringify } from "postcss";
+// import { updateCurrentLocation } from "../../../api/controllers/users";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -20,7 +21,9 @@ const userDataMock = {
   education: "School of hard knocks",
 };
 
-const tokenMock = "testToken";
+const tokenMock = {
+  user_id: "123",
+};
 const userIdMock = "123";
 
 describe("User service", () => {
@@ -28,7 +31,7 @@ describe("User service", () => {
     test("includes a token and userId with its request", async () => {
       fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
 
-      await getUserById(userIdMock, tokenMock);
+      await getUserById(userIdMock, "testToken");
 
       const fetchArguments = fetch.mock.lastCall;
       const url = fetchArguments[0];
@@ -53,32 +56,71 @@ describe("User service", () => {
 
     it("gets a response with all the relevant user details", async () => {
       fetch.mockResponseOnce(JSON.stringify(userDataMock), { status: 200 });
-      const userData = await getUserById(userIdMock, tokenMock);
+      const userData = await getUserById(userIdMock, "testToken");
 
       expect(userData).toEqual(userDataMock);
     });
   });
-  
+
   describe("Profile Page - POST requests", () => {
     test.todo("Creates a POST request and ensure 200 status", async () => {});
 
-    test.todo("rejects with an error if status is not 201", async () => {});
+    describe("Update Bio", () => {
+      test("the update bio request contains a string & a token", async () => {
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
 
-    test.todo(
-      "the update bio request contains a string & a token",
-      async () => {}
-    );
-    test.todo(
-      "the update currentLocation request contains a string & a token",
-      async () => {}
-    );
-    test.todo(
-      "the update workplace request contains a string & a token",
-      async () => {}
-    );
-    test.todo(
-      "the update education request contains a string & a token",
-      async () => {}
-    );
+        await updateBio("I love acebook", tokenMock);
+
+        const fetchArguments = fetch.mock.lastCall;
+        const url = fetchArguments[0];
+        const options = fetchArguments[1];
+
+        expect(url).toEqual(`${BACKEND_URL}/users/123/bio`);
+        expect(options.method).toEqual("POST");
+        expect(options.headers["Authorization"]).toEqual(`Bearer ${tokenMock}`);
+        expect(options.body).toContain("I love acebook");
+      });
+
+      it("rejects with an error if status is not 201", async () => {
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
+
+        try {
+          await updateBio("I love acebook", tokenMock);
+        } catch (err) {
+          expect(err.message).toEqual("Couldn't update bio");
+        }
+      });
+    });
+
+    describe("Update current location", () => {
+      test("the update currentLocation request contains a string & a token", async () => {
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+        await updateCurrentLocation("London", tokenMock);
+
+        const fetchArguments = fetch.mock.lastCall;
+        const url = fetchArguments[0];
+        const options = fetchArguments[1];
+
+        expect(url).toEqual(`${BACKEND_URL}/users/123/currentLocation`);
+        expect(options.method).toEqual("POST");
+        expect(options.headers["Authorization"]).toEqual(`Bearer ${tokenMock}`);
+        expect(options.body).toContain("London");
+      });
+    });
+
+    describe("Update workplace", () => {
+      test.todo(
+        "the update workplace request contains a string & a token",
+        async () => {}
+      );
+    });
+
+    describe("Update education", () => {
+      test.todo(
+        "the update education request contains a string & a token",
+        async () => {}
+      );
+    });
   });
 });
