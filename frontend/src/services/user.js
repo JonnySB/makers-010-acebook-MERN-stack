@@ -36,7 +36,7 @@ export const updateBio = async (bioContent, token) => {
   if (response.status !==201){
     throw new Error("Couldn't update bio");
   }else{
-    console.log("Updated successfuly")
+    console.log("Updated bio successfuly")
   }
 
   const data = await response.json();
@@ -45,11 +45,47 @@ export const updateBio = async (bioContent, token) => {
 
 export const updateCurrentLocation = async (currentLocationContent, token) => {
   const requestOptions = {
-    method: "POST", 
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'applicatoin/json'
+    },
+    body: JSON.stringify(currentLocationContent) 
   }
+
+  const response = await fetch(`${BACKEND_URL}/users/${token.user_id}/currentLocation`, requestOptions);
+
+  if (response.status !==201){
+    throw new Error("Couldn't update current location");
+  }else{
+    console.log("Updated current location successfuly")
+  }
+
+  const data = await response.json();
+  return data; 
 }
 
-// export const updateWorkPlace = async () => {}
+export const updateWorkplace = async (workplaceContent, token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'applicatoin/json'
+    },
+    body: JSON.stringify(workplaceContent) 
+  }
+
+  const response = await fetch(`${BACKEND_URL}/users/${token.user_id}/workplace`, requestOptions);
+
+  if (response.status !==201){
+    throw new Error("Couldn't update current location");
+  }else{
+    console.log("Updated workplace successfuly")
+  }
+
+  const data = await response.json();
+  return data; 
+}
 
 // export const updateEducation = async () => {}
 

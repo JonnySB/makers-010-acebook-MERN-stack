@@ -1,7 +1,12 @@
 import createFetchMock from "vitest-fetch-mock";
 import { describe, expect, vi } from "vitest";
 
-import { getUserById, updateBio, updateCurrentLocation } from "../../src/services/user";
+import {
+  getUserById,
+  updateBio,
+  updateCurrentLocation,
+  updateWorkplace,
+} from "../../src/services/user";
 import { stringify } from "postcss";
 // import { updateCurrentLocation } from "../../../api/controllers/users";
 
@@ -107,13 +112,33 @@ describe("User service", () => {
         expect(options.headers["Authorization"]).toEqual(`Bearer ${tokenMock}`);
         expect(options.body).toContain("London");
       });
+
+      it("rejects with an error if status is not 201", async () => {
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
+
+        try {
+          await updateCurrentLocation("I love acebook", tokenMock);
+        } catch (err) {
+          expect(err.message).toEqual("Couldn't update current location");
+        }
+      });
     });
 
     describe("Update workplace", () => {
-      test.todo(
-        "the update workplace request contains a string & a token",
-        async () => {}
-      );
+      test("the update workplace request contains a string & a token", async () => {
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+        await updateWorkplace("Makers", tokenMock);
+
+        const fetchArguments = fetch.mock.lastCall;
+        const url = fetchArguments[0];
+        const options = fetchArguments[1];
+
+        expect(url).toEqual(`${BACKEND_URL}/users/123/workplace`);
+        expect(options.method).toEqual("POST");
+        expect(options.headers["Authorization"]).toEqual(`Bearer ${tokenMock}`);
+        expect(options.body).toContain("Makers");
+      });
     });
 
     describe("Update education", () => {
