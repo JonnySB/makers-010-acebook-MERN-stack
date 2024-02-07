@@ -37,7 +37,7 @@ export const SignupPage = () => {
 
     try {    
     await signup(username, dob, email, password, firstName, lastName);  
-    console.log("redirecting...:");    
+    // console.log("redirecting...:");    
     navigate("/");    
     } catch (err) {   
     console.error(err);    
@@ -82,10 +82,10 @@ export const SignupPage = () => {
 
   const handleDobChange = (event) => {
     const selectedDate = new Date(event.target.value);
-    console.log("event -> ", event.target.value);
-    console.log("Selected date -> ", selectedDate)
+    // console.log("event -> ", event.target.value);
+    // console.log("Selected date -> ", selectedDate)
     const formattedDate = selectedDate.toISOString().split('T')[0];
-    console.log("formated date -> ", formattedDate)
+    // console.log("formated date -> ", formattedDate)
     setDob(formattedDate);
     reachedMinAge();
   }
@@ -107,7 +107,7 @@ export const SignupPage = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-  console.log("FROM COMPONENT -> ", showAgeMessage);
+  // console.log("FROM COMPONENT -> ", showAgeMessage);
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
