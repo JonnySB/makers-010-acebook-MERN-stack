@@ -14,7 +14,7 @@ const Comment = (props) => {
   // Construct the formatted date string
   const formattedDate = `${hours}:${minutes} ${day}/${month}/${year}`;
 
-  console.log(formattedDate); // Output: hh:mm dd/mm/yy
+  console.log(props); // Output: hh:mm dd/mm/yy
   return (
     <div class="flex items-start gap-2.5 bottom-margin">
       <img
@@ -25,7 +25,7 @@ const Comment = (props) => {
       <div class="flex flex-col gap-1 w-full max-w-[320px]">
         <div class="flex items-center space-x-2 rtl:space-x-reverse">
           <span class="text-sm font-semibold text-gray-900 dark:text-white">
-            {props.owner}
+            {props.username} ({props.firstName} {props.lastName[0]})
           </span>
           <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
             {formattedDate}

@@ -25,6 +25,15 @@ body.active-modal {
   display: block;
   width: 100%;
 }
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #ffffff;
+  border-radius: 3px;
+}
 
 .close-modal {
   position: absolute;
@@ -34,6 +43,12 @@ body.active-modal {
 }
 
 .bottom-margin {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.comments-scroll {
+  max-height: 70vh;
+  max-width: 30vw;
+  overflow: scroll;
 }
