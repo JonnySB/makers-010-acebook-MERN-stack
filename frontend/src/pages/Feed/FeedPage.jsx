@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post/Post";
 import CreatePost from "../../components/Post/CreatePost";
+import NavBar from "../Nabvar/NavBar";
 
 export const FeedPage = () => {
   const [posts, setPosts] = useState([]);
@@ -34,6 +35,7 @@ export const FeedPage = () => {
 
   return (
     <>
+    <NavBar />
       <div className="w-screen h-full bg-gray-50">
         <div className="flex justify-center">
           <CreatePost token={token} setToken={setToken}/>
