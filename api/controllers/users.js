@@ -18,12 +18,20 @@ const create = async (req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
 
-  if (!validatePassword(password)) {
-    return res
-      .status(400)
-      .json({ message: "Password does not meet the criteria." });
+  const userDob = new Date(dob);
+  if(isNaN(userDob.getTime())) {
+    return res.status(400).json({ message: 'Invalid date of birth'});
   }
 
+  const today = new Date();
+  today.setHours(12, 0, 0, 0); // handles time difference - so to have a comparison point between birthdate and todays date
+
+  const userAge = today.getFullYear() - userDob.getFullYear() -
+  ((today.getMonth() < userDob.getMonth() ||
+  (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
+  
+
+  
   try {
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
@@ -32,13 +40,18 @@ const create = async (req, res) => {
 
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
-      return res.status(400).json({ message: "Email already exists" });
+        return res.status(400).json({ message: 'Email already exists' });
     }
+    if(userAge < 13) {
+      return res.status(400).json({ message: 'User must be at least 13 years old.' });
+    }
+
     if (!validatePassword(password)) {
       return res
         .status(400)
         .json({ message: "Password does not meet the criteria." });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       username,
@@ -51,7 +64,7 @@ const create = async (req, res) => {
     await user.save();
     // console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });
-  } catch (error) {
+  } catch(error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
