@@ -19,3 +19,4 @@ describe("Intro component tests", () => {
     expect(screen.getByRole("birthday")).toHaveTextContent("16th June 1999");
   });
 });
+
