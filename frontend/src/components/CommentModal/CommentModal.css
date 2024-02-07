@@ -26,6 +26,7 @@ body.active-modal {
   width: 100%;
 }
 .modal-content {
+  max-width: 35vw;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -49,6 +50,5 @@ body.active-modal {
 
 .comments-scroll {
   max-height: 70vh;
-  max-width: 30vw;
   overflow: scroll;
 }

@@ -40,7 +40,6 @@ export const FeedPage = () => {
         </div>
 
         <div role="feed">
-          {console.log(posts)}
           {posts.map((post) => (
             <Post
               userID={userID}

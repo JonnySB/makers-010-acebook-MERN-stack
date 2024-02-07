@@ -14,7 +14,6 @@ const Comment = (props) => {
   // Construct the formatted date string
   const formattedDate = `${hours}:${minutes} ${day}/${month}/${year}`;
 
-  console.log(props); // Output: hh:mm dd/mm/yy
   return (
     <div class="flex items-start gap-2.5 bottom-margin">
       <img

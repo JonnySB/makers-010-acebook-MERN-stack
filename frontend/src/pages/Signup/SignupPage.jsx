@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import passwordValidator from 'password-validator';
+import passwordValidator from "password-validator";
 
 import { signup } from "../../services/authentication";
 
@@ -20,15 +20,17 @@ export const SignupPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {    
-    await signup(username, dob, email, password, firstName, lastName);  
-    console.log("redirecting...:");    
-    navigate("/");    
-    } catch (err) {   
-    console.error(err);    
-    setError(err.response?.data?.message || "Username or email already exists");    
-    navigate("/signup");    
-    }   
+    try {
+      await signup(username, dob, email, password, firstName, lastName);
+      console.log("redirecting...:");
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data?.message || "Username or email already exists",
+      );
+      navigate("/signup");
+    }
   };
 
   const handleEmailChange = (event) => {
@@ -44,33 +46,37 @@ export const SignupPage = () => {
   const validatePassword = (password) => {
     const schema = new passwordValidator();
     schema
-      .is().min(8)        // Minimum length 8
-      .is().max(100)      // Maximum length 100
-      .has().uppercase()  // Must have uppercase letters
-      .has().lowercase()  // Must have lowercase letters
-      .has().digits()     // Must have digits
-      .has().symbols();   // Must have symbols
+      .is()
+      .min(8) // Minimum length 8
+      .is()
+      .max(100) // Maximum length 100
+      .has()
+      .uppercase() // Must have uppercase letters
+      .has()
+      .lowercase() // Must have lowercase letters
+      .has()
+      .digits() // Must have digits
+      .has()
+      .symbols(); // Must have symbols
     const isValidPassword = schema.validate(password);
     setIsValid(isValidPassword);
   };
 
-
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
-  }
+  };
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
-  }
+  };
   const handleLastNameChange = (event) => {
     setLastName(event.target.value);
-  }
+  };
 
   const handleDobChange = (event) => {
     const selectedDate = new Date(event.target.value);
-    const formattedDate = selectedDate.toISOString().split('T')[0];
+    const formattedDate = selectedDate.toISOString().split("T")[0];
     setDob(formattedDate);
-    console.log(formattedDate);
-  }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -78,111 +84,124 @@ export const SignupPage = () => {
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
-    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-          acebook    
-      </a>
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a
+          href="#"
+          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+        >
+          <img
+            className="w-8 h-8 mr-2"
+            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+            alt="logo"
+          />
+          acebook
+        </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    Create an account
-                </h1>
-                <form 
-                  className="space-y-4 md:space-y-6" 
-                  onSubmit={handleSubmit}
-                  >
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              Create an account
+            </h1>
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6 sm:col-span-3">
-                    <label 
-                      htmlFor="firstname" 
-                      className="text-sm font-medium text-gray-900 block mb-2">
-                      First Name
-                    </label>
-                    <input 
-                    type="text" 
-                    name="firstname" 
-                    id="firstname" 
-                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" 
-                    placeholder="First Name" 
+                  <label
+                    htmlFor="firstname"
+                    className="text-sm font-medium text-gray-900 block mb-2"
+                  >
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    name="firstname"
+                    id="firstname"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                    placeholder="First Name"
                     value={firstName}
                     onChange={handleFirstNameChange}
-                    required/>
+                    required
+                  />
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                    <label 
-                      htmlFor="lastname" 
-                      className="text-sm font-medium text-gray-900 block mb-2">
-                        Last Name
-                    </label>
-                    <input 
-                    type="text" 
-                    name="lastname" 
-                    id="lastname" 
-                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" 
-                    placeholder="Last Name" 
+                  <label
+                    htmlFor="lastname"
+                    className="text-sm font-medium text-gray-900 block mb-2"
+                  >
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    name="lastname"
+                    id="lastname"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                    placeholder="Last Name"
                     value={lastName}
                     onChange={handleLastNameChange}
-                    required/>
+                    required
+                  />
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                    <label 
-                    htmlFor="username" 
-                    className="text-sm font-medium text-gray-900 block mb-2">
-                      Username
-                      </label>
-                    <input 
-                    type="text" 
-                    name="username" 
-                    id="username" 
-                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" 
-                    placeholder="*username" 
+                  <label
+                    htmlFor="username"
+                    className="text-sm font-medium text-gray-900 block mb-2"
+                  >
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                    placeholder="*username"
                     value={username}
                     onChange={handleUsernameChange}
-                    required/>
+                    required
+                  />
                 </div>
                 <div className="col-span-6 sm:col-span-3">
-                    <label 
-                    htmlFor="dob" 
-                    className="text-sm font-medium text-gray-900 block mb-2">
-                      DOB
-                      </label>
-                    <input 
-                    type="date" 
-                    name="dob" 
-                    id="dob" 
-                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" 
-                    placeholder="*dob" 
+                  <label
+                    htmlFor="dob"
+                    className="text-sm font-medium text-gray-900 block mb-2"
+                  >
+                    DOB
+                  </label>
+                  <input
+                    type="date"
+                    name="dob"
+                    id="dob"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                    placeholder="*dob"
                     value={dob}
                     onChange={handleDobChange}
-                    required/>
+                    required
+                  />
                 </div>
               </div>
-              
+
               <div>
-                <label 
+                <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Your email
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Your email
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                    <svg 
-                      className="w-4 h-4 text-gray-500 dark:text-gray-400" 
-                      aria-hidden="true" 
-                      fill="currentColor" 
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      fill="currentColor"
                       viewBox="0 0 20 16"
                     >
-                      <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
-                      <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                      <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
+                      <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
                     </svg>
                   </div>
-                  <input 
-                    type="email" 
-                    name="email" 
-                    id="email" 
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                    placeholder="*name@company.com" 
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="*name@company.com"
                     value={email}
                     onChange={handleEmailChange}
                     required
@@ -190,29 +209,29 @@ export const SignupPage = () => {
                 </div>
               </div>
               <div>
-                <label 
+                <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password
                 </label>
-                  <div className="relative">
-                  <input 
+                <div className="relative">
+                  <input
                     type={showPassword ? "text" : "password"}
-                    name="password" 
-                    id="password" 
-                    placeholder="*••••••••" 
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  
+                    name="password"
+                    id="password"
+                    placeholder="*••••••••"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     value={password}
                     onChange={handlePasswordChange}
                     required
                   />
                   <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 cursor-pointer">
-                    <svg 
-                      className="w-[20px] h-[20px] text-gray-800 dark:text-white" 
-                      aria-hidden="true" 
+                    <svg
+                      className="w-[20px] h-[20px] text-gray-800 dark:text-white"
+                      aria-hidden="true"
                       onClick={togglePasswordVisibility}
-                      fill="none" 
+                      fill="none"
                       viewBox="0 0 24 24"
                     >
                       {showPassword ? (
@@ -242,11 +261,13 @@ export const SignupPage = () => {
                 </div>
                 {!isValid && (
                   <p className="font-medium text-xs text-red-600 dark:text-green-500">
-                    Password must have:<br/> 
-                    - 8 characters minimum<br/> 
-                    - at least one capital letter <br/> 
-                    - at least one number<br/> 
-                    - at least one special character
+                    Password must have:
+                    <br />
+                    - 8 characters minimum
+                    <br />
+                    - at least one capital letter <br />
+                    - at least one number
+                    <br />- at least one special character
                   </p>
                 )}
                 {isValid && (
@@ -255,30 +276,56 @@ export const SignupPage = () => {
                   </p>
                 )}
               </div>
-                <div className="flex items-start">
-                    <div className="flex items-center h-5">
-                      <input 
-                      id="terms" 
-                      aria-describedby="terms" 
-                      type="checkbox" 
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" 
-                      required=""/>
-                    </div>
-                    <div className="ml-3 text-sm">
-                      <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
-                    </div>
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    id="terms"
+                    aria-describedby="terms"
+                    type="checkbox"
+                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                    required=""
+                  />
                 </div>
-                <button role="submit-button" type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                    Already have an account?  <Link to="/" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Log In</Link>
+                <div className="ml-3 text-sm">
+                  <label
+                    htmlFor="terms"
+                    className="font-light text-gray-500 dark:text-gray-300"
+                  >
+                    I accept the{" "}
+                    <a
+                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                      href="#"
+                    >
+                      Terms and Conditions
+                    </a>
+                  </label>
+                </div>
+              </div>
+              <button
+                role="submit-button"
+                type="submit"
+                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              >
+                Create an account
+              </button>
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                Already have an account?{" "}
+                <Link
+                  to="/"
+                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >
+                  Log In
+                </Link>
+              </p>
+              {error && (
+                <p className="font-medium text-xs text-red-600 dark:text-green-500">
+                  {error}
                 </p>
-                {error && (
-                  <p className="font-medium text-xs text-red-600 dark:text-green-500">{error}</p>
-                )}
-                </form>
-            </div>
+              )}
+            </form>
+          </div>
         </div>
-    </div>
-  </section>
+      </div>
+    </section>
   );
 };
