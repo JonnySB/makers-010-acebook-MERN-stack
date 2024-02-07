@@ -36,7 +36,7 @@ export const FeedPage = () => {
   return (
     <>
     <NavBar />
-      <div className="w-screen h-full bg-gray-50">
+      <div className="w-screen h-full bg-gray-100">
         <div className="flex justify-center">
           <CreatePost token={token} setToken={setToken}/>
         </div>
