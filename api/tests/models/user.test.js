@@ -91,8 +91,8 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
-      firstName: "Joe", 
-      lastName: "Blogs", 
+      firstName: "John",
+      lastName: "Doe",
       bio: "An interesting man from London", 
       currentLocation: "London", 
       workplace: "Makers",
@@ -106,8 +106,8 @@ describe("User model", () => {
     expect(users[0].email).toEqual("someone@example.com");
     expect(users[0].password).toEqual("password");
     expect(users[0].dob).toEqual(dob);
-    expect(users[0].firstName).toEqual("Joe");
-    expect(users[0].lastName).toEqual("Blogs");
+    expect(users[0].firstName).toEqual("John");
+    expect(users[0].lastName).toEqual("Doe");
     expect(users[0].bio).toEqual("An interesting man from London");
     expect(users[0].currentLocation).toEqual("London");
     expect(users[0].workplace).toEqual("Makers");
@@ -120,11 +120,15 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
+      firstName: "John",
+      lastName: "Doe", 
       friends: new User({
         username: "user456",
         email: "someoneelse@example.com",
         password: "password",
         dob: dob, 
+        firstName: "Joe", 
+        lastName: "Bloggs"
       })
     });
 

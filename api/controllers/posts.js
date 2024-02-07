@@ -23,6 +23,9 @@ const getAllPosts = async (req, res) => {
         "user_data.password",
         "user_data.dob",
         "user_data.bio",
+        "user_data.currentLocation",
+        "user_data.workplace",
+        "user_data.education",
         "user_data.friends"
       ]
     }
@@ -31,7 +34,7 @@ const getAllPosts = async (req, res) => {
   // sorts post to descending order (last one first) based on the timestamp
   // compareFn(a, b) (first and second element) see sort method doc
   posts.sort((a, b) => b.createdAt - a.createdAt);
-
+  // console.log(posts[0].user_data)
   res.status(200).json({ posts: posts, user_id: req.user_id, token: token });
 };
 
