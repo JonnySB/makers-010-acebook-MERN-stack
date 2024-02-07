@@ -18,7 +18,7 @@ const createToken = (userId) => {
       // Set the JWT token to expire in 10 minutes
       exp: Math.floor(Date.now() / 1000) + 10 * 60,
     },
-    secret
+    secret,
   );
 };
 
@@ -30,7 +30,7 @@ describe("/posts", () => {
     password: "1234",
     dob: new Date("1988-02-05"),
     firstName: "Scar",
-    lastName: "Brown"
+    lastName: "Brown",
   });
   beforeAll(async () => {
     await user.save();
@@ -253,7 +253,7 @@ describe("/posts/comments", () => {
     password: "Password1!",
     dob: new Date("1988-02-05"),
     firstName: "Scar",
-    lastName: "Brown"
+    lastName: "Brown",
   });
   beforeAll(async () => {
     await user.save();
@@ -390,7 +390,7 @@ describe("/posts/likes", () => {
     password: "Password1!",
     dob: new Date("1988-02-05"),
     firstName: "Scar",
-    lastName: "Brown"
+    lastName: "Brown",
   });
   beforeAll(async () => {
     await user.save();
