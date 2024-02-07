@@ -78,7 +78,7 @@ export const updateWorkplace = async (workplaceContent, token) => {
   const response = await fetch(`${BACKEND_URL}/users/${token.user_id}/workplace`, requestOptions);
 
   if (response.status !==201){
-    throw new Error("Couldn't update current location");
+    throw new Error("Couldn't update workplace");
   }else{
     console.log("Updated workplace successfuly")
   }
@@ -87,6 +87,26 @@ export const updateWorkplace = async (workplaceContent, token) => {
   return data; 
 }
 
-// export const updateEducation = async () => {}
+export const updateEducation = async (educationContent, token) => {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'applicatoin/json'
+    },
+    body: JSON.stringify(educationContent) 
+  }
+
+  const response = await fetch(`${BACKEND_URL}/users/${token.user_id}/education`, requestOptions);
+
+  if (response.status !==201){
+    throw new Error("Couldn't update education");
+  }else{
+    console.log("Updated education successfuly")
+  }
+
+  const data = await response.json();
+  return data; 
+}
 
 

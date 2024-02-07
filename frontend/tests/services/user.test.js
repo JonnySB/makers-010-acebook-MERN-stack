@@ -6,6 +6,7 @@ import {
   updateBio,
   updateCurrentLocation,
   updateWorkplace,
+  updateEducation,
 } from "../../src/services/user";
 import { stringify } from "postcss";
 // import { updateCurrentLocation } from "../../../api/controllers/users";
@@ -117,7 +118,7 @@ describe("User service", () => {
         fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
 
         try {
-          await updateCurrentLocation("I love acebook", tokenMock);
+          await updateCurrentLocation("London", tokenMock);
         } catch (err) {
           expect(err.message).toEqual("Couldn't update current location");
         }
@@ -139,13 +140,43 @@ describe("User service", () => {
         expect(options.headers["Authorization"]).toEqual(`Bearer ${tokenMock}`);
         expect(options.body).toContain("Makers");
       });
+
+      it("rejects with an error if status is not 201", async () => {
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
+
+        try {
+          await updateWorkplace("Makers", tokenMock);
+        } catch (err) {
+          expect(err.message).toEqual("Couldn't update workplace");
+        }
+      });
     });
 
     describe("Update education", () => {
-      test.todo(
-        "the update education request contains a string & a token",
-        async () => {}
-      );
+      test("the update education request contains a string & a token", async () => {
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+        await updateEducation("School of hard knocks", tokenMock);
+
+        const fetchArguments = fetch.mock.lastCall;
+        const url = fetchArguments[0];
+        const options = fetchArguments[1];
+
+        expect(url).toEqual(`${BACKEND_URL}/users/123/education`);
+        expect(options.method).toEqual("POST");
+        expect(options.headers["Authorization"]).toEqual(`Bearer ${tokenMock}`);
+        expect(options.body).toContain("School of hard knocks");
+      });
+
+      it("rejects with an error if status is not 201", async () => {
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
+
+        try {
+          await updateEducation("Makers", tokenMock);
+        } catch (err) {
+          expect(err.message).toEqual("Couldn't update education");
+        }
+      });
     });
   });
 });
