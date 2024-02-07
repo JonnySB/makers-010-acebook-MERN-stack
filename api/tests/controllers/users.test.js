@@ -570,7 +570,7 @@ describe("Tests for route /users for user creation", () => {
   });
 });
 
-describe("Tests for route /users/:id", () => {
+describe("Tests for route /users/:user_id", () => {
   const dob = new Date("1988-02-05");
   const user1 = new User({
     username: "pops123",
@@ -583,7 +583,7 @@ describe("Tests for route /users/:id", () => {
   const user2 = new User({
     username: "user123",
     email: "user@email.com",
-    password: "1234",
+    password: "Abcd!123",
     dob: dob,
     firstName: "Joe",
     lastName: "Bloggs",
@@ -592,9 +592,7 @@ describe("Tests for route /users/:id", () => {
 
   beforeAll(async () => {
     await user1.save();
-    // console.log(user1, "before tests");
     await user2.save();
-    // console.log(user2, "before tests");
     token = createToken(user1.id);
   });
 
