@@ -130,7 +130,7 @@ describe("/posts", () => {
       expect(response.status).toEqual(200);
     });
 
-    test.only("returns every post in the collection", async () => {
+    test("returns every post in the collection", async () => {
       const post1 = new Post({
         message: "I love all my children equally",
         createdAt: date,
@@ -363,7 +363,7 @@ describe("/posts/comments", () => {
       });
 
       const posts = await Post.find();
-      console.log(posts[0]);
+      // console.log(posts[0]);
       expect(posts[0].comments).toEqual([]);
     });
 
