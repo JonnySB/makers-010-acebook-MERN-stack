@@ -24,7 +24,8 @@ const Comment = (props) => {
       <div class="flex flex-col gap-1 w-full max-w-[320px]">
         <div class="flex items-center space-x-2 rtl:space-x-reverse">
           <span class="text-sm font-semibold text-gray-900 dark:text-white">
-            {props.username} ({props.firstName} {props.lastName[0]})
+            {props.owner_username} ({props.owner_firstName}{" "}
+            {props.owner_lastName})
           </span>
           <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
             {formattedDate}

@@ -50,15 +50,16 @@ const CommentModal = (props) => {
                   commentOn={false}
                 />
                 <div className="comments">
+                  {console.log(props.post)}
                   {props.post.comments.toReversed().map((comment) => {
                     return (
                       <Comment
                         message={comment.message}
                         createdAt={comment.createdAt}
                         owner={comment.owner}
-                        firstName={comment.firstName}
-                        lastName={comment.lastName}
-                        username={comment.username}
+                        owner_firstName={comment.owner_firstName}
+                        owner_lastName={comment.owner_lastName}
+                        owner_username={comment.owner_username}
                       />
                     );
                   })}
