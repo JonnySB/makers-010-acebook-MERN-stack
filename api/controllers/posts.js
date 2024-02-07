@@ -25,7 +25,10 @@ const getAllPosts = async (req, res) => {
       ],
     },
     {
-      $unwind: "$comments",
+      $unwind: {
+        path: "$comments",
+        preserveNullAndEmptyArrays: true,
+      },
     },
     {
       $lookup: {
