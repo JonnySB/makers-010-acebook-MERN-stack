@@ -63,7 +63,6 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
                     rows="3"
                     className="w-full text-center text-md border border-gray-300 bg-gray-100 rounded-md py-2 focus:border-blue-500 placeholder:text-gray-500"
                     type="text"
-                    value={newBio}
                     onChange={handleBioChange}
                     placeholder="Describe who you are"
                   />
