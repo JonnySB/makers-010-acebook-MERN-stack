@@ -1,21 +1,21 @@
-const URL = "https://api.cloudinary.com/v1_1/dapj3ww2j/image/upload";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-export const uploadImage = async (fileDataURL, publicID) => {
+export const uploadImage = async (fileDataURL, publicID, token) => {
     const payload = {
       file: fileDataURL,
-      upload_preset: "ql98gqww",
       public_id: publicID,
     }
   
     const requestOptions = {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload)
     };
   
-    const response = await fetch(`${URL}/`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/images`, requestOptions);
   
     if (response.status !== 200) {
       throw new Error("Unable to make POST request");
