@@ -304,7 +304,6 @@ describe("Sign up - Age limit is 13", () => {
     await userEvent.type(dobInputEl, '2011-02-04');
 
     await userEvent.click(submitButtonEl);
-    screen.debug()
   
     const validationError = screen.queryByText(/User must be at least 13 years old/)
     expect(validationError !== null).toBe(false);

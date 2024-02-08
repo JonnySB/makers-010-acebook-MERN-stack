@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { login } from "../../services/authentication"; // Look this up
+import { login } from "../../services/authentication"; 
 
 export const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -19,6 +20,7 @@ export const LoginPage = () => {
       navigate("/posts");
     } catch (err) {
       console.error(err);
+      setError(err.response?.data?.message || "Make sure email and password are correct")
       navigate("/");
     }
   };
@@ -38,21 +40,21 @@ export const LoginPage = () => {
   return (
     <>
 
-    <section className="bg-gray-50 dark:bg-gray-900 md:h-screen ">
+    <section className="bg-gray-200 dark:bg-gray-900 md:h-screen ">
     <div className="lg:flex flex-wrap items-center justify-center px-6 py-8 md:h-screen ">
-      <div className="flex  ">
+      <div className="flex items-center justify-center ">
         <div className="flex flex-col pr-14">
           <h3 className="text-[#0079FC] text-6xl font-semibold ">acebook </h3>  
           <p className="mb-7 text-2xl">Acebook helps you connect and<br/> share with the people in your life.</p>
         </div>
       </div>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md  dark:bg-gray-800 dark:border-gray-700">
+            <div className="p-6  md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     Welcome back, login
                 </h1>
                 <form 
-                  className="space-y-4 md:space-y-6" 
+                  className="space-y-4 md:space-y-6 " 
                   onSubmit={handleSubmit}>
 
                     <div>
@@ -78,7 +80,7 @@ export const LoginPage = () => {
                           name="email" 
                           id="email" 
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                          placeholder="*name@company.com" 
+                          placeholder="Email address" 
                           value={email}
                           onChange={handleEmailChange}
                           required
@@ -98,7 +100,7 @@ export const LoginPage = () => {
                           type={showPassword ? "text" : "password"}
                           name="password" 
                           id="password" 
-                          placeholder="••••••••" 
+                          placeholder="Password" 
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                           value={password}
                           onChange={handlePasswordChange}
@@ -146,7 +148,9 @@ export const LoginPage = () => {
                     <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                       Don't have an account already?  <Link to="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign Up</Link>
                     </p>
-
+                    {error && (
+                      <p className="font-medium text-xs text-red-600 dark:text-green-500">{error}</p>
+                    )}
                 </form>
             </div>
         </div>
