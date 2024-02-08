@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { getPosts } from "../../services/posts";
 import { getUserById } from "../../services/users";
+import ProfileHeader from "../../components/Profile/ProfileHeader";
 import Post from "../../components/Post/Post";
 import Intro from "../../components/Profile/Intro";
 
@@ -17,7 +18,6 @@ export const ProfilePage = () => {
     if (token) {
       getUserById(token, profile_id)
         .then((data) => {
-          console.log(data);
           setProfileInfo(data.user);
           setToken(data.token);
           setUserID(data.user_id);
@@ -35,29 +35,32 @@ export const ProfilePage = () => {
   }, [token]);
 
   return (
-    <div className="bg-slate-100 min-h-screen py-4">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-screen-lg mx-auto px-4">
-        <div className="min-w-0 flex-auto">
-          <Intro profileInfo={profileInfo} profileOwner={profileOwner} />
-          <div class="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
-            <h1 class="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
-              Friends
-            </h1>
+    <>
+      <ProfileHeader profileInfo={profileInfo} />
+      <div className="bg-slate-100 h-screen p-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-screen-lg mx-auto px-4">
+          <div className="min-w-0 flex-auto">
+            <Intro profileInfo={profileInfo} profileOwner={profileOwner} />
+            <div className="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
+              <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
+                Friends
+              </h1>
+            </div>
+            <div className="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
+              <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
+                Photos
+              </h1>
+            </div>
           </div>
-          <div class="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
-            <h1 class="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
-              Photos
-            </h1>
-          </div>
-        </div>
-        <div className="min-w-0 flex-auto">
-        <div class="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
-            <h1 class="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
-              Posts
-            </h1>
+          <div className="min-w-0 flex-auto">
+            <div className="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
+              <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
+                Posts
+              </h1>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
