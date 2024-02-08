@@ -69,11 +69,9 @@ describe("User service", () => {
   });
 
   describe("Profile Page - POST requests", () => {
-    test.todo("Creates a POST request and ensure 200 status", async () => {});
-
     describe("Update Bio", () => {
       test("the update bio request contains a string & a token", async () => {
-        fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
 
         await updateBio("I love acebook", tokenMock);
 
@@ -100,7 +98,7 @@ describe("User service", () => {
 
     describe("Update current location", () => {
       test("the update currentLocation request contains a string & a token", async () => {
-        fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
 
         await updateCurrentLocation("London", tokenMock);
 
@@ -127,7 +125,7 @@ describe("User service", () => {
 
     describe("Update workplace", () => {
       test("the update workplace request contains a string & a token", async () => {
-        fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
 
         await updateWorkplace("Makers", tokenMock);
 
@@ -154,7 +152,7 @@ describe("User service", () => {
 
     describe("Update education", () => {
       test("the update education request contains a string & a token", async () => {
-        fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+        fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
 
         await updateEducation("School of hard knocks", tokenMock);
 

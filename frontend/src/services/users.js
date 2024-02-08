@@ -23,7 +23,6 @@ export const getUserById = async (userId, token) => {
   return data;
 };
 
-//TODO: Something wrong with the request. Recieving error "Couldn't update bio"
 export const updateBio = async (bioContent, token) => {
   const payload = {
     bio: bioContent
@@ -52,15 +51,19 @@ export const updateBio = async (bioContent, token) => {
   const data = await response.json();
   return data;
 };
-//TODO: Need to make payload for each of the methods below like above in updateBio
+
 export const updateCurrentLocation = async (currentLocationContent, token) => {
+  const payload ={
+    currentLocation: currentLocationContent
+  }
+  
   const requestOptions = {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "applicatoin/json",
     },
-    body: JSON.stringify(currentLocationContent),
+    body: JSON.stringify(payload),
   };
 
   const response = await fetch(
@@ -68,7 +71,7 @@ export const updateCurrentLocation = async (currentLocationContent, token) => {
     requestOptions
   );
 
-  if (response.status !== 201) {
+  if (response.status !== 200) {
     throw new Error("Couldn't update current location");
   } else {
     console.log("Updated current location successfuly");
@@ -79,13 +82,17 @@ export const updateCurrentLocation = async (currentLocationContent, token) => {
 };
 
 export const updateWorkplace = async (workplaceContent, token) => {
+  const payload = {
+    workplace: workplaceContent
+  }
+
   const requestOptions = {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "applicatoin/json",
     },
-    body: JSON.stringify(workplaceContent),
+    body: JSON.stringify(payload),
   };
 
   const response = await fetch(
@@ -93,7 +100,7 @@ export const updateWorkplace = async (workplaceContent, token) => {
     requestOptions
   );
 
-  if (response.status !== 201) {
+  if (response.status !== 200) {
     throw new Error("Couldn't update workplace");
   } else {
     console.log("Updated workplace successfuly");
@@ -104,13 +111,17 @@ export const updateWorkplace = async (workplaceContent, token) => {
 };
 
 export const updateEducation = async (educationContent, token) => {
+  const payload = {
+    education: educationContent
+  }
+
   const requestOptions = {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "applicatoin/json",
     },
-    body: JSON.stringify(educationContent),
+    body: JSON.stringify(payload),
   };
 
   const response = await fetch(
@@ -118,7 +129,7 @@ export const updateEducation = async (educationContent, token) => {
     requestOptions
   );
 
-  if (response.status !== 201) {
+  if (response.status !== 200) {
     throw new Error("Couldn't update education");
   } else {
     console.log("Updated education successfuly");
