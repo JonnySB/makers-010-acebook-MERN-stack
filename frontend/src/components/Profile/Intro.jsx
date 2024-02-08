@@ -4,6 +4,7 @@ import educationIcon from "../../assets/educationIcon.svg";
 import workplaceIcon from "../../assets/workplaceIcon.svg";
 import currentLocationIcon from "../../assets/currentLocationIcon.svg";
 import IntroItem from "./IntroItem";
+
 import {
   updateBio,
   updateCurrentLocation,
@@ -11,9 +12,8 @@ import {
   updateEducation,
 } from "../../services/users";
 
-const Intro = ({ profileInfo, profileOwner, token }) => {
+const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
   const [editingBio, setEditingBio] = useState(false);
-  //useState probably shouldn't be ("") but the data from DB?
   const [newBio, setNewBio] = useState("");
 
   const handleBioChange = (e) => {
@@ -22,16 +22,14 @@ const Intro = ({ profileInfo, profileOwner, token }) => {
 
   const handleBioSave = (event) => {
     event.preventDefault();
-    console.log("profileInfo.bio before services", profileInfo.bio)
-    console.log("New Bio before services", newBio);
 
-    //service stuff for update Bio
     try {
-      updateBio(newBio, token);
+      updateBio(newBio, token).then((data) => {
+        setToken(data.token);
+      });
     } catch (error) {
       console.error("Error updating bio:", error);
     }
-    console.log("profileInfoBio after services", profileInfo.Bio)
     setNewBio("");
     setEditingBio(false);
   };
@@ -96,7 +94,7 @@ const Intro = ({ profileInfo, profileOwner, token }) => {
         ) : (
           <div>
             <p>{profileInfo.bio}</p>
-            {/* <button>Edit Bio</button> */}
+            <button>Edit Bio</button>
           </div>
         )}
       </div>

@@ -43,7 +43,7 @@ export const updateBio = async (bioContent, token) => {
     requestOptions
   );
 
-  if (response.status !== 201) {
+  if (response.status !== 200) {
     throw new Error("Couldn't update bio");
   } else {
     console.log("Updated bio successfuly");
@@ -52,7 +52,7 @@ export const updateBio = async (bioContent, token) => {
   const data = await response.json();
   return data;
 };
-
+//TODO: Need to make payload for each of the methods below like above in updateBio
 export const updateCurrentLocation = async (currentLocationContent, token) => {
   const requestOptions = {
     method: "POST",

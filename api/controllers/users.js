@@ -111,13 +111,17 @@ const updateBio = async (req, res) => {
       { bio: bio },
       { new: true }
     );
-    res.status(200).json({ message: "Bio updated successfully" });
+
+    const newToken = generateToken(req.user_id);
+
+    res.status(200).json({ message: "Bio updated successfully", token: newToken});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
+//TODO: Need to generate new token for the following methods
 const updateCurrentLocation = async (req, res) => {
   const userId = req.user_id;
   const currentLocation = req.body.currentLocation;

@@ -657,7 +657,7 @@ describe("Tests for route /users/:user_id", () => {
       expect(response.body.token).toEqual(undefined);
     });
   });
-
+  //TODO: Need to update test to check that a new token was generated
   describe("POST, when a user updates their profile intro", () => {
     test("A user can update their intro's bio", async () => {
       await request(app)
