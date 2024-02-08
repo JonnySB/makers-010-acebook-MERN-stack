@@ -25,11 +25,11 @@ export const FeedPage = () => {
           console.err(err);
         });
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, [token]);
 
-  if (!token) {
+  if(!token) {
     return;
   }
 

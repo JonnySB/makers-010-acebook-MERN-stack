@@ -82,10 +82,7 @@ export const SignupPage = () => {
 
   const handleDobChange = (event) => {
     const selectedDate = new Date(event.target.value);
-    console.log("event -> ", event.target.value);
-    console.log("Selected date -> ", selectedDate)
     const formattedDate = selectedDate.toISOString().split('T')[0];
-    console.log("formated date -> ", formattedDate)
     setDob(formattedDate);
     reachedMinAge();
   }
@@ -98,23 +95,20 @@ export const SignupPage = () => {
     const userAge = today.getFullYear() - userDob.getFullYear() -
       ((today.getMonth() < userDob.getMonth() ||
         (today.getMonth() === userDob.getMonth() && today.getDate() < userDob.getDate())) ? 1 : 0);
-        // console.log("USER AGE -> ", userAge)
-        // console.log("USER DOB -> ", userDob)
-        // console.log("another DOB -> ", dob)
     setShowAgeMessage(userAge < 13);
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-  console.log("FROM COMPONENT -> ", showAgeMessage);
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-    <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-          acebook    
-      </a>
+    <div className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          {/* <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/> */}
+          <h3 className="text-[#0079FC] text-6xl">acebook </h3>  
+      </div>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
