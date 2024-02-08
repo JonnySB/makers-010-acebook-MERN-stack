@@ -36,14 +36,21 @@ export const FeedPage = () => {
   return (
     <>
     <NavBar />
-      <div className="w-screen h-full bg-gray-100">
+      <div className="w-screen h-full bg-gray-100 pt-6 pb-10">
         <div className="flex justify-center">
-          <CreatePost token={token} setToken={setToken}/>
+          <CreatePost token={token} setToken={setToken} />
         </div>
 
         <div role="feed">
           {posts.map((post) => (
-            <Post userID={userID} post={post} key={post._id} token={token} setToken={setToken}/>
+            <Post
+              userID={userID}
+              post={post}
+              key={post._id}
+              token={token}
+              setToken={setToken}
+              commentOn={true}
+            />
           ))}
         </div>
       </div>
