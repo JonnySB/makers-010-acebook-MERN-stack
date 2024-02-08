@@ -8,8 +8,8 @@ const Post = (props) => {
       <div className="w-1/2 bg-white shadow text-justify border border-gray-200">
         <div className="pt-2 p-4">
           <div className="flex flex-row">
-            <div className="p-4 border rounded-full">
-              Pic
+            <div className="h-14 w-14">
+              <img className="object-fill" src={props.post.user_data[0].profileImg} />
             </div>
             <div className="flex flex-col justify-center ms-4">
               {/* TODO: Add some useful label to the below div to identify it as user's name */}

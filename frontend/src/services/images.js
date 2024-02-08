@@ -15,7 +15,7 @@ export const uploadImage = async (fileDataURL, publicID, token) => {
       body: JSON.stringify(payload)
     };
   
-    const response = await fetch(`${BACKEND_URL}/images`, requestOptions);
+    const response = await fetch(`${BACKEND_URL}/images/profile`, requestOptions);
   
     if (response.status !== 200) {
       throw new Error("Unable to make POST request");

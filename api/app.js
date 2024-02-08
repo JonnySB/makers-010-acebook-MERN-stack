@@ -22,7 +22,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use("/users", usersRouter);
 app.use("/posts", tokenChecker, postsRouter);
 app.use("/tokens", authenticationRouter);
-app.use("/images", imageRouter);
+app.use("/images", tokenChecker, imageRouter);
 
 // 404 Handler
 app.use((_req, res) => {
