@@ -24,18 +24,23 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
     event.preventDefault();
 
     try {
-      updateBio(newBio, token).then((data) => {
-        setToken(data.token);
-      });
+      updateBio(newBio, token)
+        .then((data) => {
+          setToken(data.token);
+        })
+        .then(() => {
+          setNewBio(profileInfo.bio);
+        })
+        .then(() => {
+          setEditingBio(false);
+        });
     } catch (error) {
       console.error("Error updating bio:", error);
     }
-    setNewBio("");
-    setEditingBio(false);
   };
 
   const handleBioCancel = () => {
-    setNewBio("");
+    setNewBio(profileInfo.bio);
     setEditingBio(false);
   };
 
@@ -92,9 +97,46 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
             )}
           </div>
         ) : (
-          <div>
-            <p>{profileInfo.bio}</p>
-            <button>Edit Bio</button>
+          <div className="flex flex-col gap-2 py-2">
+            {editingBio ? (
+              <>
+                <div className="flex">
+                  <textarea
+                    rows="3"
+                    className="w-full text-center text-md border border-gray-300 bg-gray-100 rounded-md py-2 focus:border-blue-500 placeholder:text-gray-500"
+                    type="text"
+                    onChange={handleBioChange}
+                    placeholder="Describe who you are"
+                  >
+                    {profileInfo.bio}
+                  </textarea>
+                </div>
+                <div className="flex justify-end gap-2">
+                  <button
+                    className="w-fit p-2 hover:bg-gray-300 justify-center text-center font-medium rounded-md bg-gray-200"
+                    onClick={handleBioCancel}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="w-fit p-2 hover:bg-gray-300 justify-center text-center font-medium rounded-md bg-gray-200"
+                    onClick={handleBioSave}
+                  >
+                    Save
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="text-center">{profileInfo.bio}</p>
+                <button
+                  className="w-full py-1 hover:bg-gray-300 justify-center text-center font-medium rounded-md bg-gray-200"
+                  onClick={() => setEditingBio(true)}
+                >
+                  Edit Bio
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>
