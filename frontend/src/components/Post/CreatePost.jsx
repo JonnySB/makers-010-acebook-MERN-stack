@@ -42,7 +42,7 @@ const CreatePost = (props) => {
   return (
     <div
       role="createPostDiv"
-      className="my-3 pt-2 pb-0 p-4 border shadow-sm rounded-lg bg-white border border-gray-200 bg-gray-50"
+      className="my-3 pt-2 pb-0 p-4 border shadow-sm rounded-lg bg-white border border-gray-200"
     >
       <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
         <div className="px-2 py-2 bg-white rounded-t-lg">
