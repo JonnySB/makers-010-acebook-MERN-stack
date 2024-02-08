@@ -31,7 +31,11 @@ const CommentModal = (props) => {
 
   return (
     <>
-      <button onClick={toggleCommentModal} className="btn-modal">
+      <button
+        role="modalBtn"
+        onClick={toggleCommentModal}
+        className="btn-modal"
+      >
         {commentIcon}
       </button>
 

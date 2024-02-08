@@ -33,7 +33,10 @@ const Comment = (props) => {
           />
           <div class="flex flex-col gap-1 w-full max-w-[320px]">
             <div class="flex items-center space-x-2 rtl:space-x-reverse">
-              <span class="text-sm font-semibold text-gray-900 dark:text-white">
+              <span
+                role="commenterFullDisplayName"
+                class="text-sm font-semibold text-gray-900 dark:text-white"
+              >
                 {props.owner_username} ({props.owner_firstName}{" "}
                 {props.owner_lastName})
               </span>
@@ -42,8 +45,10 @@ const Comment = (props) => {
               </span>
             </div>
             <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-              <p class="text-sm font-normal text-gray-900 dark:text-white">
-                {" "}
+              <p
+                role="singleCommentContent"
+                class="text-sm font-normal text-gray-900 dark:text-white"
+              >
                 {props.message}
               </p>
             </div>
