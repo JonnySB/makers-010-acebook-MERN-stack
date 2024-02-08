@@ -18,7 +18,7 @@ const createToken = (userId) => {
       // Set the JWT token to expire in 10 minutes
       exp: Math.floor(Date.now() / 1000) + 10 * 60,
     },
-    secret
+    secret,
   );
 };
 
@@ -30,7 +30,7 @@ describe("/posts", () => {
     password: "1234",
     dob: new Date("1988-02-05"),
     firstName: "Scar",
-    lastName: "Brown"
+    lastName: "Brown",
   });
   beforeAll(async () => {
     await user.save();
@@ -133,12 +133,12 @@ describe("/posts", () => {
     test("returns every post in the collection", async () => {
       const post1 = new Post({
         message: "I love all my children equally",
-        createdAt: date,
+        createdAt: new Date("2024-01-31T13:51:02.009+00:00"),
         owner: "65ba5046a9d4c1867a4cd305",
       });
       const post2 = new Post({
         message: "I've never cared for GOB",
-        createdAt: date,
+        createdAt: new Date("2024-02-21T13:51:02.009+00:00"),
         owner: "65ba5046a9d4c1867a4cd305",
       });
       await post1.save();
@@ -149,15 +149,16 @@ describe("/posts", () => {
         .set("Authorization", `Bearer ${token}`);
 
       const posts = response.body.posts;
-      const firstPost = posts[0];
-      const secondPost = posts[1];
+
+      const firstPost = posts[1];
+      const secondPost = posts[0];
 
       expect(firstPost.message).toEqual("I love all my children equally");
       expect(secondPost.message).toEqual("I've never cared for GOB");
     });
 
     // TODO:
-    test.todo("returned post doesn't contain user data")
+    test.todo("returned post doesn't contain user data");
 
     test("returns a new token", async () => {
       const post1 = new Post({
@@ -256,7 +257,7 @@ describe("/posts/comments", () => {
     password: "Password1!",
     dob: new Date("1988-02-05"),
     firstName: "Scar",
-    lastName: "Brown"
+    lastName: "Brown",
   });
   beforeAll(async () => {
     await user.save();
@@ -303,8 +304,10 @@ describe("/posts/comments", () => {
         });
 
       const posts = await Post.find();
+
       expect(posts[0].comments.length).toEqual(1);
       expect(posts[0].comments[0].message).toEqual("Hello World!!");
+      expect(posts[0].comments[0].owner).toEqual(user._id);
     });
 
     test("returns a new token", async () => {
@@ -393,7 +396,7 @@ describe("/posts/likes", () => {
     password: "Password1!",
     dob: new Date("1988-02-05"),
     firstName: "Scar",
-    lastName: "Brown"
+    lastName: "Brown",
   });
   beforeAll(async () => {
     await user.save();
