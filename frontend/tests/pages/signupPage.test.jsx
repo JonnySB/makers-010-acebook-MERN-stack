@@ -276,12 +276,11 @@ describe("Sign up - Age limit is 13", () => {
     await userEvent.type(lastNameInputEl, "Eyre");
     await userEvent.type(dobInputEl, '2014-02-04');
 
-    console.log("DOB INPUT EL AFTER -> ", dobInputEl);
     await userEvent.click(submitButtonEl);
     screen.debug()
   
     const validationError = screen.queryByText(/User must be at least 13 years old/)
-    console.log("VALIDATION ERROR -> ", validationError)
+    
     expect(validationError !== null).toBe(true);
   });
 
@@ -304,12 +303,10 @@ describe("Sign up - Age limit is 13", () => {
     await userEvent.type(lastNameInputEl, "Eyre");
     await userEvent.type(dobInputEl, '2011-02-04');
 
-    console.log("DOB INPUT EL AFTER -> ", dobInputEl);
     await userEvent.click(submitButtonEl);
     screen.debug()
   
     const validationError = screen.queryByText(/User must be at least 13 years old/)
-    console.log("VALIDATION ERROR -> ", validationError)
     expect(validationError !== null).toBe(false);
   });
 });
