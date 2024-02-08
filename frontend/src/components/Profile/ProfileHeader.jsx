@@ -11,8 +11,8 @@ const ProfileHeader = (props) => {
           }}
         ></div>
       </div>
-      <div className="flex flex-col items-center w-full h-auto bg-white drop-shadow-md">
-        <div className="flex items-end w-full max-w-[68rem] h-auto pb-8 ml-24 -mt-20">
+      <div className="flex flex-col items-center w-full h-auto bg-white drop-shadow-sm">
+        <div className="lg:flex items-end w-full max-w-[68rem] h-auto pb-8 ml-24 -mt-20">
           <div className="flex">
             <div
               className="size-44 bg-cover bg-center border-8 border-white rounded-full overflow-hidden"

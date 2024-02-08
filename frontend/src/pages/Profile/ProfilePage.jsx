@@ -36,10 +36,10 @@ export const ProfilePage = () => {
 
   return (
     <>
-      <ProfileHeader profileInfo={profileInfo} />
+      <ProfileHeader profileInfo={profileInfo} profileOwner={profileOwner} />
       <div className="bg-slate-100 h-screen p-3">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-screen-lg mx-auto px-4">
-          <div className="min-w-0 flex-auto">
+        <div className="md:flex gap-4 md:max-w-screen-lg w-screen mx-auto px-4">
+          <div className="flex-auto basis-5/12">
             <Intro profileInfo={profileInfo} profileOwner={profileOwner} />
             <div className="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
               <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
@@ -52,7 +52,7 @@ export const ProfilePage = () => {
               </h1>
             </div>
           </div>
-          <div className="min-w-0 flex-auto">
+          <div className="flex-auto basis-7/12">
             <div className="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
               <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
                 Posts
