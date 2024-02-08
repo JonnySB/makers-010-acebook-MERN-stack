@@ -4,17 +4,34 @@ import educationIcon from "../../assets/educationIcon.svg";
 import workplaceIcon from "../../assets/workplaceIcon.svg";
 import currentLocationIcon from "../../assets/currentLocationIcon.svg";
 import IntroItem from "./IntroItem";
+import {
+  updateBio,
+  updateCurrentLocation,
+  updateWorkplace,
+  updateEducation,
+} from "../../services/users";
 
-const Intro = (props) => {
+const Intro = ({ profileInfo, profileOwner, token }) => {
   const [editingBio, setEditingBio] = useState(false);
+  //useState probably shouldn't be ("") but the data from DB?
   const [newBio, setNewBio] = useState("");
 
   const handleBioChange = (e) => {
     setNewBio(e.target.value);
   };
 
-  const handleBioSave = () => {
+  const handleBioSave = (event) => {
+    event.preventDefault();
+    console.log("profileInfo.bio before services", profileInfo.bio)
+    console.log("New Bio before services", newBio);
+
     //service stuff for update Bio
+    try {
+      updateBio(newBio, token);
+    } catch (error) {
+      console.error("Error updating bio:", error);
+    }
+    console.log("profileInfoBio after services", profileInfo.Bio)
     setNewBio("");
     setEditingBio(false);
   };
@@ -25,15 +42,17 @@ const Intro = (props) => {
   };
 
   return (
-    <div class="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
+    <div className="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
       <div>
-        <h1 class="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
+        <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
           Intro
         </h1>
       </div>
       <div className="w-full">
-        {props.profileOwner && !props.profileInfo.bio ? (
+        {/* If the profile belongs to the owner but their Bio is empty, show next line.*/}
+        {profileOwner && !profileInfo.bio ? (
           <div className="flex flex-col gap-2">
+            {/* If the user isn't editing the bio, show line 71 */}
             {editingBio ? (
               <>
                 <div className="flex">
@@ -64,6 +83,8 @@ const Intro = (props) => {
             ) : (
               <div className="py-2">
                 <button
+                  aria-label="Add Bio"
+                  aria-expanded={editingBio}
                   className="w-full py-1 hover:bg-gray-300 justify-center text-center font-medium rounded-md bg-gray-200"
                   onClick={() => setEditingBio(true)}
                 >
@@ -73,33 +94,44 @@ const Intro = (props) => {
             )}
           </div>
         ) : (
-          <p>{props.profileInfo.bio}</p>
+          <div>
+            <p>{profileInfo.bio}</p>
+            {/* <button>Edit Bio</button> */}
+          </div>
         )}
       </div>
       <div>
         <IntroItem
           icon={birthdayIcon}
           label="Born on"
-          value={props.profileInfo.dob}
+          value={profileInfo.dob}
+          aria-labelledby="born-on-label"
+          role="listitem"
         />
         <IntroItem
           icon={educationIcon}
           label="Studies at"
-          value={props.profileInfo.education}
+          value={profileInfo.education}
+          aria-labelledby="studies-label"
+          role="listitem"
         />
         <IntroItem
           icon={workplaceIcon}
           label="Works at"
-          value={props.profileInfo.workplace}
+          value={profileInfo.workplace}
+          aria-labelledby="workplace-label"
+          role="listitem"
         />
         <IntroItem
           icon={currentLocationIcon}
           label="Lives in"
-          value={props.profileInfo.currentLocation}
+          value={profileInfo.currentLocation}
+          aria-labelledby="lives-in-label"
+          role="listitem"
         />
       </div>
       <div className="py-2">
-        {props.profileOwner ? (
+        {profileOwner ? (
           <button className="w-full py-1 hover:bg-gray-300 justify-center text-center font-medium rounded-md bg-gray-200">
             Edit details
           </button>
