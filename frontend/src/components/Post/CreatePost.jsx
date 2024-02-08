@@ -42,28 +42,28 @@ const CreatePost = (props) => {
   return (
     <div
       role="createPostDiv"
-      className="w-1/2 border border-gray-200 bg-gray-50"
+      className="my-3 pt-2 pb-0 p-4 border shadow-sm rounded-lg bg-white border border-gray-200 bg-gray-50"
     >
       <form onSubmit={handleCreatePost} aria-label="Create New Post Form">
-        <div className="px-4 py-2 bg-white rounded-t-lg">
+        <div className="px-2 py-2 bg-white rounded-t-lg">
           <textarea
             name="message"
             value={text}
             onChange={handleChange}
             rows="4"
             cols="75"
-            className="focus:outline-none w-full px-0 text-sm text-gray-900 bg-white resize-none"
+            className="focus:outline-none w-full px-0 text-md text-gray-900 bg-white resize-none"
             placeholder="Write a post..."
             required
           ></textarea>
         </div>
-        <div className="flex justify-end px-3 py-2 bg-white border-t">
+        <div className="flex justify-end px-2 py-4 bg-white border-t">
           <div>
             <button
               role="createPostSubmitButton"
               type="submit"
               name="submit"
-              className="py-2.5 px-4 text-xs font-medium text-center text-white bg-green-600 rounded-lg focus:ring-4 focus:ring-green-200 hover:bg-green-800"
+              className="py-2.5 px-4 text-md font-medium text-center text-white bg-green-600 rounded-lg focus:ring-4 focus:ring-green-200 hover:bg-green-800"
               aria-label="Submit Post"
               value="Create Post"
             >

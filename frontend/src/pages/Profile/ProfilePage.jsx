@@ -5,6 +5,7 @@ import { getPosts } from "../../services/posts";
 import { getUserById } from "../../services/users";
 import ProfileHeader from "../../components/Profile/ProfileHeader";
 import Post from "../../components/Post/Post";
+import CreatePost from "../../components/Post/CreatePost";
 import Intro from "../../components/Profile/Intro";
 
 export const ProfilePage = () => {
@@ -37,7 +38,7 @@ export const ProfilePage = () => {
   return (
     <>
       <ProfileHeader profileInfo={profileInfo} profileOwner={profileOwner} />
-      <div className="bg-slate-100 h-screen p-3">
+      <div className="bg-slate-100 h-screen">
         <div className="md:flex gap-4 md:max-w-screen-lg w-screen mx-auto px-4">
           <div className="flex-auto basis-5/12">
             <Intro profileInfo={profileInfo} profileOwner={profileOwner} />
@@ -46,13 +47,14 @@ export const ProfilePage = () => {
                 Friends
               </h1>
             </div>
-            <div className="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
+            <div className="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
               <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
                 Photos
               </h1>
             </div>
           </div>
           <div className="flex-auto basis-7/12">
+            <CreatePost />
             <div className="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
               <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
                 Posts

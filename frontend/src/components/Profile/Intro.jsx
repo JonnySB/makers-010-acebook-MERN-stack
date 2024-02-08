@@ -25,7 +25,7 @@ const Intro = (props) => {
   };
 
   return (
-    <div className="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
+    <div className="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
       <div>
         <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
           Intro
