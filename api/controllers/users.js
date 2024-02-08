@@ -17,6 +17,7 @@ const create = async (req, res) => {
   const dob = req.body.dob;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
+  const profileImg = process.env.CLOUDINARY_BASE_URL + "profile/default";
 
   const userDob = new Date(dob);
   if(isNaN(userDob.getTime())) {
@@ -45,12 +46,13 @@ const create = async (req, res) => {
     if(userAge < 13) {
       return res.status(400).json({ message: 'User must be at least 13 years old.' });
     }
-
+    /*
     if (!validatePassword(password)) {
       return res
         .status(400)
         .json({ message: "Password does not meet the criteria." });
     }
+    */
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
@@ -60,6 +62,7 @@ const create = async (req, res) => {
       dob,
       firstName,
       lastName,
+      profileImg
     });
     await user.save();
     // console.log("User created, id:", user._id.toString());
