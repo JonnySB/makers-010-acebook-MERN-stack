@@ -46,6 +46,7 @@ export const FeedPage = () => {
                 token={token}
                 setToken={setToken}
                 commentOn={true}
+                actionButtons={true}
               />
             ))}
           </div>
