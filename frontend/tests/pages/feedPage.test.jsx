@@ -28,7 +28,9 @@ describe("Feed Page", () => {
         message: "Test Post 1",
         createdAt: "2024-02-01T16:50:30.870Z",
         likes: [],
-        comments: [],
+        comments: [{
+            owner_firstName: [{}],
+        }],
         user_data: [{
             username: "user",
             firstName: "Bob",
@@ -41,7 +43,6 @@ describe("Feed Page", () => {
         getPosts.mockResolvedValue({ posts: mockPosts, token: "newToken", user_id: "userID" });
         
         render(<FeedPage />);
-
         test("It displays the Post and Like components", () => {
             const post = screen.getByRole("singlePostContent");
             const like = screen.getByRole("likeDiv");
