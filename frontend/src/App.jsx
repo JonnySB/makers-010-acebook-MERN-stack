@@ -6,7 +6,7 @@ import { LoginPage } from "./pages/Login/LoginPage";
 import { SignupPage } from "./pages/Signup/SignupPage";
 import { FeedPage } from "./pages/Feed/FeedPage";
 import { ProfilePage } from "./pages/Profile/ProfilePage";
-import { TestPage } from "./pages/Test/TestPage";
+// import { TestPage } from "./pages/Test/TestPage";
 
 // docs: https://reactrouter.com/en/main/start/overview
 const router = createBrowserRouter([
@@ -26,10 +26,10 @@ const router = createBrowserRouter([
     path: "/profile/:profile_id",
     element: <ProfilePage />,
   },
-  {
-    path: "/test/",
-    element: <TestPage />,
-  },
+  // {
+  //   path: "/test/",
+  //   element: <TestPage />,
+  // },
 ]);
 
 const App = () => {
