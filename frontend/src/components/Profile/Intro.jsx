@@ -44,7 +44,7 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
   };
 
   return (
-    <div className="flex flex-col mx-auto pt-2 p-4 border shadow-sm rounded-lg bg-white">
+    <div className="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
       <div>
         <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
           Intro
@@ -52,7 +52,7 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
       </div>
       <div className="w-full">
         {/* If the profile belongs to the owner but their Bio is empty, show next line.*/}
-        {profileOwner && !profileInfo.bio ? (
+        {profileOwner && !profileInfo.bio && (
           <div className="flex flex-col gap-2">
             {/* If the user isn't editing the bio, show line 71 */}
             {editingBio ? (
@@ -96,7 +96,8 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
               </div>
             )}
           </div>
-        ) : (
+        )}{" "}
+        {profileOwner && profileInfo.bio && (
           <div className="flex flex-col gap-2 py-2">
             {editingBio ? (
               <>
@@ -137,6 +138,11 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
                 </button>
               </>
             )}
+          </div>
+        )}
+        {!profileOwner && profileInfo.bio && (
+          <div className="flex flex-col gap-2 py-2">
+            <p className="text-center">{profileInfo.bio}</p>
           </div>
         )}
       </div>
