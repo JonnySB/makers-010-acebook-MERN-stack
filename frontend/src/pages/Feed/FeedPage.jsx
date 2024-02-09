@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post/Post";
 import CreatePost from "../../components/Post/CreatePost";
+import NavBar from "../../components/NavBar/NavBar";
 
 export const FeedPage = () => {
   const [posts, setPosts] = useState([]);
@@ -28,13 +29,19 @@ export const FeedPage = () => {
     }
   }, [token]);
 
-  if (!token) {
+  if(!token) {
     return;
+  }
+
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+    navigate("/");
   }
 
   return (
     <>
-      <div className="min-h-screen bg-slate-100 flex justify-center">
+    <NavBar userID={userID} handleLogout={handleLogout}/>
+      <div className="flex justify-center min-h-screen bg-slate-100 pt-6 pb-10">
         <div>
           <CreatePost token={token} setToken={setToken} />
           <div role="feed">

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 
 import { useNavigate } from "react-router-dom";
 import { login } from "../../src/services/authentication";
@@ -62,7 +62,7 @@ describe("Login Page", () => {
         expect(navigateMock).toHaveBeenCalledWith("/posts");
     });
 
-    test("navigates to /login on unsuccessful login", async () => {
+    test("navigates to / on unsuccessful login", async () => {
         render(<LoginPage />);
 
         login.mockRejectedValue(new Error("Error logging in"));
@@ -73,3 +73,30 @@ describe("Login Page", () => {
         expect(navigateMock).toHaveBeenCalledWith("/");
     });
 });
+
+describe("Login - unsuccessful", () => {
+    beforeEach(() => {
+        vi.resetAllMocks();
+    });
+
+    test.todo("User cannot login if the email and password do not match", async () => {
+        render(<LoginPage />);
+        const emailInputEl = screen.getByLabelText("Your email");
+        const passwordInputEl = screen.getByLabelText("Password");
+
+        const submitButtonEl = screen.getByRole("submit-button");
+
+        await userEvent.type(emailInputEl, "test@email.com");
+        await userEvent.type(passwordInputEl, "12345");
+
+        // console.log("THE PASSWORD BEFORE -> ", passwordInputEl)
+
+        await userEvent.click(submitButtonEl);
+        const validationError = screen.queryByText(/Make sure email and password are correct/);
+        // console.log("VALIDATION ERROR IN LOGIN -> ", validationError)
+        // console.log("THE PASSWORD AFTER -> ", passwordInputEl)
+        expect(validationError !== null).toBe(true)
+
+    });
+});
+
