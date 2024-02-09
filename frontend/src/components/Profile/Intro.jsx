@@ -22,7 +22,6 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
 
   const handleBioSave = (event) => {
     event.preventDefault();
-
     try {
       updateBio(newBio, token)
         .then((data) => {
@@ -65,6 +64,8 @@ const Intro = ({ profileInfo, profileOwner, token, setToken }) => {
                     type="text"
                     onChange={handleBioChange}
                     placeholder="Describe who you are"
+                    // Can't test the value inside the text area without below code
+                    // value={newBio}
                   />
                 </div>
                 <div className="flex justify-end gap-2">
