@@ -5,6 +5,7 @@ const cors = require("cors");
 const usersRouter = require("./routes/users");
 const postsRouter = require("./routes/posts");
 const authenticationRouter = require("./routes/authentication");
+const imageRouter = require("./routes/images");
 const tokenChecker = require("./middleware/tokenChecker");
 
 const app = express();
@@ -15,12 +16,13 @@ const app = express();
 app.use(cors());
 
 // Parse JSON request bodies, made available on `req.body`
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 // API Routes
 app.use("/users", usersRouter);
 app.use("/posts", tokenChecker, postsRouter);
 app.use("/tokens", authenticationRouter);
+app.use("/images", tokenChecker, imageRouter);
 
 // 404 Handler
 app.use((_req, res) => {

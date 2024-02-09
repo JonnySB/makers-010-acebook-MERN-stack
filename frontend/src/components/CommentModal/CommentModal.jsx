@@ -43,6 +43,9 @@ const CommentModal = (props) => {
         <div className="modal">
           <div className="overlay">
             <div className="modal-content pt-2 p-4">
+              <button className="close-modal fixed top-0 right-0" onClick={toggleCommentModal}>
+                Close
+              </button>
               <div className="comments-scroll">
                 <Post
                   userID={props.userID}
@@ -52,6 +55,7 @@ const CommentModal = (props) => {
                   setToken={props.setToken}
                   commentModal={commentModal}
                   commentOn={false}
+                  actionButtons={false}
                 />
                 <div className="comments">
                   {console.log(props.post)}
@@ -74,9 +78,6 @@ const CommentModal = (props) => {
                 setToken={props.setToken}
                 post_id={props.post._id}
               />
-              <button className="close-modal" onClick={toggleCommentModal}>
-                Close
-              </button>
             </div>
           </div>
         </div>
