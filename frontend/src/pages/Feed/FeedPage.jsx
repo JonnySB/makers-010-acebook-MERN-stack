@@ -21,10 +21,10 @@ export const FeedPage = () => {
           window.localStorage.setItem("token", data.token);
         })
         .catch((err) => {
-          console.err(err);
+          console.error(err);
         });
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, [token]);
 
@@ -34,22 +34,21 @@ export const FeedPage = () => {
 
   return (
     <>
-      <div className="w-screen h-full bg-gray-50">
-        <div className="flex justify-center">
+      <div className="min-h-screen bg-slate-100 flex justify-center">
+        <div>
           <CreatePost token={token} setToken={setToken} />
-        </div>
-
-        <div role="feed">
-          {posts.map((post) => (
-            <Post
-              userID={userID}
-              post={post}
-              key={post._id}
-              token={token}
-              setToken={setToken}
-              commentOn={true}
-            />
-          ))}
+          <div role="feed">
+            {posts.map((post) => (
+              <Post
+                userID={userID}
+                post={post}
+                key={post._id}
+                token={token}
+                setToken={setToken}
+                commentOn={true}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </>
