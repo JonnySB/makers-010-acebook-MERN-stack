@@ -7,7 +7,6 @@ const ImageUpload = (props) => {
     const fileDataURL = await readFile(file);
     uploadImage(fileDataURL, props.id, props.token).then((response) => {
       props.setToken(response.token);
-      window.location.reload(true);
     });
   };
 
@@ -26,9 +25,9 @@ const ImageUpload = (props) => {
     });
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full hover:brightness-75 cursor-pointer">
       <img
-        className="object-fill"
+        className=""
         src={props.profileImg}
         onClick={handleClick}
       />

@@ -15,6 +15,7 @@ export const ProfilePage = () => {
   const { profile_id } = useParams();
   const [profileOwner, setProfileOwner] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [profileImg, setProfileImg] = useState("");
 
   useEffect(() => {
     if (token) {
@@ -47,14 +48,24 @@ export const ProfilePage = () => {
     }
   }, [token]);
 
-  console.log(posts)
+  console.log(posts);
 
   return (
     <div className="bg-slate-100 min-h-screen">
-      <ProfileHeader profileInfo={profileInfo} profileOwner={profileOwner} token={token} setToken={setToken}/>
+      <ProfileHeader
+        profileInfo={profileInfo}
+        profileOwner={profileOwner}
+        token={token}
+        setToken={setToken}
+      />
       <div className="md:flex gap-4 md:max-w-screen-lg w-screen mx-auto px-4">
         <div className="flex-auto basis-5/12">
-          <Intro profileInfo={profileInfo} profileOwner={profileOwner} token={token} setToken={setToken}/>
+          <Intro
+            profileInfo={profileInfo}
+            profileOwner={profileOwner}
+            token={token}
+            setToken={setToken}
+          />
           <div className="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
             <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
               Photos
@@ -84,6 +95,7 @@ export const ProfilePage = () => {
                   token={token}
                   setToken={setToken}
                   commentOn={true}
+                  actionButtons={true}
                 />
               ))}
           </div>
