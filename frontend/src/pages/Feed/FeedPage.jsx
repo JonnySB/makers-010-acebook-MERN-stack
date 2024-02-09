@@ -35,7 +35,7 @@ export const FeedPage = () => {
   return (
     <>
       <div className="min-h-screen bg-slate-100 flex justify-center">
-        <div>
+        <div className="w-1/2">
           <CreatePost token={token} setToken={setToken} />
           <div role="feed">
             {posts.map((post) => (
