@@ -1,4 +1,8 @@
 import React from "react";
+import ImageUpload from "./ImageUpload";
+
+const CLOUDINARY_BASE_URL =
+  "https://res.cloudinary.com/dapj3ww2j/image/upload/profile/";
 
 const ProfileHeader = (props) => {
   return (
@@ -16,10 +20,9 @@ const ProfileHeader = (props) => {
           <div className="flex">
             <div
               className="size-44 bg-cover bg-center border-8 border-white rounded-full overflow-hidden"
-              style={{
-                backgroundImage: `url(https://i.pinimg.com/originals/e5/3c/6b/e53c6bfa45da3f684fda60c4b21b1307.jpg)`,
-              }}
-            ></div>
+            >
+              {props.profileOwner && <ImageUpload id={props.profileInfo._id} profileImg={props.profileInfo.profileImg} token={props.token} setToken={props.setToken}/>}
+            </div>
             <div className="flex flex-col gap-1 ml-4 self-end">
               <div className="text-4xl font-bold align-bottom">
                 {props.profileInfo.firstName} {props.profileInfo.lastName}
