@@ -25,9 +25,9 @@ const ImageUpload = (props) => {
     });
 
   return (
-    <div className="w-full h-full hover:brightness-75 cursor-pointer">
+    <div className="hover:brightness-75 cursor-pointer">
       <img
-        className=""
+        className="object-fill"
         src={props.profileImg}
         onClick={handleClick}
       />

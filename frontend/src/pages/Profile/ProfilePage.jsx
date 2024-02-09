@@ -15,7 +15,6 @@ export const ProfilePage = () => {
   const { profile_id } = useParams();
   const [profileOwner, setProfileOwner] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [profileImg, setProfileImg] = useState("");
 
   useEffect(() => {
     if (token) {
