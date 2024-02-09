@@ -74,7 +74,10 @@ describe("Login Page", () => {
     });
 });
 
-// describe("Login - unsuccessfuk", () => {
+// describe("Login - unsuccessful", () => {
+//     beforeEach(() => {
+//         vi.resetAllMocks();
+//     });
 
 //     test("User cannot login if the email and password do not match", async () => {
 //         render(<LoginPage />);
@@ -84,10 +87,14 @@ describe("Login Page", () => {
 //         const submitButtonEl = screen.getByRole("submit-button");
 
 //         await userEvent.type(emailInputEl, "test@email.com");
-//         await userEvent.type(passwordInputEl, "1234");
+//         await userEvent.type(passwordInputEl, "12345");
+
+//         // console.log("THE PASSWORD BEFORE -> ", passwordInputEl)
 
 //         await userEvent.click(submitButtonEl);
 //         const validationError = screen.queryByText(/Make sure email and password are correct/);
+//         // console.log("VALIDATION ERROR IN LOGIN -> ", validationError)
+//         // console.log("THE PASSWORD AFTER -> ", passwordInputEl)
 //         expect(validationError !== null).toBe(true)
 
 //     });

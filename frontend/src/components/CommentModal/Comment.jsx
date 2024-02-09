@@ -25,29 +25,29 @@ const Comment = (props) => {
   return (
     <>
       {hasComment && (
-        <div class="flex items-start gap-2.5 bottom-margin">
+        <div className="flex items-start gap-2.5 bottom-margin">
           <img
-            class="w-8 h-8 rounded-full"
+            className="w-8 h-8 rounded-full"
             src="/docs/images/people/profile-picture-3.jpg"
             alt="Jese image"
           />
-          <div class="flex flex-col gap-1 w-full max-w-[320px]">
-            <div class="flex items-center space-x-2 rtl:space-x-reverse">
+          <div className="flex flex-col gap-1 w-full max-w-[320px]">
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
               <span
                 role="commenterFullDisplayName"
-                class="text-sm font-semibold text-gray-900 dark:text-white"
+                className="text-sm font-semibold text-gray-900 dark:text-white"
               >
                 {props.owner_username} ({props.owner_firstName}{" "}
                 {props.owner_lastName})
               </span>
-              <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+              <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                 {formattedDate}
               </span>
             </div>
-            <div class="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
+            <div className="flex flex-col leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
               <p
                 role="singleCommentContent"
-                class="text-sm font-normal text-gray-900 dark:text-white"
+                className="text-sm font-normal text-gray-900 dark:text-white"
               >
                 {props.message}
               </p>

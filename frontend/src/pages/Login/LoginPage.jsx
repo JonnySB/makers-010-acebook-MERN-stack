@@ -43,7 +43,7 @@ export const LoginPage = () => {
     <section className="bg-gray-200 dark:bg-gray-900 md:h-screen ">
     <div className="lg:flex flex-wrap items-center justify-center px-6 py-8 md:h-screen ">
       <div className="flex items-center justify-center ">
-        <div className="flex flex-col pr-14">
+        <div className="flex flex-col pr-24">
           <h3 className="text-[#0079FC] text-6xl font-semibold ">acebook </h3>  
           <p className="mb-7 text-2xl">Acebook helps you connect and<br/> share with the people in your life.</p>
         </div>

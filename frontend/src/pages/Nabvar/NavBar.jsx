@@ -10,14 +10,7 @@ import { Link } from 'react-router-dom';
 const NavBar = () => {
 
     const [showSearchBar, setShowSearchBar] = useState(false);
-    const [colorChange, setColorChange] = useState(false);
-    const [color, setColor] = useState("");
 
-    const handleColorChange = () => {
-        setColorChange((prev) => !prev)
-    }
-
-    const blue = "fill-[#0079FC";
 
     const toggleShowSearchBar = (e) => {
         setShowSearchBar((prev) => !prev);
@@ -38,7 +31,7 @@ const NavBar = () => {
                             type="search" name="search" placeholder="Search Acebook"/>
                         )}
                     </div>
-                    <div className="items-center justify-center md:w-auto cursor-pointer" id="navbar-user">
+                    <div role='feed-page' className="items-center justify-center md:w-auto cursor-pointer" id="navbar-user">
                         
                         <Link to='/posts'>
                             <div className="p-2 rounded-full bg-gray-100 hover:bg-gray-200">
@@ -61,14 +54,22 @@ const NavBar = () => {
                                 1
                             </span>
                         </div>
-                        <div className="p-2 bg-gray-200 border-slate-800 hover:bg-gray-300 hover:fill-[#EBEBEB] rounded-full cursor-pointer">
-                            {/* To be replaces with profile pic - just a place holder for now. */}
+                        <div role='profile-page' className="p-2 bg-gray-200 border-slate-800 hover:bg-gray-300 hover:fill-[#EBEBEB] rounded-full cursor-pointer">
                             <Link to='/profile' >
-                            <p>PIC</p>
+                            {/* <p>PIC</p> */}
+                            <svg
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                                height="1.5em"
+                                width="1.5em"
+                                className='fill-[#ffffff]'
+                                >
+                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 100-6 3 3 0 000 6z" />
+                            </svg>
                             </Link>
                             
                         </div>
-                        <button className="p-2 bg-gray-200 hover:bg-gray-300 rounded-full cursor-pointer" >
+                        <button role='logout-button' className="p-2 bg-gray-200 hover:bg-gray-300 rounded-full cursor-pointer" >
                             <Link to='/'>
                                 <img src={logoOut} className="h-6 md:h-6 md:w-auto" alt="notification" />
                             </Link>

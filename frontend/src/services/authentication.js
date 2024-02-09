@@ -33,27 +33,6 @@ export const login = async (email, password) => {
   }
 };
 
-// export const logout = async(token, user_id) => {
-//   const payload = {
-//     user_id: user_id
-//   }
-
-//   const requestOptions = {
-//     method: "DELETE",
-//     headers: {
-//       'Authorization': `Bearer ${token}`,
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(payload),
-//   }
-//   const response = await fetch(`${BACKEND_URL}/users/:id`, requestOptions)
-
-//   if(response.status !== 200){
-//     throw new Error('Unable to logout')
-//   } else {
-//     console.log("Logout success")
-//   }
-// }
 
 export const signup = async (username, dob, email, password, firstName, lastName) => {
   const payload = {
