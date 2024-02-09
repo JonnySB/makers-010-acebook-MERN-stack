@@ -6,7 +6,7 @@ const { generateToken } = require("../lib/token");
 const validatePassword = (password) => {
   // min 8 characters, at least one special character, one number, and one capital letter
   const passwordRegex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\\.])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
   return passwordRegex.test(password);
 };
 
