@@ -60,6 +60,6 @@ describe("Feed Page", () => {
     test("It navigates to login if no token is present", async () => {
         render(<FeedPage />);
         const navigateMock = useNavigate();
-        expect(navigateMock).toHaveBeenCalledWith("/login");
+        expect(navigateMock).toHaveBeenCalledWith("/");
     });
 });

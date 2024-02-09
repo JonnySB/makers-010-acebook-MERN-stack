@@ -47,6 +47,8 @@ export const ProfilePage = () => {
     }
   }, [token]);
 
+  console.log(posts)
+
   return (
     <div className="bg-slate-100 min-h-screen">
       <ProfileHeader profileInfo={profileInfo} profileOwner={profileOwner} />
@@ -81,6 +83,7 @@ export const ProfilePage = () => {
                   key={filteredPost._id}
                   token={token}
                   setToken={setToken}
+                  commentOn={true}
                 />
               ))}
           </div>

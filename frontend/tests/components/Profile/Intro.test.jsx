@@ -65,11 +65,10 @@ describe("Intro component renders conditionally", () => {
 // Mock for updateBio
 const updateBioSpy = vi
   .spyOn(userServices, "updateBio")
-  .mockResolvedValue({token: 'newToken'});
+  .mockResolvedValue({ token: "newToken" });
 
 const setTokenMock = vi.fn();
-const setNewBioMock = vi.fn().mockResolvedValue({bio: "I love acebook"})
-
+const setNewBioMock = vi.fn().mockResolvedValue({ bio: "I love acebook" });
 
 const mockToken = "testToken";
 
@@ -110,7 +109,7 @@ describe("Intro component functions", () => {
     await waitFor(() => {
       expect(updateBioSpy).toHaveBeenCalled();
       expect(updateBioSpy).toHaveBeenCalledWith("I love acebook", mockToken);
-      expect(setTokenMock).toHaveBeenCalledWith("newToken")
+      expect(setTokenMock).toHaveBeenCalledWith("newToken");
     });
 
     // TODO: Research how to mock useEffect from parent down to child. Seems difficult

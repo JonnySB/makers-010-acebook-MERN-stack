@@ -19,11 +19,11 @@ const getAllPosts = async (req, res) => {
         "user_data.email",
         "user_data.password",
         "user_data.dob",
-        "user_data.bio", 
+        "user_data.bio",
         "user_data.currentLocation",
         "user_data.workplace",
         "user_data.education",
-        "user_data.friends"
+        "user_data.friends",
       ],
     },
     {
@@ -42,7 +42,6 @@ const getAllPosts = async (req, res) => {
     },
     {
       $unset: [
-        "owner",
         "commenter_info._id",
         "commenter_info.email",
         "commenter_info.password",
@@ -51,7 +50,7 @@ const getAllPosts = async (req, res) => {
         "commenter_info.currentLocation",
         "commenter_info.workplace",
         "commenter_info.education",
-        "commenter_info.friends"
+        "commenter_info.friends",
       ],
     },
     {
@@ -61,6 +60,7 @@ const getAllPosts = async (req, res) => {
         createdAt: { $first: "$createdAt" },
         likes: { $first: "$likes" },
         user_data: { $first: "$user_data" },
+        owner: { $first: "$owner" },
         comments: {
           $push: {
             message: "$comments.message",
