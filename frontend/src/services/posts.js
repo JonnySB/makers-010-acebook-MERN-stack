@@ -16,6 +16,7 @@ export const getPosts = async (token) => {
   }
 
   const data = await response.json();
+  console.log("posts services", data)
   return data;
 };
 

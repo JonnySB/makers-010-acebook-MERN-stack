@@ -8,11 +8,13 @@ describe("Post component tests", () => {
     createdAt: "2024-02-01T16:50:30.870Z",
     likes: [],
     comments: [],
-    user_data: [{
-      username: "user",
-      firstName: "Bob",
-      lastName: "Smith"
-    }]
+    user_data: [
+      {
+        username: "user",
+        firstName: "Bob",
+        lastName: "Smith",
+      },
+    ],
   };
 
   test("displays the content(message) as a paragraph", () => {
@@ -26,5 +28,4 @@ describe("Post component tests", () => {
     render(<Post post={testPost} />);
     expect(screen.getByRole("likeDiv")).toBeInTheDocument();
   });
-
-}); 
+});

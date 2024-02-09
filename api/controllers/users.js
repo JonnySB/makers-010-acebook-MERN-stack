@@ -10,6 +10,7 @@ const validatePassword = (password) => {
   return passwordRegex.test(password);
 };
 
+//TODO: Can rename create to createUser?
 const create = async (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
@@ -40,7 +41,7 @@ const create = async (req, res) => {
 
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
-        return res.status(400).json({ message: 'Email already exists' });
+      return res.status(400).json({ message: "Email already exists" });
     }
     if(userAge < 13) {
       return res.status(400).json({ message: 'User must be at least 13 years old.' });
@@ -64,7 +65,7 @@ const create = async (req, res) => {
     await user.save();
     // console.log("User created, id:", user._id.toString());
     res.status(201).json({ message: "User created successfully" });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
@@ -94,7 +95,7 @@ const login = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.user_id;
   const user = await User.findById(userId).select("-password -email");
   const newToken = generateToken(req.user_id);
   res.status(200).json({ user: user, user_id: req.user_id, token: newToken });
@@ -110,13 +111,17 @@ const updateBio = async (req, res) => {
       { bio: bio },
       { new: true }
     );
-    res.status(200).json({ message: "Bio updated successfully" });
+
+    const newToken = generateToken(req.user_id);
+
+    res.status(200).json({ message: "Bio updated successfully", token: newToken});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
+//TODO: Need to generate new token for the following methods
 const updateCurrentLocation = async (req, res) => {
   const userId = req.user_id;
   const currentLocation = req.body.currentLocation;
