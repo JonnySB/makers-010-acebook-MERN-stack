@@ -5,7 +5,7 @@ import { getPosts } from "../../services/posts";
 import { getUserById } from "../../services/users";
 import ProfileHeader from "../../components/Profile/ProfileHeader";
 import Post from "../../components/Post/Post";
-import NavBar from "../Nabvar/NavBar";
+import NavBar from "../../components/NavBar/NavBar";
 import CreatePost from "../../components/Post/CreatePost";
 
 import Intro from "../../components/Profile/Intro";
@@ -17,6 +17,7 @@ export const ProfilePage = () => {
   const { profile_id } = useParams();
   const [profileOwner, setProfileOwner] = useState(false);
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -45,15 +46,18 @@ export const ProfilePage = () => {
           console.error(err);
         });
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, [token]);
 
-  console.log(posts)
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+    navigate("/");
+  }
 
   return (
     <>
-    <NavBar />
+    <NavBar userID={userID} handleLogout={handleLogout}/>
     <div className="bg-slate-100 min-h-screen">
       <ProfileHeader profileInfo={profileInfo} profileOwner={profileOwner} />
       <div className="md:flex gap-4 md:max-w-screen-lg w-screen mx-auto px-4">

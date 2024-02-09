@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const NavBar = () => {
+const NavBar = (props) => {
 
     const [showSearchBar, setShowSearchBar] = useState(false);
 
@@ -55,7 +55,7 @@ const NavBar = () => {
                             </span>
                         </div>
                         <div role='profile-page' className="p-2 bg-gray-200 border-slate-800 hover:bg-gray-300 hover:fill-[#EBEBEB] rounded-full cursor-pointer">
-                            <Link to='/profile/:profile_id' >
+                            <Link aria-label='test' to={`/profile/${props.userID}`} >
                             {/* <p>PIC</p> */}
                             <svg
                                 fill="currentColor"
@@ -69,10 +69,10 @@ const NavBar = () => {
                             </Link>
                             
                         </div>
-                        <button role='logout-button' className="p-2 bg-gray-200 hover:bg-gray-300 rounded-full cursor-pointer" >
-                            <Link to='/'>
+                        <button onClick={props.handleLogout} role='logout-button' className="p-2 bg-gray-200 hover:bg-gray-300 rounded-full cursor-pointer" >
+                            {/* <Link to='/'> */}
                                 <img src={logoOut} className="h-6 md:h-6 md:w-auto" alt="notification" />
-                            </Link>
+                            {/* </Link> */}
                         </button>
                     </div>
                 </div>

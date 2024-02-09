@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getPosts } from "../../services/posts";
 import Post from "../../components/Post/Post";
 import CreatePost from "../../components/Post/CreatePost";
-import NavBar from "../Nabvar/NavBar";
+import NavBar from "../../components/NavBar/NavBar";
 
 export const FeedPage = () => {
   const [posts, setPosts] = useState([]);
@@ -33,9 +33,14 @@ export const FeedPage = () => {
     return;
   }
 
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+    navigate("/");
+  }
+
   return (
     <>
-    <NavBar />
+    <NavBar userID={userID} handleLogout={handleLogout}/>
       <div className="flex justify-center min-h-screen bg-slate-100 pt-6 pb-10">
         <div>
           <CreatePost token={token} setToken={setToken} />
