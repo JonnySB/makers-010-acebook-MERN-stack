@@ -65,6 +65,7 @@ const Post = (props) => {
         </div>
       )}
     </div>
+    
   );
 };
 

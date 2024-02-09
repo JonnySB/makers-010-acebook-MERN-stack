@@ -5,7 +5,9 @@ import { getPosts } from "../../services/posts";
 import { getUserById } from "../../services/users";
 import ProfileHeader from "../../components/Profile/ProfileHeader";
 import Post from "../../components/Post/Post";
+import NavBar from "../../components/NavBar/NavBar";
 import CreatePost from "../../components/Post/CreatePost";
+
 import Intro from "../../components/Profile/Intro";
 
 export const ProfilePage = () => {
@@ -15,6 +17,7 @@ export const ProfilePage = () => {
   const { profile_id } = useParams();
   const [profileOwner, setProfileOwner] = useState(false);
   const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -43,13 +46,19 @@ export const ProfilePage = () => {
           console.error(err);
         });
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, [token]);
 
+  const handleLogout = () => {
+    window.localStorage.removeItem("token");
+    navigate("/");
+  }
   console.log(posts);
 
   return (
+    <>
+    <NavBar userID={userID} handleLogout={handleLogout}/>
     <div className="bg-slate-100 min-h-screen">
       <ProfileHeader
         profileInfo={profileInfo}
@@ -70,6 +79,7 @@ export const ProfilePage = () => {
               Photos
             </h1>
           </div>
+
           <div className="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
             <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
               Friends
@@ -101,5 +111,6 @@ export const ProfilePage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
