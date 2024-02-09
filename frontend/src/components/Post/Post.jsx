@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 
 const Post = (props) => {
   const formattedDate = new Date(props.post.createdAt).toLocaleString();
-  let comments = props.post.comments.length;
-  console.log (props.post.owner)
 
+  let comments;
+  if (props.post.comments[0].owner_firstName[0]) {
+    comments = props.post.comments.length;
+  } else {
+    comments = 0;
+  }
   return (
     <div
       role="singlePost"
@@ -16,7 +20,10 @@ const Post = (props) => {
       <div className="pt-2">
         <div className="flex flex-row">
           <div className="h-14 w-14">
-            <img className="object-fill" src={props.post.user_data[0].profileImg} />
+            <img
+              className="object-fill"
+              src={props.post.user_data[0].profileImg}
+            />
           </div>
           <div className="flex flex-col justify-center ms-4">
             {/* TODO: Add some useful label to the below div to identify it as user's name */}
@@ -33,7 +40,7 @@ const Post = (props) => {
           {props.post.message}
         </p>
       </div>
-      {props.actionButtons &&
+      {props.actionButtons && (
         <div className="grid grid-cols-2 grid-rows-1 border-t px-4 py-2 text-xs text-neutral-500">
           <Like
             post_id={props.post._id}
@@ -56,7 +63,7 @@ const Post = (props) => {
             </span>
           </div>
         </div>
-      }
+      )}
     </div>
   );
 };
