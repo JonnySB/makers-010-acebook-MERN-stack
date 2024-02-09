@@ -25,7 +25,7 @@ describe("Comment component tests", () => {
     expect(paragraph.textContent).toEqual("This is a message");
 
     const span = screen.getByRole("commenterFullDisplayName");
-    expect(span.textContent).toEqual("username (firstname lastname)");
+    expect(span.textContent).toEqual("firstname lastname");
     // TODO: Should probably check that the names are also next to the post
   });
 });

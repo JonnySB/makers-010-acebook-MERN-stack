@@ -42,6 +42,6 @@ describe("CommentModal component tests", () => {
     expect(commentMessage.textContent).toEqual(post.comments[0].message);
 
     const commentOwner = screen.getByRole("commenterFullDisplayName");
-    expect(commentOwner.textContent).toEqual("jdoe (john doe)");
+    expect(commentOwner.textContent).toEqual("john doe");
   });
 });

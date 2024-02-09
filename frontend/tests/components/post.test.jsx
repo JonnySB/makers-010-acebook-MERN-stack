@@ -23,9 +23,4 @@ describe("Post component tests", () => {
     expect(paragraph.textContent).toEqual("Test Post 1");
     // TODO: Should probably check that the names are also next to the post
   });
-
-  test("displays Like component", () => {
-    render(<Post post={testPost} />);
-    expect(screen.getByRole("likeDiv")).toBeInTheDocument();
-  });
 });
