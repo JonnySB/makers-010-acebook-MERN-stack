@@ -1,5 +1,6 @@
 import Like from "./Like";
 import CommentModal from "../CommentModal/CommentModal";
+import { Link } from "react-router-dom";
 
 const Post = (props) => {
   const formattedDate = new Date(props.post.createdAt).toLocaleString();
@@ -20,10 +21,10 @@ const Post = (props) => {
           <div className="flex flex-col justify-center ms-4">
             {/* TODO: Add some useful label to the below div to identify it as user's name */}
             <div className="text-base font-bold">
-              <a href={`/profile/${props.post.owner}`}>
+              <Link to={`/profile/${props.post.owner}`}>
               {props.post.user_data[0].firstName}{" "}
               {props.post.user_data[0].lastName}
-            </a>
+            </Link>
             </div>
             <div className="mt-1 text-xs text-neutral-500">{formattedDate}</div>
           </div>
