@@ -55,7 +55,7 @@ const NavBar = () => {
                             </span>
                         </div>
                         <div role='profile-page' className="p-2 bg-gray-200 border-slate-800 hover:bg-gray-300 hover:fill-[#EBEBEB] rounded-full cursor-pointer">
-                            <Link to='/profile' >
+                            <Link to='/profile/:profile_id' >
                             {/* <p>PIC</p> */}
                             <svg
                                 fill="currentColor"
