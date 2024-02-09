@@ -22,7 +22,7 @@ const createToken = (userId) => {
 };
 
 let token;
-describe("/users", () => {
+describe("Tests for route /users for user creation", () => {
   beforeEach(async () => {
     await User.deleteMany({});
   });
@@ -348,6 +348,8 @@ describe("/users", () => {
 
       const found = await User.find();
       expect(found[0].username).toBe("scar123");
+      expect(found[0].email).toBe("scar@email.com");
+      expect(found.length).toEqual(1);
     });
 
     test("Three users created - only two has unique username and all have different emails", async () => {
@@ -387,6 +389,7 @@ describe("/users", () => {
       // console.log(found);
       const usernames = found.map((user) => user.username);
       expect(usernames).toEqual(["scar123", "scar1234"]);
+      expect(usernames.length).toEqual(2);
     });
   });
 
@@ -477,6 +480,7 @@ describe("/users", () => {
       const found = await User.find();
       // console.log("Username it test: ", found[0].email);
       expect(found[0].email).toBe("scar@email.com");
+      expect(found.length).toEqual(1)
     });
 
     test("Three users created - only two have unique emails and all have different usernames", async () => {
@@ -566,7 +570,7 @@ describe("/users", () => {
   });
 });
 
-describe("/users/:id", () => {
+describe("Tests for route /users/:user_id", () => {
   const dob = new Date("1988-02-05");
   const user1 = new User({
     username: "pops123",
@@ -579,7 +583,7 @@ describe("/users/:id", () => {
   const user2 = new User({
     username: "user123",
     email: "user@email.com",
-    password: "1234",
+    password: "Abcd!123",
     dob: dob,
     firstName: "Joe",
     lastName: "Bloggs",
@@ -588,9 +592,7 @@ describe("/users/:id", () => {
 
   beforeAll(async () => {
     await user1.save();
-    // console.log(user1, "before tests");
     await user2.save();
-    // console.log(user2, "before tests");
     token = createToken(user1.id);
   });
 
@@ -655,7 +657,7 @@ describe("/users/:id", () => {
       expect(response.body.token).toEqual(undefined);
     });
   });
-
+  //TODO: Need to update test to check that a new token was generated
   describe("POST, when a user updates their profile intro", () => {
     test("A user can update their intro's bio", async () => {
       await request(app)
