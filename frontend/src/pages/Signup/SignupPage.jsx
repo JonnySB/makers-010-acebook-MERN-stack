@@ -311,7 +311,7 @@ export const SignupPage = () => {
                   </p>
                 )}
               </div>
-              <div className="flex items-start">
+              {/* <div className="flex items-start">
                 <div className="flex items-center h-5">
                   <input
                     id="terms"
@@ -335,7 +335,7 @@ export const SignupPage = () => {
                     </a>
                   </label>
                 </div>
-              </div>
+              </div> */}
               <button
                 role="submit-button"
                 type="submit"

@@ -5,6 +5,8 @@ import notifications from '../../assets/notifications.svg';
 import logoOut from  '../../assets/logOut.svg';
 import { Link } from 'react-router-dom';
 
+const CLOUDINARY_BASE_URL = "https://res.cloudinary.com/dapj3ww2j/image/upload/profile/";
+
 
 
 const NavBar = (props) => {
@@ -54,10 +56,9 @@ const NavBar = (props) => {
                                 1
                             </span>
                         </div>
-                        <div role='profile-page' className="p-2 bg-gray-200 border-slate-800 hover:bg-gray-300 hover:fill-[#EBEBEB] rounded-full cursor-pointer">
+                        <div role='profile-page' className="bg-gray-200 border-slate-800 hover:bg-gray-300 hover:fill-[#EBEBEB] rounded-full cursor-pointer">
                             <Link aria-label='test' to={`/profile/${props.userID}`} >
-                            {/* <p>PIC</p> */}
-                            <svg
+                            {/* <svg
                                 fill="currentColor"
                                 viewBox="0 0 16 16"
                                 height="1.5em"
@@ -65,7 +66,9 @@ const NavBar = (props) => {
                                 className='fill-[#ffffff]'
                                 >
                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 100-6 3 3 0 000 6z" />
-                            </svg>
+                            </svg> */}
+                            <img className="object-fill h-9 w-9" src={CLOUDINARY_BASE_URL + props.userID + '.png'} />
+
                             </Link>
                             
                         </div>
