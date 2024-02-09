@@ -6,7 +6,7 @@ const { generateToken } = require("../lib/token");
 const validatePassword = (password) => {
   // min 8 characters, at least one special character, one number, and one capital letter
   const passwordRegex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&\\.])[A-Za-z\d@$!%*?&]{8,}$/;
   return passwordRegex.test(password);
 };
 
@@ -46,13 +46,12 @@ const create = async (req, res) => {
     if(userAge < 13) {
       return res.status(400).json({ message: 'User must be at least 13 years old.' });
     }
-    /*
+    
     if (!validatePassword(password)) {
       return res
         .status(400)
         .json({ message: "Password does not meet the criteria." });
     }
-    */
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
