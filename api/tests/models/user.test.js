@@ -2,7 +2,7 @@ require("../mongodb_helper");
 const User = require("../../models/user");
 
 describe("User model", () => {
-  beforeEach(async () => {
+  afterEach(async () => {
     await User.deleteMany({});
   });
 
@@ -15,7 +15,7 @@ describe("User model", () => {
       password: "password",
       dob: new Date("1994-04-15"),
       firstName: "Scar",
-      lastName: "Brown"
+      lastName: "Brown",
     });
     expect(user.email).toEqual("someone@example.com");
   });
@@ -27,7 +27,7 @@ describe("User model", () => {
       password: "password",
       dob: new Date("1994-04-15"),
       firstName: "Scar",
-      lastName: "Brown"
+      lastName: "Brown",
     });
     expect(user.password).toEqual("password");
   });
@@ -39,7 +39,7 @@ describe("User model", () => {
       password: "password",
       dob: new Date("1994-04-15"),
       firstName: "Scar",
-      lastName: "Brown"
+      lastName: "Brown",
     });
     expect(user.username).toEqual("user123");
   });
@@ -51,7 +51,7 @@ describe("User model", () => {
       password: "password",
       dob: dob,
       firstName: "Scar",
-      lastName: "Brown"
+      lastName: "Brown",
     });
     expect(user.dob).toEqual(dob);
   });
@@ -63,7 +63,7 @@ describe("User model", () => {
       password: "password",
       dob: dob,
       firstName: "John",
-      lastName: "Doe"
+      lastName: "Doe",
     });
     expect(user.firstName).toEqual("John");
   });
@@ -75,7 +75,7 @@ describe("User model", () => {
       password: "password",
       dob: dob,
       firstName: "John",
-      lastName: "Doe"
+      lastName: "Doe",
     });
     expect(user.lastName).toEqual("Doe");
   });
@@ -91,12 +91,12 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
-      firstName: "Joe", 
-      lastName: "Blogs", 
-      bio: "An interesting man from London", 
-      currentLocation: "London", 
+      firstName: "John",
+      lastName: "Doe",
+      bio: "An interesting man from London",
+      currentLocation: "London",
       workplace: "Makers",
-      education: "School of hard knocks"
+      education: "School of hard knocks",
     });
 
     await user.save();
@@ -106,8 +106,8 @@ describe("User model", () => {
     expect(users[0].email).toEqual("someone@example.com");
     expect(users[0].password).toEqual("password");
     expect(users[0].dob).toEqual(dob);
-    expect(users[0].firstName).toEqual("Joe");
-    expect(users[0].lastName).toEqual("Blogs");
+    expect(users[0].firstName).toEqual("John");
+    expect(users[0].lastName).toEqual("Doe");
     expect(users[0].bio).toEqual("An interesting man from London");
     expect(users[0].currentLocation).toEqual("London");
     expect(users[0].workplace).toEqual("Makers");
@@ -120,17 +120,21 @@ describe("User model", () => {
       email: "someone@example.com",
       password: "password",
       dob: dob,
+      firstName: "John",
+      lastName: "Doe",
       friends: new User({
         username: "user456",
         email: "someoneelse@example.com",
         password: "password",
-        dob: dob, 
-      })
+        dob: dob,
+        firstName: "Joe",
+        lastName: "Bloggs",
+      }),
     });
 
     await user1.save();
-    const users = await User.find(); 
+    const users = await User.find();
 
-    expect(users[0].friends.length).toEqual(1)
-  })
+    expect(users[0].friends.length).toEqual(1);
+  });
 });

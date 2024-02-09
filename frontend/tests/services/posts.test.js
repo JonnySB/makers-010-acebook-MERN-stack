@@ -57,7 +57,9 @@ describe("posts service", () => {
       expect(url).toEqual(`${BACKEND_URL}/posts`);
       expect(options.method).toEqual("POST");
       expect(options.headers["Authorization"]).toEqual("Bearer testToken");
+      expect(options.body).toContain("Hello World")
     });
+
     it("rejects with an error if the status is not 201", async () => {
       fetch.mockResponseOnce(
         JSON.stringify({ message: "Something went wrong" }),
@@ -67,9 +69,16 @@ describe("posts service", () => {
       try {
         await createPosts("testToken", "Hello World");
       } catch (err) {
-        expect(err.message).toEqual("Unable to make POST request for fetch posts");
+        expect(err.message).toEqual(
+          "Unable to make POST request for fetch posts"
+        );
       }
     });
+
+    // TODO:
+    it.todo('creates a POST request with a token and a message', () => {
+      // expect(createPosts).toHaveBeenCalledWith("Hello World!")
+    })
   });
 
   describe("postLike", () => {
@@ -101,33 +110,32 @@ describe("posts service", () => {
     });
   });
 
-describe("postUnlike", () => {
-  it("Creates a resource with a POST request and ensure 200 status code", async () => {
-    fetch.mockResponseOnce(JSON.stringify({ message: "success!" }), {
-      status: 201,
-    });
-    await postUnlike("testToken", "testPostID");
-    const fetchArguments = fetch.mock.lastCall;
-    const url = fetchArguments[0];
-    const options = fetchArguments[1];
-
-    expect(url).toEqual(`${BACKEND_URL}/posts/unlike`);
-    expect(options.method).toEqual("POST");
-    expect(options.headers["Authorization"]).toEqual("Bearer testToken");
-  });
-
-  it("rejects with an error if the status is not 201", async () => {
-    fetch.mockResponseOnce(
-      JSON.stringify({ message: "Something went wrong" }),
-      { status: 400 }
-    );
-
-    try {
+  describe("postUnlike", () => {
+    it("Creates a resource with a POST request and ensure 200 status code", async () => {
+      fetch.mockResponseOnce(JSON.stringify({ message: "success!" }), {
+        status: 201,
+      });
       await postUnlike("testToken", "testPostID");
-    } catch (err) {
-      expect(err.message).toEqual("Unable to unlike");
-    }
-  });
+      const fetchArguments = fetch.mock.lastCall;
+      const url = fetchArguments[0];
+      const options = fetchArguments[1];
+
+      expect(url).toEqual(`${BACKEND_URL}/posts/unlike`);
+      expect(options.method).toEqual("POST");
+      expect(options.headers["Authorization"]).toEqual("Bearer testToken");
+    });
+
+    it("rejects with an error if the status is not 201", async () => {
+      fetch.mockResponseOnce(
+        JSON.stringify({ message: "Something went wrong" }),
+        { status: 400 }
+      );
+
+      try {
+        await postUnlike("testToken", "testPostID");
+      } catch (err) {
+        expect(err.message).toEqual("Unable to unlike");
+      }
+    });
   });
 });
-

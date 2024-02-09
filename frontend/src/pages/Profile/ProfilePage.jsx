@@ -18,11 +18,12 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     if (token) {
-      getUserById(token, profile_id)
+      getUserById(profile_id, token)
         .then((data) => {
           setProfileInfo(data.user);
           setToken(data.token);
           setUserID(data.user_id);
+
           if (profile_id === userID) {
             setProfileOwner(true);
           }
@@ -51,7 +52,7 @@ export const ProfilePage = () => {
       <ProfileHeader profileInfo={profileInfo} profileOwner={profileOwner} />
       <div className="md:flex gap-4 md:max-w-screen-lg w-screen mx-auto px-4">
         <div className="flex-auto basis-5/12">
-          <Intro profileInfo={profileInfo} profileOwner={profileOwner} />
+          <Intro profileInfo={profileInfo} profileOwner={profileOwner} token={token} setToken={setToken}/>
           <div className="flex flex-col mx-auto my-3 pt-2 p-4 border shadow-sm rounded-lg bg-white">
             <h1 className="my-2 text-xl text-left font-bold tracking-tight text-gray-900">
               Photos

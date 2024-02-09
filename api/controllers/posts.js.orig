@@ -15,15 +15,14 @@ const getAllPosts = async (req, res) => {
     },
     {
       $unset: [
+        "owner",
         "user_data._id",
         "user_data.email",
         "user_data.password",
         "user_data.dob",
-        "user_data.bio", 
-        "user_data.currentLocation",
-        "user_data.workplace",
-        "user_data.education",
-        "user_data.friends"
+        "user_data.bio",
+<<<<<<< HEAD
+        "user_data.friends",
       ],
     },
     {
@@ -48,10 +47,7 @@ const getAllPosts = async (req, res) => {
         "commenter_info.password",
         "commenter_info.dob",
         "commenter_info.bio",
-        "commenter_info.currentLocation",
-        "commenter_info.workplace",
-        "commenter_info.education",
-        "commenter_info.friends"
+        "commenter_info.friends",
       ],
     },
     {
@@ -73,11 +69,20 @@ const getAllPosts = async (req, res) => {
         },
       },
     },
+=======
+        "user_data.currentLocation",
+        "user_data.workplace",
+        "user_data.education",
+        "user_data.friends"
+      ]
+    }
+>>>>>>> main
   ]);
 
   // sorts post to descending order (last one first) based on the timestamp
   // compareFn(a, b) (first and second element) see sort method doc
   posts.sort((a, b) => b.createdAt - a.createdAt);
+  console.log(posts[0].user_data)
   res.status(200).json({ posts: posts, user_id: req.user_id, token: token });
 };
 
